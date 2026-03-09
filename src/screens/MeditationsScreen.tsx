@@ -1,469 +1,211 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Header from '../components/Header';
 import Section from '../components/Section';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
-import {
-  topRatedMeditations,
-  todayMeditations,
-  meditationCategories,
-  soundCategories,
-} from '../data/mockData';
+import { todayMeditations } from '../data/mockData';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
+
+const TABS = ['All', 'Meditation', 'Soundscape', 'Sound Healing'];
+const DURATION_FILTERS = ['UNDER 5 MINS', 'UNDER 10 MINS', 'UNDER 20 MINS'];
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const tabs = ['All', 'Meditations', 'Sounds', 'Sound Healing', 'Hypnosis'];
+const FAVORITES = [
+  { id: '1', title: 'Clearing Mental Clutter With Sacred Geometry', author: 'Jeffrey Allen', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400', round: false },
+  { id: '2', title: 'Leo', author: 'Gabriel Loynaz', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400', round: true },
+];
+
+const TOP_RATED = [
+  { id: '1', title: 'Ocean Healing', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=200' },
+  { id: '2', title: '528 Hz – The Love Frequency', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=200' },
+  { id: '3', title: 'Throat Chakra – Communication', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=200' },
+  { id: '4', title: 'Root Chakra', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=200' },
+];
 
 export default function MeditationsScreen() {
   const [activeTab, setActiveTab] = useState('All');
   const navigation = useNavigation<NavigationProp>();
 
-  const navigateToMeditation = (id: string, title: string, author: string, image: string, duration: string, rating?: number) => {
-    navigation.navigate('MeditationPlayer', {
-      id,
-      title,
-      author,
-      image,
-      duration,
-      rating,
-    });
-  };
-
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <Header />
-
-      {/* Tab Bar */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.tabBar}
-        contentContainerStyle={styles.tabBarContent}
-      >
-        {tabs.map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            style={[styles.tab, activeTab === tab && styles.activeTab]}
-            onPress={() => setActiveTab(tab)}
-          >
-            <Text
-              style={[styles.tabText, activeTab === tab && styles.activeTabText]}
-            >
-              {tab}
-            </Text>
+      <View style={styles.tabBar}>
+        {TABS.map((tab) => (
+          <TouchableOpacity key={tab} onPress={() => setActiveTab(tab)} style={styles.tabItem}>
+            <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
+            {activeTab === tab && <View style={styles.tabUnderline} />}
           </TouchableOpacity>
         ))}
-      </ScrollView>
+      </View>
 
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Set Meditation Target */}
-        <TouchableOpacity style={styles.targetCard}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Daily Target */}
+        <View style={styles.targetCard}>
           <View style={styles.targetIcon}>
-            <Ionicons name="radio-button-on-outline" size={24} color={colors.primary} />
+            <Ionicons name="radio-button-on" size={28} color={colors.teal} />
           </View>
           <View style={styles.targetText}>
-            <Text style={styles.targetTitle}>Set a Meditation Target</Text>
-            <Text style={styles.targetSubtitle}>Track your meditation practice</Text>
+            <Text style={styles.targetLabel}>Daily target</Text>
+            <Text style={styles.targetProgress}>0 / 5 mins</Text>
           </View>
-          <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
-        </TouchableOpacity>
-
-        {/* Upgrade Banner */}
-        <View style={styles.upgradeBanner}>
-          <Text style={styles.upgradeText}>
-            Level up your growth with{'\n'}Mindvalley Membership + Meditations
-          </Text>
-          <TouchableOpacity style={styles.upgradeButton}>
-            <Text style={styles.upgradeButtonText}>Upgrade now</Text>
+          <TouchableOpacity>
+            <Ionicons name="ellipsis-horizontal" size={18} color={colors.textMuted} />
           </TouchableOpacity>
         </View>
 
         {/* Favorites */}
-        <Section title="Favorites">
-          <View style={styles.emptyState}>
-            <View style={styles.emptyIcon}>
-              <Ionicons name="bookmark-outline" size={24} color={colors.textMuted} />
-            </View>
-            <View style={styles.emptyText}>
-              <Text style={styles.emptyTitle}>Nothing to show here yet!</Text>
-              <Text style={styles.emptySubtitle}>
-                Start exploring our content and save your favorites for later.
-              </Text>
-            </View>
-          </View>
+        <Section title="Favorites" horizontal>
+          {FAVORITES.map((item) => (
+            <TouchableOpacity key={item.id} style={styles.favCard} activeOpacity={0.85}>
+              <Image
+                source={{ uri: item.image }}
+                style={[styles.favImage, item.round && styles.favImageRound]}
+              />
+              <Text style={styles.favTitle} numberOfLines={2}>{item.title}</Text>
+              <Text style={styles.favAuthor}>{item.author}</Text>
+            </TouchableOpacity>
+          ))}
         </Section>
 
         {/* Top Rated */}
-        <Section title="Top rated" showSeeAll>
+        <View style={styles.topRatedSection}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Top rated</Text>
+            <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
+          </View>
           <View style={styles.topRatedGrid}>
-            {topRatedMeditations.map((med) => (
-              <TouchableOpacity
-                key={med.id}
-                style={styles.topRatedItem}
-                onPress={() => navigateToMeditation(
-                  med.id,
-                  med.title,
-                  med.author,
-                  med.image,
-                  med.duration,
-                  med.rating
-                )}
-                activeOpacity={0.8}
-              >
-                <View style={styles.topRatedImageContainer}>
-                  <Image
-                    source={{ uri: med.image }}
-                    style={styles.topRatedImage}
-                  />
-                  {med.isLocked && (
-                    <View style={styles.lockOverlay}>
-                      <Ionicons name="lock-closed" size={14} color="#fff" />
-                    </View>
-                  )}
-                </View>
-                <View style={styles.topRatedInfo}>
-                  <Text style={styles.topRatedTitle} numberOfLines={2}>
-                    {med.title}
-                  </Text>
-                  <Text style={styles.topRatedAuthor}>{med.author}</Text>
-                  <View style={styles.topRatedMeta}>
-                    <Text style={styles.topRatedRating}>{med.rating}</Text>
-                    <Ionicons name="star" size={12} color="#FFB800" />
+            {TOP_RATED.map((item) => (
+              <TouchableOpacity key={item.id} style={styles.topRatedItem} activeOpacity={0.85}>
+                <Image source={{ uri: item.image }} style={styles.topRatedThumb} />
+                <View style={styles.topRatedMeta}>
+                  <Text style={styles.topRatedTitle} numberOfLines={2}>{item.title}</Text>
+                  <Text style={styles.topRatedAuthor}>{item.author}</Text>
+                  <View style={styles.ratingRow}>
+                    <Text style={styles.ratingText}>{item.rating}</Text>
+                    <Text> ⭐</Text>
                   </View>
                 </View>
               </TouchableOpacity>
             ))}
           </View>
-        </Section>
+        </View>
 
-        {/* Your meditations for today */}
-        <Section title="Your meditations for today">
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {/* Your Meditations for Today */}
+        <View style={styles.todaySection}>
+          <Text style={styles.todaySectionTitle}>Your meditations for today</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.durationFilters}>
+            {DURATION_FILTERS.map((f) => (
+              <View key={f} style={styles.durationPill}>
+                <Ionicons name="time-outline" size={11} color={colors.textMuted} />
+                <Text style={styles.durationText}>{f}</Text>
+              </View>
+            ))}
+          </ScrollView>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.medsRow}>
             {todayMeditations.map((med) => (
               <TouchableOpacity
                 key={med.id}
-                style={styles.meditationCard}
-                onPress={() => navigateToMeditation(
-                  med.id,
-                  med.title,
-                  med.author,
-                  med.image,
-                  med.duration,
-                  med.rating
-                )}
-                activeOpacity={0.8}
+                style={styles.medCard}
+                activeOpacity={0.85}
+                onPress={() => navigation.navigate('MeditationPlayer', {
+                  id: med.id, title: med.title, author: med.author, image: med.image, duration: med.duration, rating: med.rating,
+                })}
               >
-                <View style={styles.meditationCategory}>
-                  <Ionicons name="time-outline" size={12} color={colors.textMuted} />
-                  <Text style={styles.meditationCategoryText}>{med.category}</Text>
-                </View>
-                <Image source={{ uri: med.image }} style={styles.meditationImage} />
-                <Text style={styles.meditationTitle} numberOfLines={2}>
-                  {med.title}
-                </Text>
-                <Text style={styles.meditationAuthor}>{med.author}</Text>
-                <View style={styles.meditationMeta}>
-                  <Text style={styles.meditationRating}>{med.rating}</Text>
-                  <Ionicons name="star" size={12} color="#FFB800" />
-                  <Text style={styles.meditationDuration}> · {med.duration}</Text>
+                <Image source={{ uri: med.image }} style={styles.medImage} />
+                <Text style={styles.medTitle} numberOfLines={2}>{med.title}</Text>
+                <Text style={styles.medAuthor}>{med.author}</Text>
+                <View style={styles.medMeta}>
+                  <Text style={styles.medRating}>{med.rating}</Text>
+                  <Text> ⭐ </Text>
+                  <Text style={styles.medDuration}>{med.duration}</Text>
                 </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
-        </Section>
+        </View>
 
-        {/* Meditation Categories */}
-        <Section title="Meditation categories" showSeeAll>
-          <View style={styles.categoriesRow}>
-            {meditationCategories.slice(0, 2).map((cat) => (
-              <TouchableOpacity key={cat.id} style={styles.categoryCard}>
-                <Image source={{ uri: cat.image }} style={styles.categoryImage} />
-                <View style={styles.categoryGradient} />
-                <Text style={styles.categoryName}>{cat.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </Section>
-
-        {/* Sound Categories */}
-        <Section title="Sound categories" showSeeAll>
-          <View style={styles.categoriesRow}>
-            {soundCategories.slice(0, 2).map((cat) => (
-              <TouchableOpacity key={cat.id} style={styles.categoryCard}>
-                <Image source={{ uri: cat.image }} style={styles.categoryImage} />
-                <View style={styles.categoryGradient} />
-                <Text style={styles.categoryName}>{cat.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </Section>
-
-        <View style={styles.bottomPadding} />
+        <View style={{ height: 100 }} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  container: { flex: 1, backgroundColor: colors.background },
   tabBar: {
-    maxHeight: 50,
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    marginBottom: 16,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
-  tabBarContent: {
-    paddingHorizontal: 16,
-    alignItems: 'center',
-  },
-  tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    marginRight: 4,
-  },
-  activeTab: {
-    borderBottomWidth: 2,
-    borderBottomColor: colors.textPrimary,
-  },
-  tabText: {
-    ...typography.label,
-    color: colors.textMuted,
-  },
-  activeTabText: {
-    color: colors.textPrimary,
-    fontWeight: '600',
-  },
-  scrollView: {
-    flex: 1,
+  tabItem: { marginRight: 24, paddingBottom: 12, position: 'relative' },
+  tabText: { fontSize: 16, fontWeight: '500', color: colors.textMuted },
+  tabTextActive: { color: colors.textPrimary, fontWeight: '700' },
+  tabUnderline: {
+    position: 'absolute', bottom: 0, left: 0, right: 0,
+    height: 2, backgroundColor: colors.textPrimary, borderRadius: 1,
   },
   targetCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F9FAFB',
-    marginHorizontal: 16,
-    marginTop: 16,
+    backgroundColor: colors.backgroundCard,
+    marginHorizontal: 20,
+    borderRadius: 14,
     padding: 16,
-    borderRadius: 12,
+    marginBottom: 28,
+    gap: 14,
   },
-  targetIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F3F0FF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
+  targetIcon: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
+  targetText: { flex: 1 },
+  targetLabel: { fontSize: 14, fontWeight: '600', color: colors.textPrimary, marginBottom: 2 },
+  targetProgress: { fontSize: 13, color: colors.textSecondary },
+  favCard: { width: 160, marginRight: 14 },
+  favImage: { width: 160, height: 160, borderRadius: 12, backgroundColor: colors.backgroundCard, marginBottom: 10 },
+  favImageRound: { borderRadius: 80 },
+  favTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 4 },
+  favAuthor: { fontSize: 12, color: colors.textSecondary },
+  topRatedSection: { marginBottom: 32 },
+  sectionHeader: {
+    flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+    paddingHorizontal: 20, marginBottom: 16,
   },
-  targetText: {
-    flex: 1,
-  },
-  targetTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
-    fontWeight: '600',
-  },
-  targetSubtitle: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-  },
-  upgradeBanner: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: colors.primary,
-    marginHorizontal: 16,
-    marginTop: 12,
-    marginBottom: 24,
-    padding: 16,
-    borderRadius: 12,
-  },
-  upgradeText: {
-    ...typography.bodySmall,
-    color: '#fff',
-    flex: 1,
-    marginRight: 12,
-  },
-  upgradeButton: {
-    backgroundColor: '#fff',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  upgradeButtonText: {
-    ...typography.label,
-    color: colors.primary,
-    fontWeight: '600',
-  },
-  emptyState: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    padding: 16,
-    backgroundColor: '#F9FAFB',
-    borderRadius: 12,
-  },
-  emptyIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#E5E7EB',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 12,
-  },
-  emptyText: {
-    flex: 1,
-  },
-  emptyTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  emptySubtitle: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-  },
+  sectionTitle: { fontSize: 20, fontWeight: '700', color: colors.textPrimary },
+  seeAll: { fontSize: 14, color: colors.textAction },
   topRatedGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    flexDirection: 'row', flexWrap: 'wrap',
+    paddingHorizontal: 20, gap: 12,
   },
   topRatedItem: {
-    width: '48%',
-    flexDirection: 'row',
-    marginBottom: 16,
+    width: '47%', flexDirection: 'row', alignItems: 'center', gap: 10,
   },
-  topRatedImageContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    overflow: 'hidden',
-    marginRight: 10,
+  topRatedThumb: { width: 50, height: 50, borderRadius: 25, backgroundColor: colors.backgroundCard },
+  topRatedMeta: { flex: 1 },
+  topRatedTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 2 },
+  topRatedAuthor: { fontSize: 12, color: colors.textSecondary, marginBottom: 2 },
+  ratingRow: { flexDirection: 'row', alignItems: 'center' },
+  ratingText: { fontSize: 12, color: colors.textMuted },
+  todaySection: { marginBottom: 0 },
+  todaySectionTitle: { paddingHorizontal: 20, marginBottom: 16, fontSize: 20, fontWeight: '700', color: colors.textPrimary },
+  durationFilters: { paddingHorizontal: 20, marginBottom: 16, gap: 8 },
+  durationPill: {
+    flexDirection: 'row', alignItems: 'center', gap: 4,
+    backgroundColor: colors.backgroundCard,
+    borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6,
+    borderWidth: 1, borderColor: colors.border,
   },
-  topRatedImage: {
-    width: '100%',
-    height: '100%',
-  },
-  lockOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  topRatedInfo: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  topRatedTitle: {
-    ...typography.bodySmall,
-    color: colors.textPrimary,
-    fontWeight: '600',
-    marginBottom: 2,
-  },
-  topRatedAuthor: {
-    ...typography.caption,
-    color: colors.textSecondary,
-    marginBottom: 2,
-  },
-  topRatedMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  topRatedRating: {
-    ...typography.caption,
-    color: colors.textMuted,
-    marginRight: 2,
-  },
-  meditationCard: {
-    width: 160,
-    marginRight: 12,
-  },
-  meditationCategory: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  meditationCategoryText: {
-    ...typography.caption,
-    color: colors.textMuted,
-    marginLeft: 4,
-    letterSpacing: 0.5,
-  },
-  meditationImage: {
-    width: 160,
-    height: 160,
-    borderRadius: 12,
-    marginBottom: 10,
-  },
-  meditationTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
-    marginBottom: 4,
-  },
-  meditationAuthor: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginBottom: 4,
-  },
-  meditationMeta: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  meditationRating: {
-    ...typography.caption,
-    color: colors.textMuted,
-    marginRight: 2,
-  },
-  meditationDuration: {
-    ...typography.caption,
-    color: colors.textMuted,
-  },
-  categoriesRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  categoryCard: {
-    width: '48%',
-    height: 140,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  categoryImage: {
-    width: '100%',
-    height: '100%',
-  },
-  categoryGradient: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-  },
-  categoryName: {
-    position: 'absolute',
-    bottom: 12,
-    left: 12,
-    ...typography.label,
-    color: '#fff',
-    fontWeight: '700',
-    letterSpacing: 1,
-  },
-  bottomPadding: {
-    height: 100,
-  },
+  durationText: { fontSize: 11, color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: '500' },
+  medsRow: { paddingHorizontal: 20 },
+  medCard: { width: 150, marginRight: 14 },
+  medImage: { width: 150, height: 150, borderRadius: 12, backgroundColor: colors.backgroundCard, marginBottom: 8 },
+  medTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 4 },
+  medAuthor: { fontSize: 12, color: colors.textSecondary, marginBottom: 4 },
+  medMeta: { flexDirection: 'row', alignItems: 'center' },
+  medRating: { fontSize: 12, color: colors.textMuted },
+  medDuration: { fontSize: 12, color: colors.textMuted },
 });

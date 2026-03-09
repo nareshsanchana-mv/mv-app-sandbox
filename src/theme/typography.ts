@@ -1,86 +1,67 @@
-import { TextStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-export const typography = {
-  // Headings
+export const typography = StyleSheet.create({
   h1: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: '700',
-    lineHeight: 40,
-    letterSpacing: -0.5,
-  } as TextStyle,
-
+    letterSpacing: 0,
+  },
   h2: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: '700',
-    lineHeight: 32,
-    letterSpacing: -0.3,
-  } as TextStyle,
-
+    letterSpacing: 0,
+  },
   h3: {
     fontSize: 20,
-    fontWeight: '600',
-    lineHeight: 28,
-  } as TextStyle,
-
+    fontWeight: '700',
+    letterSpacing: 0,
+  },
   h4: {
     fontSize: 18,
-    fontWeight: '600',
-    lineHeight: 24,
-  } as TextStyle,
-
-  // Body text
-  bodyLarge: {
-    fontSize: 16,
-    fontWeight: '400',
-    lineHeight: 24,
-  } as TextStyle,
-
+    fontWeight: '700',
+    letterSpacing: 0,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    letterSpacing: 0,
+  },
+  cardTitleCaps: {
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
+  overlayTitle: {
+    fontSize: 26,
+    fontWeight: '900',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+  },
   body: {
     fontSize: 14,
     fontWeight: '400',
-    lineHeight: 20,
-  } as TextStyle,
-
+  },
   bodySmall: {
     fontSize: 12,
     fontWeight: '400',
-    lineHeight: 16,
-  } as TextStyle,
-
-  // Labels
+  },
   label: {
     fontSize: 14,
     fontWeight: '500',
-    lineHeight: 20,
-  } as TextStyle,
-
-  labelSmall: {
+  },
+  labelCaps: {
     fontSize: 12,
     fontWeight: '500',
-    lineHeight: 16,
-    letterSpacing: 0.5,
-  } as TextStyle,
-
-  // Buttons
-  button: {
-    fontSize: 16,
-    fontWeight: '600',
-    lineHeight: 24,
-  } as TextStyle,
-
-  buttonSmall: {
-    fontSize: 14,
-    fontWeight: '600',
-    lineHeight: 20,
-  } as TextStyle,
-
-  // Caption
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
   caption: {
     fontSize: 11,
     fontWeight: '400',
-    lineHeight: 14,
-    letterSpacing: 0.3,
-  } as TextStyle,
-};
-
-export default typography;
+  },
+  tabLabel: {
+    fontSize: 10,
+    fontWeight: '500',
+  },
+});

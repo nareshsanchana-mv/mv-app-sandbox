@@ -623,7 +623,7 @@ export default function TodayScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
@@ -640,7 +640,7 @@ const styles = StyleSheet.create({
   streakCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F9FAFB',
+    backgroundColor: colors.backgroundCard,
     marginHorizontal: 16,
     padding: 16,
     borderRadius: 12,
@@ -650,7 +650,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 18,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -664,13 +664,14 @@ const styles = StyleSheet.create({
     ...typography.caption,
     color: colors.textMuted,
     letterSpacing: 1,
+    textTransform: 'uppercase',
   },
   streakArrow: {
     marginLeft: 'auto',
   },
   // Eve Section (L1)
   eveSection: {
-    backgroundColor: '#F5F3FF',
+    backgroundColor: colors.backgroundCard,
     paddingTop: 20,
     paddingBottom: 16,
     marginBottom: 24,
@@ -687,7 +688,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#E8E3FF',
+    backgroundColor: colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -710,7 +711,7 @@ const styles = StyleSheet.create({
   reasonPill: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundElevated,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 8,
@@ -730,7 +731,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundElevated,
     marginHorizontal: 16,
     marginTop: 16,
     paddingVertical: 14,
@@ -773,6 +774,7 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginBottom: 4,
   },
+
   meditationMeta: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -837,6 +839,7 @@ const styles = StyleSheet.create({
     ...typography.h4,
     color: colors.textPrimary,
   },
+
   growthGoalsContent: {
     paddingHorizontal: 16,
   },
@@ -872,7 +875,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   growthGoalTag: {
-    backgroundColor: colors.surface,
+    backgroundColor: colors.backgroundElevated,
     alignSelf: 'flex-start',
     paddingHorizontal: 12,
     paddingVertical: 6,
@@ -893,6 +896,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 16,
   },
+
   featuredScroll: {
     marginBottom: 12,
   },
@@ -905,7 +909,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: colors.border,
+    backgroundColor: colors.surface,
     marginHorizontal: 4,
   },
   activeDot: {
@@ -931,7 +935,7 @@ const styles = StyleSheet.create({
   },
   seeAllText: {
     ...typography.label,
-    color: colors.textMuted,
+    color: colors.textAction,
   },
   bottomPadding: {
     height: 100,

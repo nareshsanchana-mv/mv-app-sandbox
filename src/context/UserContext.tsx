@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { user } from '../data/mockData';
 
 export type UserTier = 'L1' | 'L3L4';
 
@@ -7,6 +8,7 @@ interface UserContextType {
   setUserTier: (tier: UserTier) => void;
   isSubscriber: boolean;
   userName: string;
+  userAvatar: string;
   dayStreak: number;
 }
 
@@ -24,6 +26,7 @@ export function UserProvider({ children }: UserProviderProps) {
     setUserTier,
     isSubscriber: userTier === 'L3L4',
     userName: 'Naresh',
+    userAvatar: user.avatar,
     dayStreak: 0,
   };
 

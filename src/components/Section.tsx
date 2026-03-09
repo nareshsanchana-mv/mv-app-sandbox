@@ -1,113 +1,64 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
 
 interface SectionProps {
   title: string;
   subtitle?: string;
-  icon?: string;
-  iconColor?: string;
   showSeeAll?: boolean;
-  onSeeAllPress?: () => void;
-  children: React.ReactNode;
   horizontal?: boolean;
-  backgroundColor?: string;
-  paddingHorizontal?: number;
+  children: React.ReactNode;
 }
 
-export default function Section({
-  title,
-  subtitle,
-  icon,
-  iconColor,
-  showSeeAll = false,
-  onSeeAllPress,
-  children,
-  horizontal = false,
-  backgroundColor,
-  paddingHorizontal = 16,
-}: SectionProps) {
+export default function Section({ title, subtitle, showSeeAll, horizontal, children }: SectionProps) {
   return (
-    <View style={[styles.container, backgroundColor ? { backgroundColor } : null]}>
-      <View style={[styles.header, { paddingHorizontal }]}>
-        <View style={styles.titleContainer}>
-          {icon && (
-            <View style={[styles.iconContainer, { backgroundColor: iconColor ? `${iconColor}20` : '#F3F0FF' }]}>
-              <Ionicons name={icon as any} size={14} color={iconColor || colors.primary} />
-            </View>
-          )}
-          <View>
-            <Text style={styles.title}>{title}</Text>
-            {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
-          </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.titleRow}>
+          <Text style={styles.title}>{title}</Text>
+          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
-
         {showSeeAll && (
-          <TouchableOpacity onPress={onSeeAllPress} style={styles.seeAllButton}>
-            <Text style={styles.seeAllText}>See all</Text>
+          <TouchableOpacity>
+            <Text style={styles.seeAll}>See all</Text>
           </TouchableOpacity>
         )}
       </View>
-
       {horizontal ? (
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={[styles.horizontalContent, { paddingHorizontal }]}
-        >
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalContent}>
           {children}
         </ScrollView>
       ) : (
-        <View style={[styles.content, { paddingHorizontal }]}>{children}</View>
+        <View>{children}</View>
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 24,
-  },
+  container: { marginBottom: 32 },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
+    paddingHorizontal: 20,
     marginBottom: 16,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  iconContainer: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 8,
-  },
+  titleRow: { flex: 1, marginRight: 8 },
   title: {
-    ...typography.h4,
+    fontSize: 20,
+    fontWeight: '700',
     color: colors.textPrimary,
   },
   subtitle: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginTop: 2,
-  },
-  seeAllButton: {
-    paddingVertical: 4,
-    paddingHorizontal: 8,
-  },
-  seeAllText: {
-    ...typography.label,
+    fontSize: 13,
     color: colors.textMuted,
+    marginTop: 4,
   },
-  horizontalContent: {
-    paddingRight: 16,
+  seeAll: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: colors.textAction,
   },
-  content: {},
+  horizontalContent: { paddingHorizontal: 20 },
 });

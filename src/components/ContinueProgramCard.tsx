@@ -1,174 +1,158 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
-
-const { width } = Dimensions.get('window');
 
 interface ContinueProgramCardProps {
-  title: string;
   programName: string;
+  lessonTitle: string;
   author: string;
   image: string;
-  duration: string;
-  completedLessons: number;
+  progress: number;
+  lessonsCompleted: number;
   totalLessons: number;
+  duration?: string;
   onPress?: () => void;
-  onPlayPress?: () => void;
-  onListPress?: () => void;
 }
 
 export default function ContinueProgramCard({
-  title,
   programName,
+  lessonTitle,
+  author,
   image,
-  duration,
-  completedLessons,
+  progress,
+  lessonsCompleted,
   totalLessons,
+  duration,
   onPress,
-  onPlayPress,
-  onListPress,
 }: ContinueProgramCardProps) {
-  const progress = totalLessons > 0 ? completedLessons / totalLessons : 0;
-
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.9}>
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.85}>
       <View style={styles.imageContainer}>
         <Image source={{ uri: image }} style={styles.image} />
         <View style={styles.overlay}>
-          <Text style={styles.lessonTitle}>{title}</Text>
+          <Text style={styles.lessonTitle} numberOfLines={2}>{lessonTitle.toUpperCase()}</Text>
         </View>
-        <View style={styles.durationBadge}>
-          <Text style={styles.durationText}>{duration}</Text>
-        </View>
-        <View style={styles.mindvalleyLogo}>
-          <Ionicons name="chevron-down" size={16} color="#fff" />
-        </View>
+        {duration && (
+          <View style={styles.durationBadge}>
+            <Text style={styles.durationText}>{duration}</Text>
+          </View>
+        )}
       </View>
-
-      <View style={styles.content}>
+      <View style={styles.meta}>
         <View style={styles.titleRow}>
-          <Text style={styles.programName}>{programName}</Text>
+          <Text style={styles.programName} numberOfLines={2}>{programName.toUpperCase()}</Text>
           <View style={styles.actions}>
-            <TouchableOpacity style={styles.actionButton} onPress={onPlayPress}>
-              <Ionicons name="play-circle" size={32} color={colors.textPrimary} />
+            <TouchableOpacity style={styles.playBtn}>
+              <Ionicons name="play" size={16} color={colors.background} />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton} onPress={onListPress}>
-              <Ionicons name="list" size={24} color={colors.textPrimary} />
+            <TouchableOpacity style={styles.listBtn}>
+              <Ionicons name="list" size={18} color={colors.textSecondary} />
             </TouchableOpacity>
           </View>
         </View>
-
-        <View style={styles.progressContainer}>
-          <View style={styles.progressBar}>
-            <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-          </View>
+        <View style={styles.progressTrack}>
+          <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
         </View>
-
-        <Text style={styles.progressText}>
-          {completedLessons} of {totalLessons} completed
-        </Text>
+        <Text style={styles.completedText}>{lessonsCompleted} of {totalLessons} completed</Text>
       </View>
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    width: width - 80,
-    marginRight: 16,
+  card: {
+    width: 300,
+    marginRight: 14,
   },
   imageContainer: {
-    height: 200,
-    borderRadius: 16,
+    position: 'relative',
+    borderRadius: 14,
     overflow: 'hidden',
-    backgroundColor: colors.backgroundCard,
+    marginBottom: 12,
   },
   image: {
     width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
+    height: 200,
+    backgroundColor: colors.backgroundCard,
   },
   overlay: {
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     left: 0,
     right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.3)',
+    padding: 12,
+    backgroundColor: 'rgba(10,14,23,0.5)',
   },
   lessonTitle: {
-    ...typography.h3,
-    color: '#fff',
-    textAlign: 'center',
-    paddingHorizontal: 20,
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 4,
+    fontSize: 20,
+    fontWeight: '900',
+    color: colors.textPrimary,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   durationBadge: {
     position: 'absolute',
-    bottom: 12,
+    bottom: 48,
     right: 12,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    paddingHorizontal: 10,
+    backgroundColor: 'rgba(10,14,23,0.75)',
+    paddingHorizontal: 8,
     paddingVertical: 4,
-    borderRadius: 12,
+    borderRadius: 6,
   },
   durationText: {
-    ...typography.caption,
-    color: '#fff',
-    fontWeight: '500',
+    fontSize: 11,
+    color: colors.textPrimary,
+    fontWeight: '600',
   },
-  mindvalleyLogo: {
-    position: 'absolute',
-    bottom: 12,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  content: {
-    paddingTop: 12,
+  meta: {
+    paddingHorizontal: 2,
   },
   titleRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   programName: {
-    ...typography.label,
-    color: colors.textPrimary,
-    fontWeight: '700',
-    letterSpacing: 0.5,
     flex: 1,
+    fontSize: 13,
+    fontWeight: '900',
+    color: colors.textPrimary,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
+    marginRight: 8,
   },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 10,
   },
-  actionButton: {
-    marginLeft: 8,
+  playBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.textPrimary,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  progressContainer: {
-    marginBottom: 6,
+  listBtn: {
+    padding: 4,
   },
-  progressBar: {
-    height: 4,
-    backgroundColor: colors.border,
+  progressTrack: {
+    height: 3,
+    backgroundColor: colors.progressTrack,
     borderRadius: 2,
     overflow: 'hidden',
+    marginBottom: 6,
   },
   progressFill: {
     height: '100%',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.magenta,
     borderRadius: 2,
   },
-  progressText: {
-    ...typography.caption,
-    color: colors.textMuted,
+  completedText: {
+    fontSize: 12,
+    color: colors.textSecondary,
   },
 });

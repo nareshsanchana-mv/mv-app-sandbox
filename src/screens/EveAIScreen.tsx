@@ -1,189 +1,71 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
+  View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
-import { user, evePrompts } from '../data/mockData';
+import { useUser } from '../context/UserContext';
 
-interface Message {
-  id: string;
-  text: string;
-  isUser: boolean;
-  isTyping?: boolean;
-}
+const SUGGESTIONS = [
+  "I'm feeling stressed, tired, or seeking better sleep.",
+  "I'm looking to lose weight and improve my fitness.",
+  "I want to develop a growth mindset and increase my self-confidence.",
+  "I want to enhance my leadership skills, build a strong team and inspire others.",
+];
 
 export default function EveAIScreen() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputText, setInputText] = useState('');
-
-  const handleSendMessage = (text: string) => {
-    if (!text.trim()) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: text.trim(),
-      isUser: true,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInputText('');
-
-    // Simulate Eve typing
-    setTimeout(() => {
-      const typingMessage: Message = {
-        id: 'typing',
-        text: '',
-        isUser: false,
-        isTyping: true,
-      };
-      setMessages((prev) => [...prev, typingMessage]);
-
-      // Simulate Eve response
-      setTimeout(() => {
-        const eveResponse: Message = {
-          id: (Date.now() + 1).toString(),
-          text: `That's a great goal! Let me find some content that can help you with "${text.trim()}". I have several programs and meditations that might be perfect for you.`,
-          isUser: false,
-        };
-        setMessages((prev) => prev.filter((m) => m.id !== 'typing').concat(eveResponse));
-      }, 2000);
-    }, 500);
-  };
-
-  const handlePromptPress = (prompt: string) => {
-    handleSendMessage(prompt);
-  };
+  const { userName } = useUser();
+  const [input, setInput] = useState('');
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
+      <View style={styles.topBar}>
+        <TouchableOpacity>
           <Ionicons name="menu" size={24} color={colors.textPrimary} />
         </TouchableOpacity>
-        <View style={styles.headerSpacer} />
-        <TouchableOpacity style={styles.headerButton}>
-          <Ionicons name="eye-outline" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.headerButton}>
-          <Ionicons name="close" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
+        <View style={styles.topBarRight}>
+          <TouchableOpacity style={styles.topBarIcon}>
+            <Ionicons name="eye-outline" size={22} color={colors.textPrimary} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.topBarIcon}>
+            <Ionicons name="close" size={22} color={colors.textPrimary} />
+          </TouchableOpacity>
+        </View>
       </View>
 
-      <KeyboardAvoidingView
-        style={styles.keyboardView}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
-      >
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {messages.length === 0 ? (
-            // Initial State
-            <View style={styles.initialState}>
-              {/* Eve Logo */}
-              <View style={styles.eveLogo}>
-                <Ionicons name="cube-outline" size={40} color={colors.primary} />
-              </View>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.eveIconContainer}>
+          <Ionicons name="aperture" size={44} color={colors.primary} />
+        </View>
+        <Text style={styles.greeting}>Hi, {userName}</Text>
+        <Text style={styles.subtitle}>How can I help you today?</Text>
 
-              {/* Greeting */}
-              <Text style={styles.greeting}>Hi, {user.name}</Text>
-              <Text style={styles.subtitle}>How can I help you today?</Text>
+        <View style={styles.suggestionsGrid}>
+          {SUGGESTIONS.map((suggestion, i) => (
+            <TouchableOpacity key={i} style={styles.suggestionCard} activeOpacity={0.8}>
+              <Text style={styles.suggestionText}>{suggestion}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
 
-              <View style={styles.promptsSection}>
-                <Text style={styles.promptsTitle}>Prompts to get you started</Text>
-                <View style={styles.promptsGrid}>
-                  {evePrompts.map((prompt, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={styles.promptCard}
-                      onPress={() => handlePromptPress(prompt)}
-                    >
-                      <Text style={styles.promptText}>{prompt}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </View>
-              </View>
-            </View>
-          ) : (
-            // Chat Messages
-            <View style={styles.messagesContainer}>
-              {messages.map((message) => (
-                <View
-                  key={message.id}
-                  style={[
-                    styles.messageBubble,
-                    message.isUser ? styles.userBubble : styles.eveBubble,
-                  ]}
-                >
-                  {!message.isUser && (
-                    <View style={styles.eveAvatar}>
-                      <Ionicons name="cube-outline" size={16} color={colors.primary} />
-                    </View>
-                  )}
-                  <View
-                    style={[
-                      styles.messageContent,
-                      message.isUser ? styles.userContent : styles.eveContent,
-                    ]}
-                  >
-                    {message.isTyping ? (
-                      <View style={styles.typingIndicator}>
-                        <View style={styles.typingDot} />
-                        <View style={[styles.typingDot, styles.typingDotMiddle]} />
-                        <View style={styles.typingDot} />
-                      </View>
-                    ) : (
-                      <Text
-                        style={[
-                          styles.messageText,
-                          message.isUser ? styles.userMessageText : styles.eveMessageText,
-                        ]}
-                      >
-                        {message.text}
-                      </Text>
-                    )}
-                  </View>
-                </View>
-              ))}
-            </View>
-          )}
-        </ScrollView>
-
-        {/* Input Area */}
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
+          <View style={styles.inputBar}>
             <TextInput
               style={styles.input}
               placeholder="Ask Eve AI..."
               placeholderTextColor={colors.textMuted}
-              value={inputText}
-              onChangeText={setInputText}
-              onSubmitEditing={() => handleSendMessage(inputText)}
-              returnKeyType="send"
+              value={input}
+              onChangeText={setInput}
             />
-            <TouchableOpacity style={styles.micButton}>
-              <Ionicons name="mic-outline" size={22} color={colors.textMuted} />
+            <TouchableOpacity>
+              <Ionicons name="mic-outline" size={22} color={colors.textSecondary} />
             </TouchableOpacity>
           </View>
-
-          {/* Disclaimer */}
           <Text style={styles.disclaimer}>
-            EVE AI provides general information only. It is not medical, financial,
-            therapeutic, or professional advice, and may not reflect Mindvalley's
-            views or always be accurate.
+            EVE AI provides general information only. It is not medical, financial, therapeutic, or professional advice, and may not reflect Mindvalley's views or always be accurate.
           </Text>
         </View>
       </KeyboardAvoidingView>
@@ -192,176 +74,78 @@ export default function EveAIScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
+  container: { flex: 1, backgroundColor: colors.background },
+  topBar: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 8,
-    paddingVertical: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
   },
-  headerButton: {
-    width: 44,
-    height: 44,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerSpacer: {
-    flex: 1,
-  },
-  keyboardView: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
+  topBarRight: { flexDirection: 'row' },
+  topBarIcon: { marginLeft: 20 },
+  content: {
     flexGrow: 1,
-  },
-  initialState: {
-    flex: 1,
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 20,
     paddingTop: 40,
+    paddingBottom: 24,
   },
-  eveLogo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#F3F0FF',
-    justifyContent: 'center',
-    alignItems: 'center',
+  eveIconContainer: {
     marginBottom: 20,
   },
   greeting: {
-    ...typography.h2,
+    fontSize: 28,
+    fontWeight: '700',
     color: colors.textPrimary,
     marginBottom: 8,
   },
   subtitle: {
-    ...typography.body,
+    fontSize: 16,
     color: colors.textSecondary,
-    marginBottom: 60,
+    marginBottom: 48,
   },
-  promptsSection: {
+  suggestionsGrid: {
     width: '100%',
-  },
-  promptsTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
-    marginBottom: 16,
-  },
-  promptsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    gap: 12,
   },
-  promptCard: {
-    width: '48%',
-    backgroundColor: '#F9FAFB',
-    borderRadius: 12,
+  suggestionCard: {
+    width: '47%',
+    backgroundColor: colors.backgroundCard,
+    borderRadius: 14,
     padding: 16,
-    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: colors.border,
   },
-  promptText: {
-    ...typography.bodySmall,
+  suggestionText: {
+    fontSize: 14,
     color: colors.textPrimary,
+    fontWeight: '400',
     lineHeight: 20,
   },
-  messagesContainer: {
-    padding: 16,
-  },
-  messageBubble: {
-    flexDirection: 'row',
-    marginBottom: 16,
-    maxWidth: '85%',
-  },
-  userBubble: {
-    alignSelf: 'flex-end',
-  },
-  eveBubble: {
-    alignSelf: 'flex-start',
-  },
-  eveAvatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: '#F3F0FF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 8,
-    marginTop: 4,
-  },
-  messageContent: {
-    borderRadius: 16,
-    padding: 12,
-    maxWidth: '100%',
-  },
-  userContent: {
-    backgroundColor: '#E8E3FF',
-    borderTopRightRadius: 4,
-  },
-  eveContent: {
-    backgroundColor: 'transparent',
-    paddingLeft: 0,
-  },
-  messageText: {
-    ...typography.body,
-    lineHeight: 22,
-  },
-  userMessageText: {
-    color: colors.textPrimary,
-  },
-  eveMessageText: {
-    color: colors.textPrimary,
-  },
-  typingIndicator: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 4,
-  },
-  typingDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: colors.textMuted,
-    marginHorizontal: 2,
-    opacity: 0.6,
-  },
-  typingDotMiddle: {
-    opacity: 0.8,
-  },
   inputContainer: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingBottom: 16,
     paddingTop: 8,
   },
-  inputWrapper: {
+  inputBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F9FAFB',
-    borderRadius: 24,
-    paddingHorizontal: 16,
-    paddingVertical: 4,
-    marginBottom: 12,
+    backgroundColor: colors.backgroundElevated,
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    marginBottom: 10,
   },
   input: {
     flex: 1,
-    ...typography.body,
     color: colors.textPrimary,
-    paddingVertical: 12,
-  },
-  micButton: {
-    width: 36,
-    height: 36,
-    justifyContent: 'center',
-    alignItems: 'center',
+    fontSize: 16,
   },
   disclaimer: {
-    ...typography.caption,
+    fontSize: 11,
     color: colors.textMuted,
     textAlign: 'center',
     lineHeight: 16,

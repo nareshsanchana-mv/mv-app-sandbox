@@ -1,299 +1,156 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import Section from '../components/Section';
 import ProgramCard from '../components/ProgramCard';
+import ContinueProgramCard from '../components/ContinueProgramCard';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
-import {
-  trendingPrograms,
-  popularPrograms,
-  categories,
-} from '../data/mockData';
+import { continuePrograms, popularPrograms, freePrograms } from '../data/mockData';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RootStackParamList } from '../navigation/RootNavigator';
 
-// Category programs by type
-const categoryPrograms = {
-  Soul: [
-    {
-      id: 's1',
-      title: 'Ultra Presence',
-      author: 'Juan Pablo Barahona',
-      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600',
-      userCount: 21565,
-      lessonCount: 15,
-    },
-    {
-      id: 's2',
-      title: 'Higher Self',
-      author: 'Ariya Lorenz',
-      image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=600',
-      userCount: 5250,
-      lessonCount: 12,
-    },
-  ],
-  Entrepreneurship: [
-    {
-      id: 'e1',
-      title: 'Building an Unstoppable Brand',
-      author: 'Jeffrey Perlman',
-      image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600',
-      userCount: 23448,
-      lessonCount: 19,
-    },
-    {
-      id: 'e2',
-      title: 'The Transformational Leader',
-      author: 'Monty Moran',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600',
-      userCount: 14452,
-      lessonCount: 16,
-    },
-  ],
-};
+const TABS = ['Discover', 'Coach', 'Recordings', 'Courses'];
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function ProgramsScreen() {
+  const [activeTab, setActiveTab] = useState('Discover');
+  const navigation = useNavigation<NavigationProp>();
+
+  const goToQuest = (id: string, title: string, image: string, author: string) =>
+    navigation.navigate('QuestDetail', { questId: id, questTitle: title, questImage: image, author });
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <Header />
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Language Selector */}
-        <View style={styles.languageRow}>
-          <Text style={styles.browseLabel}>Browse by language</Text>
-          <TouchableOpacity style={styles.languageButton}>
-            <Ionicons name="language" size={16} color={colors.textPrimary} />
-            <Text style={styles.languageText}>English (EN)</Text>
+      <View style={styles.tabBar}>
+        {TABS.map((tab) => (
+          <TouchableOpacity key={tab} onPress={() => setActiveTab(tab)} style={styles.tabItem}>
+            <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
+            {activeTab === tab && <View style={styles.tabUnderline} />}
           </TouchableOpacity>
+        ))}
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.languagePill}>
+          <Ionicons name="globe-outline" size={14} color={colors.textSecondary} />
+          <Text style={styles.languageText}>English (EN)</Text>
         </View>
 
-        {/* Trending Globally */}
-        <Section
-          title="Trending Globally"
-          subtitle="Update your location to see the latest trending programs in your country."
-        >
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          >
-            {trendingPrograms.map((program) => (
-              <TouchableOpacity key={program.id} style={styles.trendingCard}>
-                <Image
-                  source={{ uri: program.image }}
-                  style={styles.trendingImage}
-                />
-                <View style={styles.trendingInfo}>
-                  <Text style={styles.trendingRank}>{program.rank}</Text>
-                  <View style={styles.trendingText}>
-                    <Text style={styles.trendingTitle} numberOfLines={2}>
-                      {program.title}
-                    </Text>
-                    <Text style={styles.trendingAuthor}>{program.author}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </Section>
+        {/* Hot in your region */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Hot in Malaysia</Text>
+          <TouchableOpacity>
+            <Ionicons name="globe-outline" size={18} color={colors.textMuted} />
+          </TouchableOpacity>
+        </View>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.numberedList}>
+          {popularPrograms.map((program, index) => (
+            <TouchableOpacity
+              key={program.id}
+              style={styles.numberedCard}
+              onPress={() => goToQuest('silva-ultramind', program.title, program.image, program.author)}
+              activeOpacity={0.85}
+            >
+              <Image source={{ uri: program.image }} style={styles.numberedImage} />
+              <Text style={styles.rankNumber}>{index + 1}</Text>
+              <Text style={styles.numberedTitle} numberOfLines={2}>{program.title}</Text>
+              <Text style={styles.numberedAuthor} numberOfLines={1}>{program.author}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
 
-        {/* Popular Now */}
-        <Section
-          title="Popular now"
-          subtitle="Update your profile to get personalized program recommendations."
-          horizontal
-        >
-          {popularPrograms.map((program) => (
-            <ProgramCard
+        {/* Continue Programs */}
+        <Section title="Continue programs" showSeeAll horizontal>
+          {continuePrograms.map((program) => (
+            <ContinueProgramCard
               key={program.id}
               {...program}
-              type="program"
-              size="large"
+              onPress={() => goToQuest('silva-ultramind', program.programName, program.image, program.author)}
             />
           ))}
         </Section>
 
-        {/* Browse by Categories */}
-        <Section title="Browse by Categories">
-          <View style={styles.categoriesGrid}>
-            {categories.slice(0, 4).map((category) => (
-              <TouchableOpacity key={category.id} style={styles.categoryCard}>
-                <Image
-                  source={{ uri: category.image }}
-                  style={styles.categoryImage}
-                />
-                <View style={[styles.categoryOverlay, { backgroundColor: `${category.color}80` }]} />
-                <Text style={styles.categoryName}>{category.name}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+        {/* Author Collections */}
+        <Section title="Author collections" showSeeAll horizontal>
+          {freePrograms.map((program) => (
+            <ProgramCard
+              key={program.id}
+              {...program}
+              size="medium"
+              onPress={() => goToQuest('silva-ultramind', program.title, program.image, program.author)}
+            />
+          ))}
         </Section>
 
-        {/* Soul Category */}
-        <Section
-          title="Soul"
-          icon="sunny-outline"
-          iconColor="#F59E0B"
-          showSeeAll
-        >
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {categoryPrograms.Soul.map((program) => (
-              <ProgramCard
-                key={program.id}
-                {...program}
-                type="program"
-                size="large"
-              />
-            ))}
-          </ScrollView>
-        </Section>
-
-        {/* Entrepreneurship Category */}
-        <Section
-          title="Entrepreneurship"
-          icon="rocket-outline"
-          iconColor="#EF4444"
-          showSeeAll
-        >
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {categoryPrograms.Entrepreneurship.map((program) => (
-              <ProgramCard
-                key={program.id}
-                {...program}
-                type="program"
-                size="large"
-              />
-            ))}
-          </ScrollView>
-        </Section>
-
-        {/* Career Growth */}
-        <Section
-          title="Career Growth"
-          icon="trending-up-outline"
-          iconColor="#8B5CF6"
-          showSeeAll
-        >
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {popularPrograms.map((program) => (
-              <ProgramCard
-                key={program.id}
-                {...program}
-                type="program"
-                size="large"
-              />
-            ))}
-          </ScrollView>
-        </Section>
-
-        <View style={styles.bottomPadding} />
+        <View style={styles.bottomPad} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
+  container: { flex: 1, backgroundColor: colors.background },
+  tabBar: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    marginBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
   },
-  scrollView: {
-    flex: 1,
+  tabItem: { marginRight: 24, paddingBottom: 12, position: 'relative' },
+  tabText: { fontSize: 16, fontWeight: '500', color: colors.textMuted },
+  tabTextActive: { color: colors.textPrimary, fontWeight: '700' },
+  tabUnderline: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: colors.textPrimary,
+    borderRadius: 1,
   },
-  languageRow: {
+  languagePill: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  browseLabel: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginRight: 12,
-  },
-  languageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F3F4F6',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    alignSelf: 'flex-start',
+    marginHorizontal: 20,
+    marginBottom: 24,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: 20,
+    paddingHorizontal: 14,
+    paddingVertical: 7,
+    gap: 6,
   },
-  languageText: {
-    ...typography.bodySmall,
-    color: colors.textPrimary,
-    marginLeft: 6,
-    fontWeight: '500',
-  },
-  trendingCard: {
-    width: 180,
-    marginRight: 12,
-  },
-  trendingImage: {
-    width: 180,
-    height: 120,
-    borderRadius: 12,
-    marginBottom: 8,
-  },
-  trendingInfo: {
+  languageText: { fontSize: 13, color: colors.textSecondary },
+  sectionHeader: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 16,
   },
-  trendingRank: {
-    ...typography.h3,
-    color: colors.textMuted,
-    marginRight: 8,
-    width: 20,
+  sectionTitle: { fontSize: 20, fontWeight: '700', color: colors.textPrimary },
+  numberedList: { paddingHorizontal: 20, marginBottom: 32 },
+  numberedCard: { width: 155, marginRight: 14 },
+  numberedImage: {
+    width: '100%',
+    height: 155,
+    borderRadius: 12,
+    backgroundColor: colors.backgroundCard,
+    marginBottom: 6,
   },
-  trendingText: {
-    flex: 1,
-  },
-  trendingTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
+  rankNumber: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: colors.textSecondary,
     marginBottom: 2,
   },
-  trendingAuthor: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-  },
-  categoriesGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  categoryCard: {
-    width: '48%',
-    height: 120,
-    borderRadius: 16,
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  categoryImage: {
-    width: '100%',
-    height: '100%',
-  },
-  categoryOverlay: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  categoryName: {
-    position: 'absolute',
-    bottom: 12,
-    left: 12,
-    ...typography.h4,
-    color: '#fff',
-    fontWeight: '700',
-  },
-  bottomPadding: {
-    height: 100,
-  },
+  numberedTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 2 },
+  numberedAuthor: { fontSize: 12, color: colors.textSecondary },
+  bottomPad: { height: 100 },
 });
