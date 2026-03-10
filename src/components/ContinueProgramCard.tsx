@@ -31,7 +31,7 @@ export default function ContinueProgramCard({
       <View style={styles.imageContainer}>
         <Image source={{ uri: image }} style={styles.image} />
         <View style={styles.overlay}>
-          <Text style={styles.lessonTitle} numberOfLines={2}>{lessonTitle.toUpperCase()}</Text>
+          <Text style={styles.lessonTitle} numberOfLines={2}>{lessonTitle}</Text>
         </View>
         {duration && (
           <View style={styles.durationBadge}>
@@ -41,7 +41,7 @@ export default function ContinueProgramCard({
       </View>
       <View style={styles.meta}>
         <View style={styles.titleRow}>
-          <Text style={styles.programName} numberOfLines={2}>{programName.toUpperCase()}</Text>
+          <Text style={styles.programName} numberOfLines={2}>{programName}</Text>
           <View style={styles.actions}>
             <TouchableOpacity style={styles.playBtn}>
               <Ionicons name="play" size={16} color={colors.background} />

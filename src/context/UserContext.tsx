@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { user } from '../data/mockData';
 
-export type UserTier = 'L1' | 'L3L4';
+export type UserTier = 'L1' | 'L3' | 'L3L4';
 
 interface UserContextType {
   userTier: UserTier;
@@ -24,7 +24,7 @@ export function UserProvider({ children }: UserProviderProps) {
   const value: UserContextType = {
     userTier,
     setUserTier,
-    isSubscriber: userTier === 'L3L4',
+    isSubscriber: userTier === 'L3' || userTier === 'L3L4',
     userName: 'Naresh',
     userAvatar: user.avatar,
     dayStreak: 0,

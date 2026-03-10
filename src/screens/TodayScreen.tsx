@@ -33,7 +33,6 @@ import {
   continuePrograms,
   premiumPrograms,
   favorites,
-  growthGoalsPrograms,
   featuredBanners,
   pickedForYou,
   featuredAuthors,
@@ -46,7 +45,7 @@ import type { RootStackParamList } from '../navigation/RootNavigator';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 export default function TodayScreen() {
-  const { isSubscriber, userName, dayStreak } = useUser();
+  const { isSubscriber, userName, dayStreak, userTier } = useUser();
   const navigation = useNavigation<NavigationProp>();
 
   const navigateToQuest = (questId: string, title: string, image: string, author: string) => {
@@ -192,23 +191,25 @@ export default function TodayScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* Your Premium Programs */}
-            <Section title="Your premium programs" horizontal>
-              {premiumPrograms.map((program) => (
-                <ProgramCard
-                  key={program.id}
-                  {...program}
-                  type="program"
-                  size="large"
-                  onPress={() => navigateToQuest(
-                    'silva-ultramind',
-                    program.title,
-                    program.image,
-                    program.author
-                  )}
-                />
-              ))}
-            </Section>
+            {/* Your Premium Programs (L3+L4 only) */}
+            {userTier === 'L3L4' && (
+              <Section title="Your premium programs" horizontal>
+                {premiumPrograms.map((program) => (
+                  <ProgramCard
+                    key={program.id}
+                    {...program}
+                    type="program"
+                    size="large"
+                    onPress={() => navigateToQuest(
+                      'silva-ultramind',
+                      program.title,
+                      program.image,
+                      program.author
+                    )}
+                  />
+                ))}
+              </Section>
+            )}
 
             {/* Your Meditations for Today */}
             <Section title="Your meditations for today">
@@ -261,42 +262,6 @@ export default function TodayScreen() {
                 />
               ))}
             </Section>
-
-            {/* Based on Your Growth Goals */}
-            <View style={styles.growthGoalsSection}>
-              <View style={styles.growthGoalsHeader}>
-                <Text style={styles.growthGoalsTitle}>Based on your growth goals</Text>
-                <TouchableOpacity>
-                  <Ionicons name="ellipsis-horizontal" size={20} color={colors.textMuted} />
-                </TouchableOpacity>
-              </View>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.growthGoalsContent}
-              >
-                {growthGoalsPrograms.map((program) => (
-                  <View key={program.id} style={styles.growthGoalCard}>
-                    <Image
-                      source={{ uri: program.image }}
-                      style={styles.growthGoalImage}
-                    />
-                    <Text style={styles.growthGoalTitle}>{program.title}</Text>
-                    <Text style={styles.growthGoalAuthor}>{program.author}</Text>
-                    <View style={styles.growthGoalMeta}>
-                      <Ionicons name="people-outline" size={14} color={colors.textMuted} />
-                      <Text style={styles.growthGoalMetaText}>
-                        {program.userCount >= 1000 ? `${(program.userCount / 1000).toFixed(0)}K` : program.userCount}
-                      </Text>
-                      <Text style={styles.growthGoalMetaText}> · {program.lessonCount} lessons</Text>
-                    </View>
-                    <View style={styles.growthGoalTag}>
-                      <Text style={styles.growthGoalTagText}>{program.tag}</Text>
-                    </View>
-                  </View>
-                ))}
-              </ScrollView>
-            </View>
 
             {/* Featured Banner */}
             <View style={styles.featuredSection}>
@@ -433,21 +398,23 @@ export default function TodayScreen() {
               ))}
             </Section>
 
-            {/* Live Classes */}
-            <View style={styles.liveClassesSection}>
-              <View style={styles.liveClassesHeader}>
-                <Text style={styles.sectionTitle}>Live classes</Text>
-                <TouchableOpacity>
-                  <Text style={styles.seeAllText}>See all</Text>
-                </TouchableOpacity>
+            {/* Live Classes (L3+L4 only) */}
+            {userTier === 'L3L4' && (
+              <View style={styles.liveClassesSection}>
+                <View style={styles.liveClassesHeader}>
+                  <Text style={styles.sectionTitle}>Live classes</Text>
+                  <TouchableOpacity>
+                    <Text style={styles.seeAllText}>See all</Text>
+                  </TouchableOpacity>
+                </View>
+                {liveClasses.map((liveClass) => (
+                  <LiveClassCard
+                    key={liveClass.id}
+                    {...liveClass}
+                  />
+                ))}
               </View>
-              {liveClasses.map((liveClass) => (
-                <LiveClassCard
-                  key={liveClass.id}
-                  {...liveClass}
-                />
-              ))}
-            </View>
+            )}
           </>
         ) : (
           // L1 Free User Experience

@@ -22,7 +22,7 @@ export default function ProgramCard({ title, author, image, size = 'medium', onP
   return (
     <TouchableOpacity style={[styles.card, { width }]} onPress={onPress} activeOpacity={0.85}>
       <Image source={{ uri: image }} style={[styles.image, { height: imageHeight }]} />
-      <Text style={styles.title} numberOfLines={2}>{title.toUpperCase()}</Text>
+      <Text style={styles.title} numberOfLines={2}>{title}</Text>
       <Text style={styles.author} numberOfLines={1}>{author}</Text>
       {progress !== undefined && (
         <View style={styles.progressTrack}>
