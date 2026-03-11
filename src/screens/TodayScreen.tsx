@@ -18,7 +18,6 @@ import ContinueProgramCard from '../components/ContinueProgramCard';
 import FeaturedBanner from '../components/FeaturedBanner';
 import LiveClassCard from '../components/LiveClassCard';
 import FavoriteCard from '../components/FavoriteCard';
-import AuthorChip from '../components/AuthorChip';
 import SoundCard from '../components/SoundCard';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
@@ -34,8 +33,7 @@ import {
   premiumPrograms,
   favorites,
   featuredBanners,
-  pickedForYou,
-  featuredAuthors,
+  growthGoalsPrograms,
   meditationsForGoal,
   soundsForGoal,
   liveClasses,
@@ -114,7 +112,7 @@ export default function TodayScreen() {
         {isSubscriber ? (
           // L3/L4 Subscriber Experience
           <>
-            {/* Continue Programs */}
+            {/* 1. Continue Programs */}
             <Section title="Continue programs" showSeeAll horizontal>
               {continuePrograms.map((program) => (
                 <ContinueProgramCard
@@ -130,68 +128,25 @@ export default function TodayScreen() {
               ))}
             </Section>
 
-            {/* Eve's Recommendations for L3/L4 */}
-            <View style={styles.eveSection}>
-              <View style={styles.eveSectionHeader}>
-                <View style={styles.eveIconSmall}>
-                  <Ionicons name="cube-outline" size={16} color={colors.primary} />
+            {/* 2. Live Classes (L3L4 only at this position) */}
+            {userTier === 'L3L4' && (
+              <View style={styles.liveClassesSection}>
+                <View style={styles.liveClassesHeader}>
+                  <Text style={styles.sectionTitle}>Live classes</Text>
+                  <TouchableOpacity>
+                    <Text style={styles.seeAllText}>See all</Text>
+                  </TouchableOpacity>
                 </View>
-                <View>
-                  <Text style={styles.eveSectionTitle}>
-                    Eve's recommendation for {userName}
-                  </Text>
-                  <Text style={styles.eveSectionSubtitle}>
-                    Curated content to help you achieve your goals.
-                  </Text>
-                </View>
-              </View>
-
-              {/* Recommendation reason pills */}
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={styles.reasonsScroll}
-                contentContainerStyle={styles.reasonsContent}
-              >
-                {eveRecommendations.map((rec, index) => (
-                  <View key={index} style={styles.reasonPill}>
-                    <Ionicons name="sparkles" size={12} color={colors.primary} />
-                    <Text style={styles.reasonText} numberOfLines={2}>
-                      {rec.reason}
-                    </Text>
-                  </View>
-                ))}
-              </ScrollView>
-
-              {/* Recommendation cards */}
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.cardsScroll}
-              >
-                {eveRecommendations.map((item) => (
-                  <ProgramCard
-                    key={item.id}
-                    {...item}
-                    size="medium"
-                    onPress={() => navigateToQuest(
-                      'silva-ultramind',
-                      item.title,
-                      item.image,
-                      item.author
-                    )}
+                {liveClasses.map((liveClass) => (
+                  <LiveClassCard
+                    key={liveClass.id}
+                    {...liveClass}
                   />
                 ))}
-              </ScrollView>
+              </View>
+            )}
 
-              {/* All recommendations button */}
-              <TouchableOpacity style={styles.allRecsButton}>
-                <Text style={styles.allRecsText}>All my recommendations</Text>
-                <Ionicons name="chevron-forward" size={18} color={colors.textPrimary} />
-              </TouchableOpacity>
-            </View>
-
-            {/* Your Premium Programs (L3+L4 only) */}
+            {/* 3. Your Premium Programs (L3L4 only) */}
             {userTier === 'L3L4' && (
               <Section title="Your premium programs" horizontal>
                 {premiumPrograms.map((program) => (
@@ -211,7 +166,7 @@ export default function TodayScreen() {
               </Section>
             )}
 
-            {/* Your Meditations for Today */}
+            {/* 4. Your Meditations for Today */}
             <Section title="Your meditations for today">
               <ScrollView
                 horizontal
@@ -253,7 +208,7 @@ export default function TodayScreen() {
               </ScrollView>
             </Section>
 
-            {/* Favorites */}
+            {/* 5. Favorites */}
             <Section title="Favorites" horizontal>
               {favorites.map((fav) => (
                 <FavoriteCard
@@ -263,7 +218,57 @@ export default function TodayScreen() {
               ))}
             </Section>
 
-            {/* Featured Banner */}
+            {/* 6. Based on your Growth Goals */}
+            <View style={styles.growthGoalsSection}>
+              <View style={styles.growthGoalsHeader}>
+                <Text style={styles.sectionTitle}>Based on your growth goals</Text>
+                <TouchableOpacity>
+                  <Ionicons name="ellipsis-horizontal" size={24} color={colors.textMuted} />
+                </TouchableOpacity>
+              </View>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.growthGoalsContent}
+              >
+                {growthGoalsPrograms.map((program) => (
+                  <TouchableOpacity
+                    key={program.id}
+                    style={styles.growthGoalCard}
+                    onPress={() => navigateToQuest(
+                      'silva-ultramind',
+                      program.title,
+                      program.image,
+                      program.author
+                    )}
+                    activeOpacity={0.8}
+                  >
+                    <Image
+                      source={{ uri: program.image }}
+                      style={styles.growthGoalImage}
+                    />
+                    <Text style={styles.growthGoalTitle}>{program.title}</Text>
+                    <Text style={styles.growthGoalAuthor}>{program.author}</Text>
+                    <View style={styles.growthGoalMeta}>
+                      <Ionicons name="people-outline" size={14} color={colors.textMuted} />
+                      <Text style={styles.growthGoalMetaText}>
+                        {program.userCount?.toLocaleString()}
+                      </Text>
+                      <Text style={styles.growthGoalMetaText}>
+                        {' '}  ·  {program.lessonCount} lessons
+                      </Text>
+                    </View>
+                    {program.tag && (
+                      <View style={styles.growthGoalTag}>
+                        <Text style={styles.growthGoalTagText}>{program.tag}</Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+
+            {/* 7. Featured */}
             <View style={styles.featuredSection}>
               <Text style={styles.sectionTitle}>Featured</Text>
               <ScrollView
@@ -289,19 +294,7 @@ export default function TodayScreen() {
               </View>
             </View>
 
-            {/* Picked for You */}
-            <Section title={`Picked for you, ${userName}`} horizontal>
-              {pickedForYou.map((program) => (
-                <ProgramCard
-                  key={program.id}
-                  {...program}
-                  type="program"
-                  size="large"
-                />
-              ))}
-            </Section>
-
-            {/* Daily Shorts */}
+            {/* 8. Daily Shorts */}
             <Section title="Daily shorts" horizontal>
               {dailyShorts.map((short, index) => (
                 <TouchableOpacity
@@ -324,23 +317,7 @@ export default function TodayScreen() {
               ))}
             </Section>
 
-            {/* Featured Authors */}
-            <View style={styles.authorsSection}>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.authorsContent}
-              >
-                {featuredAuthors.map((author) => (
-                  <AuthorChip
-                    key={author.id}
-                    {...author}
-                  />
-                ))}
-              </ScrollView>
-            </View>
-
-            {/* Meditations for Goal */}
+            {/* 9. Meditations for Better Sleep */}
             <Section
               title={`Meditations for `}
               subtitle={meditationsForGoal.goal}
@@ -377,7 +354,7 @@ export default function TodayScreen() {
               ))}
             </Section>
 
-            {/* Sounds for Goal */}
+            {/* 10. Sounds for Focus */}
             <Section
               title={`Sounds for `}
               subtitle={soundsForGoal.goal}
@@ -398,8 +375,8 @@ export default function TodayScreen() {
               ))}
             </Section>
 
-            {/* Live Classes (L3+L4 only) */}
-            {userTier === 'L3L4' && (
+            {/* Live Classes (L3 only - at end position) */}
+            {userTier === 'L3' && (
               <View style={styles.liveClassesSection}>
                 <View style={styles.liveClassesHeader}>
                   <Text style={styles.sectionTitle}>Live classes</Text>
