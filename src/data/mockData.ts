@@ -1,44 +1,52 @@
+// Resolve require() asset to a URI string that works with source={{ uri }}
+import { Image as RNImage } from 'react-native';
+const resolveAsset = (asset: any): string => {
+  if (typeof asset === 'string') return asset;
+  const resolved = RNImage.resolveAssetSource(asset);
+  return resolved?.uri || '';
+};
+
 // Cover image assets
 const coverImages = {
-  silvaUltramind: require('../../assets/covers/The_Silva_Ultramind_System.jpg') as string,
-  superbrain: require('../../assets/covers/Superbrain.png') as string,
-  duality: require('../../assets/covers/Duality.jpg') as string,
-  wildfit: require('../../assets/covers/Wildfit.png') as string,
-  sixPhase: require('../../assets/covers/The_6_Phase_Meditation.jpg') as string,
-  fengShui: require('../../assets/covers/Feng_Shui_for_Life.png') as string,
-  beExtraordinary: require('../../assets/covers/Be_Extraordinary.jpg') as string,
-  manifestingMastery: require('../../assets/covers/Manifesting_Mastery.jpg') as string,
-  tenXFitness: require('../../assets/covers/10X_Fitness.jpg') as string,
-  yogiGuide: require('../../assets/covers/A_Yogis_Guide_to_Joy.jpg') as string,
-  moneyEQ: require('../../assets/covers/Money_EQ.png') as string,
-  speakInspire: require('../../assets/covers/Speak_and_Inspire.png') as string,
-  longevityBlueprint: require('../../assets/covers/The_Longevity_Blueprint.png') as string,
-  consciousParenting: require('../../assets/covers/Conscious_Parenting_Mastery.png') as string,
-  certifiedHypnotherapist: require('../../assets/covers/Mindvalley_Certified_Hypnotherapist.jpg') as string,
-  buildingBrand: require('../../assets/covers/Building_an_Unstoppable_Brand.jpg') as string,
-  gettingStarted: require('../../assets/covers/Getting_Started_with_Mindvalley.jpg') as string,
-  lifebook: require('../../assets/covers/Lifebook.png') as string,
-  artOfManifesting: require('../../assets/covers/The_Art_of_Manifesting.png') as string,
+  silvaUltramind: resolveAsset(require('../../assets/covers/The_Silva_Ultramind_System.jpg')),
+  superbrain: resolveAsset(require('../../assets/covers/Superbrain.png')),
+  duality: resolveAsset(require('../../assets/covers/Duality.jpg')),
+  wildfit: resolveAsset(require('../../assets/covers/Wildfit.png')),
+  sixPhase: resolveAsset(require('../../assets/covers/The_6_Phase_Meditation.jpg')),
+  fengShui: resolveAsset(require('../../assets/covers/Feng_Shui_for_Life.png')),
+  beExtraordinary: resolveAsset(require('../../assets/covers/Be_Extraordinary.jpg')),
+  manifestingMastery: resolveAsset(require('../../assets/covers/Manifesting_Mastery.jpg')),
+  tenXFitness: resolveAsset(require('../../assets/covers/10X_Fitness.jpg')),
+  yogiGuide: resolveAsset(require('../../assets/covers/A_Yogis_Guide_to_Joy.jpg')),
+  moneyEQ: resolveAsset(require('../../assets/covers/Money_EQ.png')),
+  speakInspire: resolveAsset(require('../../assets/covers/Speak_and_Inspire.png')),
+  longevityBlueprint: resolveAsset(require('../../assets/covers/The_Longevity_Blueprint.png')),
+  consciousParenting: resolveAsset(require('../../assets/covers/Conscious_Parenting_Mastery.png')),
+  certifiedHypnotherapist: resolveAsset(require('../../assets/covers/Mindvalley_Certified_Hypnotherapist.jpg')),
+  buildingBrand: resolveAsset(require('../../assets/covers/Building_an_Unstoppable_Brand.jpg')),
+  gettingStarted: resolveAsset(require('../../assets/covers/Getting_Started_with_Mindvalley.jpg')),
+  lifebook: resolveAsset(require('../../assets/covers/Lifebook.png')),
+  artOfManifesting: resolveAsset(require('../../assets/covers/The_Art_of_Manifesting.png')),
   sleepMastery: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
-  negotiateConfidence: require('../../assets/covers/Negotiate_with_Confidence_Clarity_in_Every_Conversation.jpg') as string,
-  lifebookMastery: require('../../assets/covers/Lifebook_Mastery.jpg') as string,
+  negotiateConfidence: resolveAsset(require('../../assets/covers/Negotiate_with_Confidence_Clarity_in_Every_Conversation.jpg')),
+  lifebookMastery: resolveAsset(require('../../assets/covers/Lifebook_Mastery.jpg')),
 };
 
 // Meditation & sound cover images
 const meditationCovers = {
-  manifestingHealthWealthLove: require('../../assets/meditation-covers/Manifesting_Health,_Wealth_&_Love.jpg') as string,
-  releasingAnxiety: require('../../assets/meditation-covers/Releasing_Anxiety.jpg') as string,
-  sleepInducingBodyScan: require('../../assets/meditation-covers/Sleep_Inducing_Body_Scan.jpg') as string,
-  sinkBackIntoSleep: require('../../assets/meditation-covers/Sink_Back_Into_Deeper_Sleep.jpg') as string,
-  thirdEyeChakra: require('../../assets/meditation-covers/Third_Eye_Chakra_Sounding_Intuition_&_Wisdom.jpg') as string,
-  sixPhaseMeditation: require('../../assets/meditation-covers/6-Phase_Meditation.jpg') as string,
-  deepRelaxation: require('../../assets/meditation-covers/Deep_Relaxation.jpg') as string,
-  clarityOfVision: require('../../assets/meditation-covers/Clarity_of_Vision_The_Path_to_Your_Dreams.jpg') as string,
-  abundanceMeditation: require('../../assets/meditation-covers/Abundance_Meditation.jpg') as string,
-  profoundSleep: require('../../assets/meditation-covers/Profound_Sleep.jpg') as string,
+  manifestingHealthWealthLove: resolveAsset(require('../../assets/meditation-covers/Manifesting_Health,_Wealth_&_Love.jpg')),
+  releasingAnxiety: resolveAsset(require('../../assets/meditation-covers/Releasing_Anxiety.jpg')),
+  sleepInducingBodyScan: resolveAsset(require('../../assets/meditation-covers/Sleep_Inducing_Body_Scan.jpg')),
+  sinkBackIntoSleep: resolveAsset(require('../../assets/meditation-covers/Sink_Back_Into_Deeper_Sleep.jpg')),
+  thirdEyeChakra: resolveAsset(require('../../assets/meditation-covers/Third_Eye_Chakra_Sounding_Intuition_&_Wisdom.jpg')),
+  sixPhaseMeditation: resolveAsset(require('../../assets/meditation-covers/6-Phase_Meditation.jpg')),
+  deepRelaxation: resolveAsset(require('../../assets/meditation-covers/Deep_Relaxation.jpg')),
+  clarityOfVision: resolveAsset(require('../../assets/meditation-covers/Clarity_of_Vision_The_Path_to_Your_Dreams.jpg')),
+  abundanceMeditation: resolveAsset(require('../../assets/meditation-covers/Abundance_Meditation.jpg')),
+  profoundSleep: resolveAsset(require('../../assets/meditation-covers/Profound_Sleep.jpg')),
 };
 
-const profileAvatar = require('../../assets/naresh-avatar.jpeg') as string;
+const profileAvatar = resolveAsset(require('../../assets/naresh-avatar.jpeg'));
 
 // Mock data for Mindvalley app
 
