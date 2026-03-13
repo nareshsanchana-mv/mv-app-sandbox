@@ -1,12 +1,14 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { colors } from '../theme/colors';
 import { useUser } from '../context/UserContext';
 
 export default function Header() {
   const { userAvatar, userTier, setUserTier } = useUser();
   const isSubscriber = userTier === 'L3' || userTier === 'L3L4';
+  const navigation = useNavigation();
 
   const cycleTier = () => {
     const next = { L1: 'L3' as const, L3: 'L3L4' as const, L3L4: 'L1' as const };
@@ -17,7 +19,7 @@ export default function Header() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile' as never)}>
         <Image
           source={{ uri: userAvatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200' }}
           style={styles.avatar}
