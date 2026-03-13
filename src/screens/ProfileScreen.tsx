@@ -44,7 +44,7 @@ export default function ProfileScreen() {
           <View style={styles.profileRow}>
             <View style={styles.avatarContainer}>
               <Image
-                source={{ uri: user.avatar }}
+                source={{ uri: user.avatar || 'https://via.placeholder.com/120' }}
                 style={styles.avatar}
               />
             </View>

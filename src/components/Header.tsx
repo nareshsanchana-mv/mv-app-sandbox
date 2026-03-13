@@ -21,7 +21,7 @@ export default function Header() {
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('Profile' as never)}>
         <Image
-          source={{ uri: userAvatar }}
+          source={{ uri: userAvatar || 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200' }}
           style={styles.avatar}
         />
       </TouchableOpacity>
