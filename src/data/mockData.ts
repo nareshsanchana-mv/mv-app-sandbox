@@ -24,18 +24,18 @@ const coverImages = {
   lifebookMastery: '/covers/Lifebook_Mastery.jpg',
 };
 
-// Meditation & sound cover images (CDN URLs for now — local covers in Step 2)
+// Meditation & sound cover images (served from public/ directory)
 const meditationCovers = {
-  manifestingHealthWealthLove: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
-  releasingAnxiety: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg',
-  sleepInducingBodyScan: 'https://assets.mindvalley.com/api/v1/assets/3a88f8af-7697-4c23-9ce6-6f89d6fcb718.jpg',
-  sinkBackIntoSleep: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg',
-  thirdEyeChakra: 'https://assets.mindvalley.com/api/v1/assets/f043a23b-9e0a-48b4-a9e3-8577db7591d1.jpg',
-  sixPhaseMeditation: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
-  deepRelaxation: 'https://assets.mindvalley.com/api/v1/assets/169e289b-9dde-4956-993e-b318426ea7fe.jpg',
-  clarityOfVision: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg',
-  abundanceMeditation: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg',
-  profoundSleep: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
+  manifestingHealthWealthLove: '/meditation-covers/Manifesting_Health,_Wealth_&_Love.jpg',
+  releasingAnxiety: '/meditation-covers/Releasing_Anxiety.jpg',
+  sleepInducingBodyScan: '/meditation-covers/Sleep_Inducing_Body_Scan.jpg',
+  sinkBackIntoSleep: '/meditation-covers/Sink_Back_Into_Deeper_Sleep.jpg',
+  thirdEyeChakra: '/meditation-covers/Third_Eye_Chakra_Sounding_Intuition_&_Wisdom.jpg',
+  sixPhaseMeditation: '/meditation-covers/6-Phase_Meditation.jpg',
+  deepRelaxation: '/meditation-covers/Deep_Relaxation.jpg',
+  clarityOfVision: '/meditation-covers/Clarity_of_Vision_The_Path_to_Your_Dreams.jpg',
+  abundanceMeditation: '/meditation-covers/Abundance_Meditation.jpg',
+  profoundSleep: '/meditation-covers/Profound_Sleep.jpg',
 };
 
 // Mock data for Mindvalley app
