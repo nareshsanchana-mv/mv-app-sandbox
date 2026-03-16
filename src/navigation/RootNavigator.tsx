@@ -7,9 +7,13 @@ import SoundPlayerScreen from '../screens/SoundPlayerScreen';
 import ShortsPlayerScreen from '../screens/ShortsPlayerScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import SearchScreen from '../screens/SearchScreen';
+import NotificationsScreen from '../screens/NotificationsScreen';
 
 export type RootStackParamList = {
   Main: undefined;
+  Search: undefined;
+  Notifications: undefined;
   QuestDetail: {
     questId: string;
     questTitle: string;
@@ -78,6 +82,16 @@ export default function RootNavigator() {
           animation: 'slide_from_bottom',
           presentation: 'fullScreenModal',
         }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ animation: 'fade' }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen
         name="Profile"
