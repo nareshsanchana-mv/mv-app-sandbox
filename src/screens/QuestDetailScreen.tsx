@@ -1,791 +1,396 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Modal,
-  FlatList,
+  View, Text, ScrollView, Image, TouchableOpacity, StyleSheet,
+  SafeAreaView, StatusBar, Modal, FlatList,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { colors } from '../theme/colors';
-import { typography } from '../theme/typography';
-import {
-  questsData,
-  currentLessonMeditation,
-  lessonTasks,
-  QuestLesson,
-  QuestWeek,
-} from '../data/mockData';
-import type { RootStackParamList } from '../navigation/RootNavigator';
+import { questLessons } from '../data/mockData';
 
-const { width } = Dimensions.get('window');
+interface Props {
+  navigation?: any;
+  route?: any;
+}
 
-type QuestDetailRouteProp = RouteProp<RootStackParamList, 'QuestDetail'>;
+export default function QuestDetailScreen({ navigation }: Props) {
+  const [activeTab, setActiveTab] = useState<'Lesson' | 'Discussions'>('Lesson');
+  const [showLessonList, setShowLessonList] = useState(false);
 
-export default function QuestDetailScreen() {
-  const navigation = useNavigation();
-  const route = useRoute<QuestDetailRouteProp>();
-  const { questId, questTitle } = route.params;
+  // Use Silva Ultramind as default
+  const quest = questLessons.silvaUltramind;
+  const lesson = quest.currentLesson;
 
-  const [activeTab, setActiveTab] = useState<'lesson' | 'discussions'>('lesson');
-  const [showTOC, setShowTOC] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  // Get quest data
-  const quest = questsData[questId] || questsData['silva-ultramind'];
-
-  // Find current lesson (first uncompleted)
-  const currentLesson = quest.weeks
-    .flatMap((week) => week.lessons)
-    .find((lesson) => !lesson.isCompleted) || quest.weeks[0]?.lessons[0];
-
-  const currentLessonIndex = quest.weeks
-    .flatMap((week) => week.lessons)
-    .findIndex((lesson) => lesson.id === currentLesson?.id);
-
-  const renderTOCItem = ({ item }: { item: QuestWeek }) => (
-    <View style={styles.tocWeek}>
-      <Text style={styles.tocWeekTitle}>{item.title}</Text>
-      {item.lessons.map((lesson) => (
-        <TouchableOpacity
-          key={lesson.id}
-          style={styles.tocLessonItem}
-          onPress={() => setShowTOC(false)}
-        >
-          <Image source={{ uri: lesson.image }} style={styles.tocLessonImage} />
-          <View style={styles.tocLessonContent}>
-            <Text style={styles.tocLessonLabel}>Lesson {lesson.lessonNumber}</Text>
-            <Text style={styles.tocLessonTitle} numberOfLines={2}>
-              {lesson.title}
-            </Text>
-            <Text style={styles.tocLessonAuthor}>{lesson.author}</Text>
-            <Text style={styles.tocLessonDuration}>{lesson.duration}</Text>
-          </View>
-          {lesson.isCompleted && (
-            <Ionicons name="checkmark-circle" size={24} color={colors.success} />
-          )}
-        </TouchableOpacity>
-      ))}
-    </View>
-  );
+  const imgSrc = typeof lesson.videoThumbnail === 'string'
+    ? { uri: lesson.videoThumbnail }
+    : (lesson.videoThumbnail as any);
+  const medImgSrc = typeof lesson.meditation.image === 'string'
+    ? { uri: lesson.meditation.image }
+    : (lesson.meditation.image as any);
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.safe}>
+      <StatusBar barStyle="light-content" />
+
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Ionicons name="chevron-back" size={28} color={colors.textPrimary} />
+        <TouchableOpacity onPress={() => navigation?.goBack()} style={styles.backBtn}>
+          <Ionicons name="chevron-back" size={24} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>
-          {quest.title}
-        </Text>
-        <TouchableOpacity
-          style={styles.tocButton}
-          onPress={() => setShowTOC(true)}
-        >
-          <Ionicons name="list" size={24} color={colors.textPrimary} />
+        <Text style={styles.headerTitle} numberOfLines={1}>{quest.programTitle}</Text>
+        <TouchableOpacity onPress={() => setShowLessonList(true)} style={styles.listBtn}>
+          <Ionicons name="list" size={22} color="#fff" />
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {/* Video Player Section */}
-        <TouchableOpacity
-          style={styles.videoContainer}
-          onPress={() => setIsPlaying(!isPlaying)}
-          activeOpacity={0.9}
-        >
-          <Image source={{ uri: quest.image }} style={styles.videoImage} />
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+        {/* Video hero */}
+        <View style={styles.videoContainer}>
+          <Image source={imgSrc} style={styles.videoThumb} />
           <View style={styles.videoOverlay}>
-            {currentLesson && (
-              <Text style={styles.videoTitle}>{currentLesson.title.split(' ').slice(0, 3).join('\n')}</Text>
-            )}
+            <TouchableOpacity style={styles.playBtn}>
+              <Ionicons name="play" size={28} color="#fff" />
+            </TouchableOpacity>
+            <Text style={styles.videoDuration}>{lesson.videoDuration}</Text>
           </View>
-
-          {/* Video Controls */}
-          {isPlaying ? (
-            <View style={styles.videoControls}>
-              <View style={styles.topControls}>
-                <View style={styles.mediaToggle}>
-                  <TouchableOpacity style={styles.mediaButton}>
-                    <Ionicons name="videocam" size={18} color="#fff" />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.mediaButton}>
-                    <Ionicons name="headset" size={18} color="#fff" />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.rightControls}>
-                  <TouchableOpacity style={styles.controlIcon}>
-                    <Ionicons name="tv-outline" size={18} color="#fff" />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.controlIcon}>
-                    <Ionicons name="bookmark-outline" size={18} color="#fff" />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.controlIcon}>
-                    <Text style={styles.ccText}>CC</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.playbackControls}>
-                <TouchableOpacity style={styles.seekButton}>
-                  <Ionicons name="play-back" size={24} color="#fff" />
-                  <Text style={styles.seekText}>15</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.playButton}>
-                  <Ionicons name="play" size={36} color={colors.textPrimary} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.seekButton}>
-                  <Ionicons name="play-forward" size={24} color="#fff" />
-                  <Text style={styles.seekText}>15</Text>
-                </TouchableOpacity>
-              </View>
-
-              <View style={styles.bottomControls}>
-                <Text style={styles.timeText}>0:12</Text>
-                <View style={styles.progressBar}>
-                  <View style={styles.progressFill} />
-                  <View style={styles.progressDot} />
-                </View>
-                <Text style={styles.timeText}>7:18</Text>
-                <TouchableOpacity style={styles.speedButton}>
-                  <Text style={styles.speedText}>1x</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.fullscreenButton}>
-                  <Ionicons name="expand" size={20} color="#fff" />
-                </TouchableOpacity>
-              </View>
-            </View>
-          ) : (
-            <View style={styles.playOverlay}>
-              <TouchableOpacity style={styles.bigPlayButton}>
-                <Ionicons name="play" size={32} color="#fff" />
-              </TouchableOpacity>
-              <Text style={styles.durationBadge}>{currentLesson?.duration || '27m'}</Text>
-            </View>
-          )}
-
-          <View style={styles.mindvalleyLogo}>
-            <Ionicons name="chevron-down" size={16} color="#fff" />
+          <View style={styles.mvChevron}>
+            <Ionicons name="chevron-down" size={16} color="rgba(255,255,255,0.6)" />
           </View>
-        </TouchableOpacity>
+        </View>
 
-        {/* Lesson Info */}
+        {/* Lesson info */}
         <View style={styles.lessonInfo}>
-          <View style={styles.lessonHeader}>
-            <View style={styles.lessonTitleSection}>
-              <Text style={styles.lessonLabel}>LESSON {currentLessonIndex + 1}</Text>
-              <Text style={styles.lessonTitle}>{currentLesson?.title}</Text>
-              <Text style={styles.lessonAuthor}>{quest.author}</Text>
-              <Text style={styles.lessonDuration}>{currentLesson?.duration}</Text>
+          <View style={styles.lessonInfoTop}>
+            <View style={styles.lessonInfoLeft}>
+              <Text style={styles.lessonNumber}>LESSON {lesson.number}</Text>
+              <Text style={styles.lessonTitle}>{lesson.title}</Text>
+              <Text style={styles.lessonAuthor}>{lesson.author}</Text>
+              <Text style={styles.lessonDuration}>{lesson.duration}</Text>
             </View>
             <View style={styles.lessonActions}>
               <TouchableOpacity style={styles.actionIcon}>
-                <Ionicons name="download-outline" size={24} color={colors.textPrimary} />
+                <Ionicons name="download-outline" size={22} color="#fff" />
               </TouchableOpacity>
               <TouchableOpacity style={styles.actionIcon}>
-                <Ionicons name="bookmark-outline" size={24} color={colors.textPrimary} />
+                <Ionicons name="bookmark-outline" size={22} color="#fff" />
               </TouchableOpacity>
             </View>
           </View>
-
-          {/* Tabs */}
-          <View style={styles.tabs}>
-            <TouchableOpacity
-              style={[styles.tab, activeTab === 'lesson' && styles.activeTab]}
-              onPress={() => setActiveTab('lesson')}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === 'lesson' && styles.activeTabText,
-                ]}
-              >
-                Lesson
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.tab, activeTab === 'discussions' && styles.activeTab]}
-              onPress={() => setActiveTab('discussions')}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === 'discussions' && styles.activeTabText,
-                ]}
-              >
-                Discussions
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          {activeTab === 'lesson' ? (
-            <>
-              {/* Meditation Card */}
-              <View style={styles.meditationCard}>
-                <View style={styles.meditationHeader}>
-                  <Ionicons name="leaf-outline" size={14} color={colors.textMuted} />
-                  <Text style={styles.meditationType}>
-                    {currentLessonMeditation.type} · {currentLessonMeditation.duration}
-                  </Text>
-                </View>
-                <View style={styles.meditationContent}>
-                  <Image
-                    source={{ uri: currentLessonMeditation.image }}
-                    style={styles.meditationImage}
-                  />
-                  <View style={styles.meditationInfo}>
-                    <Text style={styles.meditationTitle}>
-                      {currentLessonMeditation.title}
-                    </Text>
-                    <Text style={styles.meditationAuthor}>
-                      {currentLessonMeditation.author}
-                    </Text>
-                  </View>
-                  <TouchableOpacity style={styles.meditationPlayButton}>
-                    <Ionicons name="play" size={24} color="#fff" />
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              {/* Description */}
-              <Text style={styles.description}>{quest.description}</Text>
-
-              {/* Tasks */}
-              <View style={styles.tasksSection}>
-                <Text style={styles.tasksTitle}>
-                  0/{lessonTasks.length} Tasks Completed
-                </Text>
-                {lessonTasks.map((task) => (
-                  <TouchableOpacity key={task.id} style={styles.taskItem}>
-                    <View
-                      style={[
-                        styles.taskCheckbox,
-                        task.isCompleted && styles.taskCheckboxCompleted,
-                      ]}
-                    >
-                      {task.isCompleted && (
-                        <Ionicons name="checkmark" size={16} color="#fff" />
-                      )}
-                    </View>
-                    <Text style={styles.taskText}>{task.title}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </>
-          ) : (
-            <View style={styles.discussionsPlaceholder}>
-              <Text style={styles.discussionsText}>
-                Discussions will appear here
-              </Text>
-            </View>
-          )}
         </View>
 
-        <View style={styles.bottomPadding} />
+        {/* AI Action pills */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.pillsRow}>
+          {[
+            { icon: 'chatbubble-outline', label: 'Ask Eve' },
+            { icon: 'help-circle-outline', label: 'Quiz me' },
+            { icon: 'document-text-outline', label: 'Summarize lesson' },
+          ].map(p => (
+            <TouchableOpacity key={p.label} style={styles.aiPill} activeOpacity={0.75}>
+              <Ionicons name={p.icon as any} size={15} color="#fff" style={{ marginRight: 5 }} />
+              <Text style={styles.aiPillText}>{p.label}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        {/* Lesson / Discussions tabs */}
+        <View style={styles.tabRow}>
+          {(['Lesson', 'Discussions'] as const).map(t => (
+            <TouchableOpacity key={t} style={styles.tab} onPress={() => setActiveTab(t)}>
+              <Text style={[styles.tabText, activeTab === t && styles.tabTextActive]}>{t}</Text>
+              {activeTab === t && <View style={styles.tabUnderline} />}
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {activeTab === 'Lesson' ? (
+          <View style={styles.lessonContent}>
+            {/* Meditation card */}
+            <TouchableOpacity style={styles.meditationCard} activeOpacity={0.85}>
+              <View style={styles.meditationLeft}>
+                <Ionicons name="musical-note" size={12} color={colors.textMuted} />
+                <Text style={styles.meditationLabel}> MEDITATIONS · {lesson.meditation.duration}</Text>
+              </View>
+              <View style={styles.meditationBody}>
+                <Image source={medImgSrc} style={styles.meditationThumb} />
+                <View style={styles.meditationInfo}>
+                  <Text style={styles.meditationTitle} numberOfLines={2}>{lesson.meditation.title}</Text>
+                  <Text style={styles.meditationAuthor}>{lesson.meditation.author}</Text>
+                </View>
+                <TouchableOpacity style={styles.meditationPlay}>
+                  <Ionicons name="play" size={20} color="#fff" />
+                </TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+
+            {/* Lesson body text */}
+            {lesson.bodyText.split('\n\n').map((para, i) => {
+              if (para.startsWith('**') && para.endsWith('**')) {
+                return (
+                  <Text key={i} style={styles.bodyBold}>
+                    {para.slice(2, -2)}
+                  </Text>
+                );
+              }
+              if (para.match(/^\d\./)) {
+                return (
+                  <Text key={i} style={styles.bodyText}>{para}</Text>
+                );
+              }
+              return <Text key={i} style={styles.bodyText}>{para}</Text>;
+            })}
+          </View>
+        ) : (
+          <View style={styles.discussionsEmpty}>
+            <Ionicons name="chatbubbles-outline" size={40} color={colors.textMuted} />
+            <Text style={styles.discussionsText}>No discussions yet. Be the first!</Text>
+          </View>
+        )}
+
+        <View style={{ height: 100 }} />
       </ScrollView>
 
-      {/* Complete Lesson Button */}
-      <View style={styles.completeButtonContainer}>
-        <TouchableOpacity style={styles.completeButton}>
-          <Text style={styles.completeButtonText}>Complete lesson</Text>
+      {/* Complete lesson sticky CTA */}
+      <View style={styles.ctaContainer}>
+        <TouchableOpacity style={styles.ctaButton} activeOpacity={0.9}>
+          <Text style={styles.ctaText}>Complete lesson</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Table of Contents Modal */}
+      {/* Lesson list modal */}
       <Modal
-        visible={showTOC}
+        visible={showLessonList}
         animationType="slide"
         presentationStyle="pageSheet"
-        onRequestClose={() => setShowTOC(false)}
+        onRequestClose={() => setShowLessonList(false)}
       >
-        <SafeAreaView style={styles.tocContainer}>
-          <View style={styles.tocHeader}>
-            <View style={styles.tocHandle} />
-            <Text style={styles.tocTitle}>{quest.title}</Text>
-          </View>
-          <FlatList
-            data={quest.weeks}
-            keyExtractor={(item) => item.id}
-            renderItem={renderTOCItem}
-            contentContainerStyle={styles.tocList}
-            showsVerticalScrollIndicator={false}
-          />
-          <TouchableOpacity
-            style={styles.tocCloseButton}
-            onPress={() => setShowTOC(false)}
-          >
-            <Text style={styles.tocCloseText}>Close</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
+        <View style={styles.modal}>
+          <View style={styles.modalHandle} />
+          <Text style={styles.modalTitle}>{quest.programTitle}</Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {quest.weeks.map(week => (
+              <View key={week.title}>
+                <Text style={styles.weekTitle}>{week.title}</Text>
+                {week.lessons.map(l => {
+                  const lImgSrc = typeof l.image === 'string' ? { uri: l.image } : (l.image as any);
+                  return (
+                    <TouchableOpacity
+                      key={l.number}
+                      style={styles.lessonRow}
+                      onPress={() => setShowLessonList(false)}
+                      activeOpacity={0.75}
+                    >
+                      <View style={styles.lessonThumbWrap}>
+                        <Image source={lImgSrc} style={styles.lessonThumb} />
+                        {l.completed && (
+                          <View style={styles.checkBadge}>
+                            <Ionicons name="checkmark" size={12} color="#fff" />
+                          </View>
+                        )}
+                      </View>
+                      <View style={styles.lessonRowInfo}>
+                        <Text style={styles.lessonRowNumber}>Lesson {l.number}</Text>
+                        <Text style={styles.lessonRowTitle} numberOfLines={2}>{l.title}</Text>
+                        <Text style={styles.lessonRowAuthor}>{l.author}</Text>
+                        <Text style={styles.lessonRowDuration}>{l.duration}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            ))}
+            <View style={{ height: 40 }} />
+          </ScrollView>
+        </View>
       </Modal>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  safe: { flex: 1, backgroundColor: colors.background },
+
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
-  },
-  backButton: {
-    marginRight: 8,
-  },
-  headerTitle: {
-    flex: 1,
-    ...typography.label,
-    color: colors.textPrimary,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  tocButton: {
-    marginLeft: 8,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  videoContainer: {
-    width: width,
-    height: 280,
-    backgroundColor: '#000',
-  },
-  videoImage: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  videoOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.3)',
-  },
-  videoTitle: {
-    ...typography.h2,
-    color: '#fff',
-    textAlign: 'center',
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
-  },
-  playOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bigPlayButton: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: 'rgba(255,255,255,0.9)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  durationBadge: {
-    position: 'absolute',
-    bottom: 16,
-    left: 16,
-    ...typography.caption,
-    color: '#fff',
-    backgroundColor: 'rgba(0,0,0,0.6)',
     paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-  },
-  videoControls: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'space-between',
-    padding: 16,
-  },
-  topControls: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  mediaToggle: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    borderRadius: 20,
-    padding: 4,
-  },
-  mediaButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-  },
-  rightControls: {
-    flexDirection: 'row',
-  },
-  controlIcon: {
-    marginLeft: 16,
-  },
-  ccText: {
-    ...typography.caption,
-    color: '#fff',
-    fontWeight: '600',
-    borderWidth: 1,
-    borderColor: '#fff',
-    paddingHorizontal: 4,
-    paddingVertical: 2,
-    borderRadius: 2,
-  },
-  playbackControls: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  seekButton: {
-    alignItems: 'center',
-    marginHorizontal: 32,
-  },
-  seekText: {
-    ...typography.caption,
-    color: '#fff',
-    marginTop: 2,
-  },
-  playButton: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomControls: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  timeText: {
-    ...typography.caption,
-    color: '#fff',
-    minWidth: 40,
-  },
-  progressBar: {
-    flex: 1,
-    height: 4,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-    borderRadius: 2,
-    marginHorizontal: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  progressFill: {
-    width: '10%',
-    height: '100%',
-    backgroundColor: colors.primary,
-    borderRadius: 2,
-  },
-  progressDot: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: colors.primary,
-    marginLeft: -6,
-  },
-  speedButton: {
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-    marginLeft: 8,
-  },
-  speedText: {
-    ...typography.caption,
-    color: '#fff',
-    fontWeight: '600',
-  },
-  fullscreenButton: {
-    marginLeft: 12,
-  },
-  mindvalleyLogo: {
-    position: 'absolute',
-    bottom: 16,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
-  lessonInfo: {
-    padding: 16,
-  },
-  lessonHeader: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  lessonTitleSection: {
-    flex: 1,
-  },
-  lessonLabel: {
-    ...typography.caption,
-    color: colors.textMuted,
-    letterSpacing: 1,
-    marginBottom: 4,
-  },
-  lessonTitle: {
-    ...typography.h3,
-    color: colors.textPrimary,
-    marginBottom: 8,
-  },
-  lessonAuthor: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-    marginBottom: 4,
-  },
-  lessonDuration: {
-    ...typography.caption,
-    color: colors.textMuted,
-  },
-  lessonActions: {
-    flexDirection: 'row',
-  },
-  actionIcon: {
-    marginLeft: 16,
-  },
-  tabs: {
-    flexDirection: 'row',
+    paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
-    marginBottom: 20,
   },
-  tab: {
-    paddingVertical: 12,
-    marginRight: 32,
-  },
-  activeTab: {
-    borderBottomWidth: 2,
-    borderBottomColor: colors.textPrimary,
-  },
-  tabText: {
-    ...typography.label,
-    color: colors.textMuted,
-  },
-  activeTabText: {
-    color: colors.textPrimary,
-    fontWeight: '600',
-  },
-  meditationCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 20,
-  },
-  meditationHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  meditationType: {
-    ...typography.caption,
-    color: colors.textMuted,
-    marginLeft: 6,
-    letterSpacing: 0.5,
-  },
-  meditationContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  meditationImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 8,
-  },
-  meditationInfo: {
+  backBtn: { padding: 8 },
+  headerTitle: {
     flex: 1,
-    marginLeft: 12,
-  },
-  meditationTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
+    fontSize: 16,
     fontWeight: '600',
-    marginBottom: 4,
+    color: '#fff',
+    textAlign: 'center',
   },
-  meditationAuthor: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
+  listBtn: { padding: 8 },
+
+  scroll: { flex: 1 },
+
+  // Video
+  videoContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 220,
+    backgroundColor: '#000',
   },
-  meditationPlayButton: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: colors.textPrimary,
-    justifyContent: 'center',
+  videoThumb: { width: '100%', height: '100%' },
+  videoOverlay: {
+    position: 'absolute',
+    bottom: 12,
+    left: 12,
+    flexDirection: 'row',
     alignItems: 'center',
+    gap: 8,
   },
-  description: {
-    ...typography.body,
-    color: colors.textSecondary,
-    lineHeight: 24,
-    marginBottom: 24,
+  playBtn: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'rgba(255,255,255,0.25)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  tasksSection: {
-    marginBottom: 20,
+  videoDuration: { fontSize: 14, fontWeight: '600', color: '#fff' },
+  mvChevron: {
+    position: 'absolute',
+    bottom: 8,
+    alignSelf: 'center',
+    left: '50%',
   },
-  tasksTitle: {
-    ...typography.h4,
-    color: colors.textPrimary,
+
+  // Lesson info
+  lessonInfo: { padding: 16 },
+  lessonInfoTop: { flexDirection: 'row', justifyContent: 'space-between' },
+  lessonInfoLeft: { flex: 1, paddingRight: 12 },
+  lessonNumber: { fontSize: 11, color: colors.textMuted, letterSpacing: 1, marginBottom: 6 },
+  lessonTitle: { fontSize: 20, fontWeight: '700', color: '#fff', marginBottom: 6, lineHeight: 26 },
+  lessonAuthor: { fontSize: 14, color: colors.textSecondary, marginBottom: 2 },
+  lessonDuration: { fontSize: 13, color: colors.textMuted },
+  lessonActions: { flexDirection: 'row', gap: 4, paddingTop: 4 },
+  actionIcon: { padding: 6 },
+
+  // AI pills
+  pillsRow: { paddingHorizontal: 16, paddingBottom: 16, gap: 8 },
+  aiPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.backgroundElevated,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 24,
+    marginRight: 8,
+  },
+  aiPillText: { fontSize: 13, color: '#fff', fontWeight: '500' },
+
+  // Tabs
+  tabRow: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
     marginBottom: 16,
   },
-  taskItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    padding: 16,
+  tab: { marginRight: 24, paddingBottom: 10, position: 'relative' },
+  tabText: { fontSize: 15, fontWeight: '600', color: colors.textMuted },
+  tabTextActive: { color: '#fff' },
+  tabUnderline: {
+    position: 'absolute', bottom: 0, left: 0, right: 0,
+    height: 2, backgroundColor: '#fff', borderRadius: 1,
+  },
+
+  // Lesson content
+  lessonContent: { paddingHorizontal: 16 },
+  meditationCard: {
+    backgroundColor: colors.backgroundElevated,
     borderRadius: 12,
+    padding: 12,
+    marginBottom: 20,
+  },
+  meditationLeft: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
+  meditationLabel: { fontSize: 11, color: colors.textMuted, letterSpacing: 0.5 },
+  meditationBody: { flexDirection: 'row', alignItems: 'center' },
+  meditationThumb: { width: 64, height: 64, borderRadius: 8, backgroundColor: colors.backgroundCard, marginRight: 12 },
+  meditationInfo: { flex: 1 },
+  meditationTitle: { fontSize: 14, fontWeight: '700', color: '#fff', marginBottom: 3, lineHeight: 19 },
+  meditationAuthor: { fontSize: 12, color: colors.textSecondary },
+  meditationPlay: {
+    width: 36, height: 36, borderRadius: 18,
+    backgroundColor: colors.backgroundCard,
+    alignItems: 'center', justifyContent: 'center',
+  },
+
+  bodyText: {
+    fontSize: 14,
+    color: colors.textSecondary,
+    lineHeight: 22,
+    marginBottom: 14,
+  },
+  bodyBold: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#fff',
     marginBottom: 8,
+    marginTop: 4,
   },
-  taskCheckbox: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: colors.border,
-    marginRight: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  taskCheckboxCompleted: {
-    backgroundColor: colors.success,
-    borderColor: colors.success,
-  },
-  taskText: {
-    ...typography.body,
-    color: colors.textPrimary,
-    flex: 1,
-  },
-  discussionsPlaceholder: {
-    padding: 40,
-    alignItems: 'center',
-  },
-  discussionsText: {
-    ...typography.body,
-    color: colors.textMuted,
-  },
-  bottomPadding: {
-    height: 100,
-  },
-  completeButtonContainer: {
+
+  discussionsEmpty: { alignItems: 'center', paddingTop: 60, gap: 12 },
+  discussionsText: { fontSize: 14, color: colors.textMuted },
+
+  // CTA
+  ctaContainer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    padding: 16,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: colors.borderLight,
-  },
-  completeButton: {
-    backgroundColor: colors.textPrimary,
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  completeButtonText: {
-    ...typography.label,
-    color: '#fff',
-    fontWeight: '600',
-  },
-  // TOC Modal Styles
-  tocContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  tocHeader: {
-    alignItems: 'center',
-    paddingVertical: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
-  },
-  tocHandle: {
-    width: 40,
-    height: 4,
-    backgroundColor: colors.border,
-    borderRadius: 2,
-    marginBottom: 16,
-  },
-  tocTitle: {
-    ...typography.h4,
-    color: colors.textPrimary,
-  },
-  tocList: {
-    padding: 16,
-  },
-  tocWeek: {
-    marginBottom: 24,
-  },
-  tocWeekTitle: {
-    ...typography.h4,
-    color: colors.textPrimary,
-    marginBottom: 16,
-  },
-  tocLessonItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    paddingHorizontal: 16,
     paddingVertical: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.borderLight,
-  },
-  tocLessonImage: {
-    width: 80,
-    height: 60,
-    borderRadius: 8,
-    marginRight: 12,
-  },
-  tocLessonContent: {
-    flex: 1,
-  },
-  tocLessonLabel: {
-    ...typography.caption,
-    color: colors.textMuted,
-    marginBottom: 2,
-  },
-  tocLessonTitle: {
-    ...typography.label,
-    color: colors.textPrimary,
-    fontWeight: '600',
-    marginBottom: 2,
-  },
-  tocLessonAuthor: {
-    ...typography.bodySmall,
-    color: colors.textSecondary,
-  },
-  tocLessonDuration: {
-    ...typography.caption,
-    color: colors.textMuted,
-  },
-  tocCloseButton: {
-    padding: 16,
-    alignItems: 'center',
+    backgroundColor: colors.background,
     borderTopWidth: 1,
-    borderTopColor: colors.borderLight,
+    borderTopColor: colors.border,
   },
-  tocCloseText: {
-    ...typography.label,
-    color: colors.primary,
-    fontWeight: '600',
+  ctaButton: {
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    paddingVertical: 16,
+    alignItems: 'center',
   },
+  ctaText: { fontSize: 16, fontWeight: '700', color: '#000' },
+
+  // Modal
+  modal: { flex: 1, backgroundColor: colors.background, paddingTop: 12 },
+  modalHandle: {
+    width: 36, height: 4, borderRadius: 2,
+    backgroundColor: colors.border, alignSelf: 'center', marginBottom: 16,
+  },
+  modalTitle: {
+    fontSize: 16, fontWeight: '700', color: '#fff',
+    textAlign: 'center', marginBottom: 20, paddingHorizontal: 16,
+  },
+  weekTitle: {
+    fontSize: 14, fontWeight: '700', color: '#fff',
+    paddingHorizontal: 16, paddingVertical: 12,
+    lineHeight: 20,
+  },
+  lessonRow: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    alignItems: 'flex-start',
+    gap: 12,
+  },
+  lessonThumbWrap: { position: 'relative' },
+  lessonThumb: { width: 72, height: 72, borderRadius: 8, backgroundColor: colors.backgroundCard },
+  checkBadge: {
+    position: 'absolute', bottom: 4, right: 4,
+    width: 20, height: 20, borderRadius: 10,
+    backgroundColor: colors.teal,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  lessonRowInfo: { flex: 1 },
+  lessonRowNumber: { fontSize: 11, color: colors.textMuted, marginBottom: 3 },
+  lessonRowTitle: { fontSize: 14, fontWeight: '700', color: '#fff', lineHeight: 19, marginBottom: 3 },
+  lessonRowAuthor: { fontSize: 12, color: colors.textSecondary, marginBottom: 2 },
+  lessonRowDuration: { fontSize: 12, color: colors.textMuted },
 });

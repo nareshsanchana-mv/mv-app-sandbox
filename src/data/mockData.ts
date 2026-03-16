@@ -1039,3 +1039,128 @@ export const comingSoon = [
     coverImage: 'https://images.unsplash.com/photo-1522881451255-f59ad836fdfb?w=800&q=80',
   },
 ];
+
+// ─── Coach tab ─────────────────────────────────────────────────────────────
+export const coachCertifications = [
+  { id: 'cert1', title: 'Certified 10X Coach', author: 'Ajit Nawalkha, Lorenzo Delano',
+    enrolledCount: 925, lessonCount: 93,
+    coverImage: coverImages.tenXFitness },
+  { id: 'cert2', title: 'Certified Business Coach', author: 'Ajit Nawalkha',
+    enrolledCount: 2792, lessonCount: 88,
+    coverImage: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80' },
+  { id: 'cert3', title: 'Certified HoloBody Coach', author: 'Ronan Diego de Oliveira',
+    enrolledCount: 2143, lessonCount: 138,
+    coverImage: coverImages.tenXFitness },
+  { id: 'cert4', title: 'Certified Life Coach', author: 'Ajit Nawalkha',
+    enrolledCount: 5874, lessonCount: 80,
+    coverImage: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80' },
+  { id: 'cert5', title: 'Certified Hypnotherapist', author: 'Marisa Peer',
+    enrolledCount: 3210, lessonCount: 72,
+    coverImage: coverImages.certifiedHypnotherapist },
+];
+
+// ─── Recordings tab ────────────────────────────────────────────────────────
+export const recordingShows = [
+  {
+    id: 'show1', name: 'Mindvalley Social Media Summit 2026', episodeCount: 3,
+    thumbnail: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=120&q=80',
+    episodes: [
+      { id: 'e1', title: 'Day 1: Find Your Voice', tag: 'Find Your Voice',
+        tagColor: '#7C3AED', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=80' },
+      { id: 'e2', title: 'Day 2: Go Viral', tag: 'Go Viral',
+        tagColor: '#059669', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=80' },
+      { id: 'e3', title: 'Day 3: Monetize Your Social Media', tag: 'Monetize Your Social Media',
+        tagColor: '#0284C7', image: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=400&q=80' },
+    ],
+  },
+  {
+    id: 'show2', name: 'Mindvalley Mentoring', episodeCount: 110,
+    thumbnail: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=120&q=80',
+    episodes: [
+      { id: 'e4', title: 'The Winning Sage', tag: 'Abundance',
+        tagColor: '#B45309', image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80' },
+      { id: 'e5', title: 'Regenerative Sexual Health', tag: 'Health',
+        tagColor: '#7C3AED', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80' },
+      { id: 'e6', title: 'Calling in The One', tag: 'Relationships',
+        tagColor: '#DB2777', image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80' },
+    ],
+  },
+  {
+    id: 'show3', name: 'Mentoring At Work', episodeCount: 46,
+    thumbnail: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=120&q=80',
+    episodes: [
+      { id: 'e7', title: 'A Million Followers in 30 Days', tag: 'Social Media',
+        tagColor: '#0284C7', image: require('../../assets/authors/brendan-kane.jpg') },
+      { id: 'e8', title: 'Creating Change, Measuring Impact', tag: 'Leadership',
+        tagColor: '#059669', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80' },
+    ],
+  },
+  {
+    id: 'show4', name: 'Mindvalley Films', episodeCount: 4,
+    thumbnail: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=120&q=80',
+    episodes: [
+      { id: 'e9', title: 'Human Longevity', tag: 'Health',
+        tagColor: '#059669', image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80' },
+    ],
+  },
+];
+
+export const recordingCategories = [
+  'Career', 'Character', 'Emotional Life', 'Financial',
+  'Health & Fitness', 'Intellectual Life', 'Life Vision', 'Love Relationship',
+  'Parenting', 'Quality of Life', 'Social Life', 'Spiritual',
+];
+
+// ─── Courses tab ────────────────────────────────────────────────────────────
+export const coursesGrid = [
+  { id: 'c1', title: 'Philosophers Notes', author: 'Brian Johnson',
+    coverImage: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80' },
+  { id: 'c2', title: '8 Flawesome Meditations', author: 'Kristina Mänd-Lakhiani',
+    coverImage: require('../../assets/authors/kristina.jpg') },
+  { id: 'c3', title: 'Abundance Meditation', author: 'Bob Proctor',
+    coverImage: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80' },
+  { id: 'c4', title: 'Moving Meditation', author: 'Lee Holden',
+    coverImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80' },
+  { id: 'c5', title: 'Silva Intuition System', author: 'Jose Silva',
+    coverImage: coverImages.silvaUltramind },
+  { id: 'c6', title: 'Silva Life System', author: 'Jose Silva',
+    coverImage: 'https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?w=400&q=80' },
+  { id: 'c7', title: 'The Winning Sage', author: 'Helene Hadsell',
+    coverImage: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80' },
+];
+
+// ─── Quest / Lesson detail ──────────────────────────────────────────────────
+export const questLessons = {
+  silvaUltramind: {
+    programTitle: 'The Silva Ultramind System',
+    currentLesson: {
+      number: 2,
+      title: 'Tap into Alpha with the Centering Exercise',
+      author: 'Vishen',
+      duration: '27m',
+      videoThumbnail: coverImages.silvaUltramind,
+      videoDuration: '7m',
+      meditation: {
+        title: 'The Silva Centering Exercise - Alpha',
+        author: 'Vishen',
+        duration: '20m',
+        image: coverImages.silvaUltramind,
+      },
+      bodyText: "Welcome to the second day of your Silva Ultramind journey.\n\nToday you will learn about the Silva Centering Exercise which is the foundation of the entire Silva UltraMind System. It will start you on the road re-building the intuitive genius you were born with.\n\n**Today's Tasks**\n\n1. Watch the video above and once you have completed it, listen to the Centering exercise. You do not need to repeat the Centering exercise today.\n\n2. Practice going to your center by using the 3-2-1 countdown. Jose Silva recommends that this is done up to 3 times a day for a minimum of 5 minutes each time.\n\n3. You will find the Beneficial, ESP, and Positive Statements listed below and you can repeat them to yourself while at your center.\n\n**Your Daily Practice - Going to your Center**\n\nWe recommend that you practice going to your center (also known as your 'level') 1 to 3 times every day. Do this by using the 3-2-1 Technique for a minimum of 5 minutes each time. When you reach your level, you can either relax at that state, or continue with any meditation practice you have.",
+    },
+    weeks: [
+      {
+        title: 'Week 1: The Mental Screen, Projection of Consciousness & Intuition',
+        lessons: [
+          { number: 1, title: 'Mastering Posture and Style', author: 'Vishen', duration: '23 mins', completed: true, image: coverImages.silvaUltramind },
+          { number: 2, title: 'Tap into Alpha with the Centering Exercise', author: 'Vishen', duration: '27 mins', completed: false, image: coverImages.silvaUltramind },
+          { number: 3, title: 'E.S.P. & the Mental Screen', author: 'Vishen', duration: '22 mins', completed: false, image: coverImages.silvaUltramind },
+          { number: 4, title: 'The Mental Video Technique: Enlist Higher Intelligence to Solve Problems', author: 'Vishen', duration: '34 mins', completed: false, image: coverImages.silvaUltramind },
+          { number: 5, title: 'Projection into Your Home', author: 'Vishen', duration: '41 mins', completed: false, image: coverImages.silvaUltramind },
+          { number: 6, title: 'Centering Exercise 2', author: 'Vishen', duration: '27 mins', completed: false, image: coverImages.silvaUltramind },
+          { number: 7, title: 'The Compass & The Rocket', author: 'Vishen', duration: '14 mins', completed: false, image: coverImages.silvaUltramind },
+        ],
+      },
+    ],
+  },
+};

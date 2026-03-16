@@ -26,6 +26,9 @@ import NewReleaseCard from '../components/NewReleaseCard';
 import ComingSoonCard from '../components/ComingSoonCard';
 import CategoryTile from '../components/CategoryTile';
 import ContinueProgramCard from '../components/ContinueProgramCard';
+import CoachTab from './CoachTab';
+import RecordingsTab from './RecordingsTab';
+import CoursesTab from './CoursesTab';
 
 // Category meta (icon + colour + display name)
 const CATEGORIES = [
@@ -80,7 +83,11 @@ export default function ProgramsScreen() {
         ))}
       </View>
 
-      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
+      {activeTab === 'Coach' && <CoachTab />}
+      {activeTab === 'Recordings' && <RecordingsTab />}
+      {activeTab === 'Courses' && <CoursesTab />}
+
+      {activeTab === 'Discover' && <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
 
         {/* Browse by language */}
         <View style={styles.languageRow}>
@@ -228,7 +235,7 @@ export default function ProgramsScreen() {
         </View>
 
         <View style={{ height: 32 }} />
-      </ScrollView>
+      </ScrollView>}
     </SafeAreaView>
   );
 }
