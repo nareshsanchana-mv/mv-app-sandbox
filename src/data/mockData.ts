@@ -330,21 +330,31 @@ export const premiumPrograms = [
 export const favorites = [
   {
     id: '1',
-    title: 'Clearing Mental Clutter With Sacred Geometry',
+    title: 'Duality',
     author: 'Jeffrey Allen',
-    image: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400',
+    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=600',
+    type: 'quest' as const,  // rectangular landscape
   },
   {
     id: '2',
-    title: 'Leo',
-    author: 'Gabriel Loynaz',
-    image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+    title: 'Super Brain',
+    author: 'Jim Kwik',
+    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600',
+    type: 'quest' as const,  // rectangular landscape
   },
   {
     id: '3',
-    title: 'Duality',
-    author: 'Jeffrey Allen',
-    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400',
+    title: "Yogi's Guide to Joy",
+    author: 'Sadhguru',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400',
+    type: 'meditation' as const,  // square
+  },
+  {
+    id: '4',
+    title: 'Leo',
+    author: 'Gabriel Loynaz',
+    image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+    type: 'sound' as const,  // circular
   },
 ];
 

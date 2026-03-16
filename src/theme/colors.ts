@@ -1,3 +1,4 @@
+// MV App Sandbox — Dark Theme Color Tokens
 export const colors = {
   // Backgrounds
   background: '#0A0E17',
