@@ -1164,3 +1164,54 @@ export const questLessons = {
     ],
   },
 };
+
+// ─── Meditations page data ──────────────────────────────────────────────────
+export const meditationPractices = [
+  { id: 'med',  label: 'Meditation',    icon: 'person-outline',   image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80' },
+  { id: 'snd',  label: 'Soundscape',   icon: 'musical-note-outline', image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80' },
+  { id: 'heal', label: 'Sound Healing', icon: 'pulse-outline',    image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&q=80' },
+  { id: 'hyp',  label: 'Hypnotherapy', icon: 'radio-button-on-outline', image: 'https://images.unsplash.com/photo-1510784722466-f2aa240cx26c?w=400&q=80' },
+  { id: 'vis',  label: 'Visualization', icon: 'eye-outline',      image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=400&q=80' },
+  { id: 'bth',  label: 'Breathwork',   icon: 'cloud-outline',    image: 'https://images.unsplash.com/photo-1506126613408-4e0e0f7c50e1?w=400&q=80' },
+];
+
+export const meditationCategories = [
+  { id: 'sleep',  label: 'BETTER SLEEP',  image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80' },
+  { id: 'perf',   label: 'PERFORMANCE',   image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80' },
+  { id: 'stress', label: 'STRESS RELIEF', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' },
+  { id: 'focus',  label: 'FOCUS',         image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=800&q=80' },
+];
+
+export const soundCategories = [
+  { id: 'altered', label: 'ALTERED STATES', image: 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=800&q=80' },
+  { id: 'nature',  label: 'NATURE',         image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80' },
+  { id: 'sleep2',  label: 'SLEEP',          image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=800&q=80' },
+  { id: 'focus2',  label: 'FOCUS MUSIC',    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80' },
+];
+
+export const recentlyPlayed = [
+  { id: 'rp1', title: 'Releasing Anxiety',      author: 'Brett Bevell',       duration: '3m',  image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=200&q=80' },
+  { id: 'rp2', title: '3x3 Restful Sleep',       author: 'Dina Proctor',       duration: '3m',  image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=200&q=80' },
+  { id: 'rp3', title: 'Sleep Inducing Body Scan', author: 'House of Wellbeing', duration: '25m', image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=200&q=80' },
+  { id: 'rp4', title: 'Deep Stillness Gratitude Meditation', author: 'Tom Cronin', duration: '7m', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&q=80' },
+];
+
+export const programMeditations = [
+  {
+    id: 'pm1',
+    programTitle: 'The Silva Ultramind System',
+    meditations: [
+      { id: 'pmed1', title: 'The Mental Screen',                      image: 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=200&q=80' },
+      { id: 'pmed2', title: 'The Silva Centering Exercise (Alpha Beats)', image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=200&q=80' },
+      { id: 'pmed3', title: 'The Short Relaxation',                   image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=200&q=80' },
+    ],
+  },
+  {
+    id: 'pm2',
+    programTitle: 'Manifestation Mastery',
+    meditations: [
+      { id: 'pmed4', title: '8-Hour Manifestation', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&q=80' },
+      { id: 'pmed5', title: 'Morning Visualisation', image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=200&q=80' },
+    ],
+  },
+];

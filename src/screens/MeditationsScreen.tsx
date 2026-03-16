@@ -1,93 +1,140 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import {
+  View, Text, StyleSheet, ScrollView, TouchableOpacity,
+  Image, ImageBackground,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
-import Section from '../components/Section';
 import { colors } from '../theme/colors';
-import { todayMeditations } from '../data/mockData';
+import {
+  todayMeditations,
+  meditationPractices,
+  meditationCategories,
+  soundCategories,
+  recentlyPlayed,
+  programMeditations,
+} from '../data/mockData';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../navigation/RootNavigator';
 
+type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
 const TABS = ['All', 'Meditation', 'Soundscape', 'Sound Healing'];
 const DURATION_FILTERS = ['UNDER 5 MINS', 'UNDER 10 MINS', 'UNDER 20 MINS'];
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
 const FAVORITES = [
-  { id: '1', title: 'Clearing Mental Clutter With Sacred Geometry', author: 'Jeffrey Allen', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400', round: false },
-  { id: '2', title: 'Leo', author: 'Gabriel Loynaz', image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400', round: true },
+  { id: '1', title: 'Clearing Mental Clutter With Sacred Geometry', author: 'Jeffrey Allen',
+    image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&q=80', round: false },
+  { id: '2', title: 'Leo', author: 'Gabriel Loynaz',
+    image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?w=400&q=80', round: true },
 ];
 
 const TOP_RATED = [
-  { id: '1', title: 'Ocean Healing', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=200' },
-  { id: '2', title: '528 Hz – The Love Frequency', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=200' },
-  { id: '3', title: 'Throat Chakra – Communication', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=200' },
-  { id: '4', title: 'Root Chakra', author: 'Gabriel Loynaz', rating: 4.9, image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=200' },
+  { id: '1', title: 'Ocean Healing', author: 'Gabriel Loynaz', rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=200&q=80' },
+  { id: '2', title: '528 Hz – The Love Frequency', author: 'Gabriel Loynaz', rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=200&q=80' },
+  { id: '3', title: 'Throat Chakra – Communication', author: 'Gabriel Loynaz', rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=200&q=80' },
+  { id: '4', title: 'Root Chakra', author: 'Gabriel Loynaz', rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=200&q=80' },
+];
+
+const TODAY_MEDS = [
+  { id: 't1', title: 'The Havening Technique', author: 'Paul McKenna', rating: 4.6, duration: '4m',
+    bucket: 'UNDER 5 MINS', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg' },
+  { id: 't2', title: 'The Relaxation Meditation', author: 'Paul McKenna', rating: 4.7, duration: '8m',
+    bucket: 'UNDER 10 MINS', image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80' },
+  { id: 't3', title: 'Perfect Blueprint for You', author: 'Regan Hillyer', rating: 4.5, duration: '12m',
+    bucket: 'UNDER 20 MINS', image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=400&q=80' },
+  { id: 't4', title: 'The 6 Phase Meditation', author: 'Vishen Lakhiani', rating: 4.8, duration: '19m',
+    bucket: 'UNDER 20 MINS', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80' },
 ];
 
 export default function MeditationsScreen() {
   const [activeTab, setActiveTab] = useState('All');
+  const [durationFilter, setDurationFilter] = useState('UNDER 5 MINS');
   const navigation = useNavigation<NavigationProp>();
+
+  const filteredMeds = durationFilter === 'UNDER 5 MINS'
+    ? TODAY_MEDS.filter(m => parseInt(m.duration) <= 5)
+    : durationFilter === 'UNDER 10 MINS'
+    ? TODAY_MEDS.filter(m => parseInt(m.duration) <= 10)
+    : TODAY_MEDS;
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <Header />
-      <View style={styles.tabBar}>
-        {TABS.map((tab) => (
+
+      {/* Tab bar */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.tabBar}
+        style={styles.tabBarWrap}
+      >
+        {TABS.map(tab => (
           <TouchableOpacity key={tab} onPress={() => setActiveTab(tab)} style={styles.tabItem}>
             <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
             {activeTab === tab && <View style={styles.tabUnderline} />}
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Daily Target */}
+
+        {/* ── Daily Target ─────────────────────────────────── */}
         <View style={styles.targetCard}>
-          <View style={styles.targetIcon}>
-            <Ionicons name="radio-button-on" size={28} color={colors.teal} />
+          <View style={styles.targetIconWrap}>
+            <Ionicons name="radio-button-on" size={26} color="#F5A623" />
           </View>
-          <View style={styles.targetText}>
+          <View style={styles.targetInfo}>
             <Text style={styles.targetLabel}>Daily target</Text>
             <Text style={styles.targetProgress}>0 / 5 mins</Text>
+            <View style={styles.progressBar}>
+              <View style={[styles.progressFill, { width: '0%' }]} />
+            </View>
           </View>
           <TouchableOpacity>
             <Ionicons name="ellipsis-horizontal" size={18} color={colors.textMuted} />
           </TouchableOpacity>
         </View>
 
-        {/* Favorites */}
-        <Section title="Favorites" horizontal>
-          {FAVORITES.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.favCard} activeOpacity={0.85}>
-              <Image
-                source={{ uri: item.image }}
-                style={[styles.favImage, item.round && styles.favImageRound]}
-              />
-              <Text style={styles.favTitle} numberOfLines={2}>{item.title}</Text>
-              <Text style={styles.favAuthor}>{item.author}</Text>
-            </TouchableOpacity>
-          ))}
-        </Section>
+        {/* ── Favorites ────────────────────────────────────── */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Favorites</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.hScroll}
+          >
+            {FAVORITES.map(item => (
+              <TouchableOpacity key={item.id} style={styles.favCard} activeOpacity={0.85}>
+                <Image
+                  source={{ uri: item.image }}
+                  style={[styles.favImage, item.round && styles.favImageRound]}
+                />
+                <Text style={styles.favTitle} numberOfLines={2}>{item.title}</Text>
+                <Text style={styles.favAuthor}>{item.author}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
 
-        {/* Top Rated */}
-        <View style={styles.topRatedSection}>
-          <View style={styles.sectionHeader}>
+        {/* ── Top Rated ────────────────────────────────────── */}
+        <View style={styles.section}>
+          <View style={styles.rowHeader}>
             <Text style={styles.sectionTitle}>Top rated</Text>
             <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
           </View>
           <View style={styles.topRatedGrid}>
-            {TOP_RATED.map((item) => (
+            {TOP_RATED.map(item => (
               <TouchableOpacity key={item.id} style={styles.topRatedItem} activeOpacity={0.85}>
                 <Image source={{ uri: item.image }} style={styles.topRatedThumb} />
                 <View style={styles.topRatedMeta}>
                   <Text style={styles.topRatedTitle} numberOfLines={2}>{item.title}</Text>
                   <Text style={styles.topRatedAuthor}>{item.author}</Text>
                   <View style={styles.ratingRow}>
-                    <Text style={styles.ratingText}>{item.rating}</Text>
-                    <Text> ⭐</Text>
+                    <Ionicons name="star" size={11} color="#F5A623" />
+                    <Text style={styles.ratingText}> {item.rating}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
@@ -95,38 +142,163 @@ export default function MeditationsScreen() {
           </View>
         </View>
 
-        {/* Your Meditations for Today */}
-        <View style={styles.todaySection}>
-          <Text style={styles.todaySectionTitle}>Your meditations for today</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.durationFilters}>
-            {DURATION_FILTERS.map((f) => (
-              <View key={f} style={styles.durationPill}>
-                <Ionicons name="time-outline" size={11} color={colors.textMuted} />
-                <Text style={styles.durationText}>{f}</Text>
-              </View>
+        {/* ── Your Meditations for Today ───────────────────── */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Your meditations for today</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}
+            contentContainerStyle={[styles.hScroll, { marginBottom: 12 }]}
+          >
+            {DURATION_FILTERS.map(f => (
+              <TouchableOpacity
+                key={f} style={[styles.durationPill, durationFilter === f && styles.durationPillActive]}
+                onPress={() => setDurationFilter(f)}
+              >
+                <Ionicons name="time-outline" size={11} color={durationFilter === f ? '#000' : colors.textMuted} />
+                <Text style={[styles.durationText, durationFilter === f && styles.durationTextActive]}> {f}</Text>
+              </TouchableOpacity>
             ))}
           </ScrollView>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.medsRow}>
-            {todayMeditations.map((med) => (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.hScroll}
+          >
+            {(filteredMeds.length > 0 ? filteredMeds : TODAY_MEDS).map(med => (
               <TouchableOpacity
-                key={med.id}
-                style={styles.medCard}
-                activeOpacity={0.85}
+                key={med.id} style={styles.medCard} activeOpacity={0.85}
                 onPress={() => navigation.navigate('MeditationPlayer', {
-                  id: med.id, title: med.title, author: med.author, image: med.image, duration: med.duration, rating: med.rating,
+                  id: med.id, title: med.title, author: med.author,
+                  image: med.image, duration: med.duration, rating: med.rating,
                 })}
               >
                 <Image source={{ uri: med.image }} style={styles.medImage} />
                 <Text style={styles.medTitle} numberOfLines={2}>{med.title}</Text>
                 <Text style={styles.medAuthor}>{med.author}</Text>
-                <View style={styles.medMeta}>
-                  <Text style={styles.medRating}>{med.rating}</Text>
-                  <Text> ⭐ </Text>
-                  <Text style={styles.medDuration}>{med.duration}</Text>
+                <View style={styles.ratingRow}>
+                  <Ionicons name="star" size={11} color="#F5A623" />
+                  <Text style={styles.ratingText}> {med.rating}</Text>
+                  <Text style={styles.ratingText}> · {med.duration}</Text>
                 </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
+        </View>
+
+        {/* ── Explore by Practices ─────────────────────────── */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Explore by practices</Text>
+          <View style={styles.practicesGrid}>
+            {meditationPractices.map(p => (
+              <TouchableOpacity key={p.id} style={styles.practiceTile} activeOpacity={0.85}>
+                <ImageBackground source={{ uri: p.image }} style={styles.practiceBg} imageStyle={styles.practiceBgImg}>
+                  <View style={styles.practiceIconCircle}>
+                    <Ionicons name={p.icon as any} size={18} color="#fff" />
+                  </View>
+                  <Text style={styles.practiceLabel}>{p.label}</Text>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* ── Meditation Categories ─────────────────────────── */}
+        <View style={styles.section}>
+          <View style={styles.rowHeader}>
+            <Text style={styles.sectionTitle}>Meditation categories</Text>
+            <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
+          </View>
+          <View style={styles.categoryGrid}>
+            {meditationCategories.map(cat => (
+              <TouchableOpacity key={cat.id} style={styles.categoryCard} activeOpacity={0.85}>
+                <ImageBackground source={{ uri: cat.image }} style={styles.categoryBg} imageStyle={styles.categoryBgImg}>
+                  <Text style={styles.categoryLabel}>{cat.label}</Text>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* ── Sound Categories ────────────────────────────────── */}
+        <View style={styles.section}>
+          <View style={styles.rowHeader}>
+            <Text style={styles.sectionTitle}>Sound categories</Text>
+            <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
+          </View>
+          <View style={styles.categoryGrid}>
+            {soundCategories.map(cat => (
+              <TouchableOpacity key={cat.id} style={styles.categoryCard} activeOpacity={0.85}>
+                <ImageBackground source={{ uri: cat.image }} style={styles.categoryBg} imageStyle={styles.categoryBgImg}>
+                  <Text style={styles.categoryLabel}>{cat.label}</Text>
+                </ImageBackground>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* ── Recently Played ─────────────────────────────────── */}
+        <View style={styles.section}>
+          <View style={styles.rowHeader}>
+            <Text style={styles.sectionTitle}>Recently played</Text>
+            <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
+          </View>
+          <View style={styles.recentGrid}>
+            {recentlyPlayed.map(item => (
+              <TouchableOpacity key={item.id} style={styles.recentItem} activeOpacity={0.85}>
+                <Image source={{ uri: item.image }} style={styles.recentThumb} />
+                <View style={styles.recentInfo}>
+                  <Text style={styles.recentTitle} numberOfLines={2}>{item.title}</Text>
+                  <Text style={styles.recentAuthor}>{item.author}</Text>
+                  <Text style={styles.recentDuration}>{item.duration}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        {/* ── My Program Meditations ──────────────────────────── */}
+        <View style={styles.section}>
+          <View style={styles.rowHeader}>
+            <Text style={styles.sectionTitle}>My program meditations</Text>
+            <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
+          </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.hScroll}
+          >
+            {programMeditations.map(prog => (
+              <View key={prog.id} style={styles.progMedCard}>
+                <TouchableOpacity style={styles.progMedHeader} activeOpacity={0.75}>
+                  <Text style={styles.progMedTitle}>{prog.programTitle}</Text>
+                  <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
+                </TouchableOpacity>
+                <View style={styles.progMedThumbs}>
+                  {prog.meditations.map(med => (
+                    <TouchableOpacity key={med.id} style={styles.progMedThumbWrap} activeOpacity={0.85}>
+                      <Image source={{ uri: med.image }} style={styles.progMedThumb} />
+                      <View style={styles.progMedThumbOverlay} />
+                      <View style={styles.progMedPlayBtn}>
+                        <Ionicons name="play" size={12} color="#fff" />
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* ── Experience sounds for mindfulness banner ─────────── */}
+        <View style={[styles.section, { paddingHorizontal: 16 }]}>
+          <TouchableOpacity activeOpacity={0.9}>
+            <ImageBackground
+              source={{ uri: 'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=800&q=80' }}
+              style={styles.soundsBanner}
+              imageStyle={styles.soundsBannerImg}
+            >
+              <View style={styles.soundsBannerOverlay} />
+              <Text style={styles.soundsBannerTitle}>Experience sounds for mindfulness</Text>
+              <TouchableOpacity style={styles.soundsBannerBtn}>
+                <Text style={styles.soundsBannerBtnText}>Play me a sound</Text>
+              </TouchableOpacity>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
 
         <View style={{ height: 100 }} />
@@ -137,75 +309,139 @@ export default function MeditationsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: colors.background },
-  tabBar: {
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  tabItem: { marginRight: 24, paddingBottom: 12, position: 'relative' },
+
+  // Tab bar
+  tabBarWrap: { borderBottomWidth: 1, borderBottomColor: colors.border, flexGrow: 0 },
+  tabBar: { paddingHorizontal: 20 },
+  tabItem: { marginRight: 24, paddingBottom: 12, paddingTop: 4, position: 'relative' },
   tabText: { fontSize: 16, fontWeight: '500', color: colors.textMuted },
-  tabTextActive: { color: colors.textPrimary, fontWeight: '700' },
+  tabTextActive: { color: '#fff', fontWeight: '700' },
   tabUnderline: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
-    height: 2, backgroundColor: colors.textPrimary, borderRadius: 1,
+    height: 2, backgroundColor: '#fff', borderRadius: 1,
   },
-  targetCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.backgroundCard,
-    marginHorizontal: 20,
-    borderRadius: 14,
-    padding: 16,
-    marginBottom: 28,
-    gap: 14,
-  },
-  targetIcon: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
-  targetText: { flex: 1 },
-  targetLabel: { fontSize: 14, fontWeight: '600', color: colors.textPrimary, marginBottom: 2 },
-  targetProgress: { fontSize: 13, color: colors.textSecondary },
-  favCard: { width: 160, marginRight: 14 },
-  favImage: { width: 160, height: 160, borderRadius: 12, backgroundColor: colors.backgroundCard, marginBottom: 10 },
-  favImageRound: { borderRadius: 80 },
-  favTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 4 },
-  favAuthor: { fontSize: 12, color: colors.textSecondary },
-  topRatedSection: { marginBottom: 32 },
-  sectionHeader: {
+
+  // Section
+  section: { marginBottom: 32 },
+  rowHeader: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-    paddingHorizontal: 20, marginBottom: 16,
+    paddingHorizontal: 20, marginBottom: 14,
   },
-  sectionTitle: { fontSize: 20, fontWeight: '700', color: colors.textPrimary },
-  seeAll: { fontSize: 14, color: colors.textAction },
-  topRatedGrid: {
-    flexDirection: 'row', flexWrap: 'wrap',
-    paddingHorizontal: 20, gap: 12,
-  },
-  topRatedItem: {
-    width: '47%', flexDirection: 'row', alignItems: 'center', gap: 10,
-  },
-  topRatedThumb: { width: 50, height: 50, borderRadius: 25, backgroundColor: colors.backgroundCard },
-  topRatedMeta: { flex: 1 },
-  topRatedTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 2 },
-  topRatedAuthor: { fontSize: 12, color: colors.textSecondary, marginBottom: 2 },
-  ratingRow: { flexDirection: 'row', alignItems: 'center' },
-  ratingText: { fontSize: 12, color: colors.textMuted },
-  todaySection: { marginBottom: 0 },
-  todaySectionTitle: { paddingHorizontal: 20, marginBottom: 16, fontSize: 20, fontWeight: '700', color: colors.textPrimary },
-  durationFilters: { paddingHorizontal: 20, marginBottom: 16, gap: 8 },
-  durationPill: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
+  sectionTitle: { fontSize: 20, fontWeight: '700', color: '#fff', paddingHorizontal: 20, marginBottom: 14 },
+  seeAll: { fontSize: 14, color: colors.teal },
+  hScroll: { paddingHorizontal: 20 },
+
+  // Daily Target
+  targetCard: {
+    flexDirection: 'row', alignItems: 'center',
     backgroundColor: colors.backgroundCard,
-    borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6,
-    borderWidth: 1, borderColor: colors.border,
+    marginHorizontal: 20, borderRadius: 14, padding: 16,
+    marginBottom: 28, gap: 14,
   },
-  durationText: { fontSize: 11, color: colors.textMuted, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: '500' },
-  medsRow: { paddingHorizontal: 20 },
-  medCard: { width: 150, marginRight: 14 },
-  medImage: { width: 150, height: 150, borderRadius: 12, backgroundColor: colors.backgroundCard, marginBottom: 8 },
-  medTitle: { fontSize: 13, fontWeight: '600', color: colors.textPrimary, marginBottom: 4 },
+  targetIconWrap: { width: 44, height: 44, justifyContent: 'center', alignItems: 'center' },
+  targetInfo: { flex: 1 },
+  targetLabel: { fontSize: 14, fontWeight: '600', color: '#fff', marginBottom: 2 },
+  targetProgress: { fontSize: 13, color: colors.textSecondary, marginBottom: 8 },
+  progressBar: { height: 4, backgroundColor: colors.border, borderRadius: 2 },
+  progressFill: { height: 4, backgroundColor: '#F5A623', borderRadius: 2 },
+
+  // Favorites
+  favCard: { width: 150, marginRight: 14 },
+  favImage: { width: 150, height: 190, borderRadius: 12, backgroundColor: colors.backgroundCard, marginBottom: 8 },
+  favImageRound: { borderRadius: 75, width: 130, height: 130 },
+  favTitle: { fontSize: 13, fontWeight: '600', color: '#fff', marginBottom: 3, lineHeight: 18 },
+  favAuthor: { fontSize: 12, color: colors.textSecondary },
+
+  // Top Rated
+  topRatedGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 20, gap: 16 },
+  topRatedItem: { width: '45%', flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
+  topRatedThumb: { width: 54, height: 54, borderRadius: 27, backgroundColor: colors.backgroundCard },
+  topRatedMeta: { flex: 1 },
+  topRatedTitle: { fontSize: 12, fontWeight: '600', color: '#fff', marginBottom: 2, lineHeight: 17 },
+  topRatedAuthor: { fontSize: 11, color: colors.textSecondary, marginBottom: 3 },
+  ratingRow: { flexDirection: 'row', alignItems: 'center' },
+  ratingText: { fontSize: 11, color: colors.textMuted },
+
+  // Today's meditations
+  durationPill: {
+    flexDirection: 'row', alignItems: 'center',
+    borderWidth: 1, borderColor: colors.border,
+    borderRadius: 20, paddingHorizontal: 12, paddingVertical: 7, marginRight: 8,
+  },
+  durationPillActive: { backgroundColor: '#fff', borderColor: '#fff' },
+  durationText: { fontSize: 11, color: colors.textMuted, fontWeight: '600', letterSpacing: 0.3 },
+  durationTextActive: { color: '#000' },
+  medCard: { width: 160, marginRight: 14 },
+  medImage: { width: 160, height: 200, borderRadius: 12, backgroundColor: colors.backgroundCard, marginBottom: 8 },
+  medTitle: { fontSize: 13, fontWeight: '600', color: '#fff', marginBottom: 3, lineHeight: 18 },
   medAuthor: { fontSize: 12, color: colors.textSecondary, marginBottom: 4 },
-  medMeta: { flexDirection: 'row', alignItems: 'center' },
-  medRating: { fontSize: 12, color: colors.textMuted },
-  medDuration: { fontSize: 12, color: colors.textMuted },
+
+  // Practices grid
+  practicesGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 8 },
+  practiceTile: { width: '47%', marginHorizontal: '1.5%', marginBottom: 4 },
+  practiceBg: { height: 72, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, gap: 10 },
+  practiceBgImg: { borderRadius: 12 },
+  practiceIconCircle: {
+    width: 34, height: 34, borderRadius: 17,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  practiceLabel: { fontSize: 14, fontWeight: '700', color: '#fff' },
+
+  // Category grid (meditation + sound)
+  categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 8 },
+  categoryCard: { width: '47%', marginHorizontal: '1.5%', aspectRatio: 1.7 },
+  categoryBg: { flex: 1, justifyContent: 'flex-end', padding: 12 },
+  categoryBgImg: { borderRadius: 12 },
+  categoryLabel: { fontSize: 16, fontWeight: '900', color: '#fff', letterSpacing: 1 },
+
+  // Recently Played
+  recentGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 12 },
+  recentItem: { width: '46%', flexDirection: 'row', alignItems: 'center', gap: 10 },
+  recentThumb: { width: 60, height: 60, borderRadius: 8, backgroundColor: colors.backgroundCard },
+  recentInfo: { flex: 1 },
+  recentTitle: { fontSize: 13, fontWeight: '600', color: '#fff', marginBottom: 2, lineHeight: 17 },
+  recentAuthor: { fontSize: 11, color: colors.textSecondary, marginBottom: 2 },
+  recentDuration: { fontSize: 11, color: colors.textMuted },
+
+  // Program Meditations
+  progMedCard: {
+    width: 300, marginRight: 16,
+    backgroundColor: colors.backgroundCard,
+    borderRadius: 14, overflow: 'hidden',
+  },
+  progMedHeader: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    paddingHorizontal: 14, paddingVertical: 12,
+    borderBottomWidth: 1, borderBottomColor: colors.border,
+  },
+  progMedTitle: { fontSize: 13, fontWeight: '700', color: '#fff', flex: 1 },
+  progMedThumbs: { flexDirection: 'row', padding: 12, gap: 8 },
+  progMedThumbWrap: { position: 'relative', flex: 1 },
+  progMedThumb: { width: '100%', aspectRatio: 1, borderRadius: 8, backgroundColor: colors.backgroundElevated },
+  progMedThumbOverlay: {
+    position: 'absolute', inset: 0,
+    backgroundColor: 'rgba(0,0,0,0.25)', borderRadius: 8,
+  },
+  progMedPlayBtn: {
+    position: 'absolute', bottom: 6, right: 6,
+    width: 22, height: 22, borderRadius: 11,
+    backgroundColor: 'rgba(255,255,255,0.3)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+
+  // Sounds banner
+  soundsBanner: { height: 180, justifyContent: 'flex-end', padding: 20 },
+  soundsBannerImg: { borderRadius: 16 },
+  soundsBannerOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,60,0.4)',
+    borderRadius: 16,
+  },
+  soundsBannerTitle: { fontSize: 22, fontWeight: '800', color: '#fff', marginBottom: 14, lineHeight: 28 },
+  soundsBannerBtn: {
+    backgroundColor: '#fff', paddingVertical: 12, paddingHorizontal: 24,
+    borderRadius: 30, alignSelf: 'flex-start',
+  },
+  soundsBannerBtnText: { fontSize: 14, fontWeight: '700', color: '#000' },
 });
