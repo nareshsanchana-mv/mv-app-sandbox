@@ -1,13 +1,53 @@
+// Cover image assets (served from public/ directory)
+const coverImages = {
+  silvaUltramind: '/covers/The_Silva_Ultramind_System.jpg',
+  superbrain: '/covers/Superbrain.png',
+  duality: '/covers/Duality.jpg',
+  wildfit: '/covers/Wildfit.png',
+  sixPhase: '/covers/The_6_Phase_Meditation.jpg',
+  fengShui: '/covers/Feng_Shui_for_Life.png',
+  beExtraordinary: '/covers/Be_Extraordinary.jpg',
+  manifestingMastery: '/covers/Manifesting_Mastery.jpg',
+  tenXFitness: '/covers/10X_Fitness.jpg',
+  yogiGuide: '/covers/A_Yogis_Guide_to_Joy.jpg',
+  moneyEQ: '/covers/Money_EQ.png',
+  speakInspire: '/covers/Speak_and_Inspire.png',
+  longevityBlueprint: '/covers/The_Longevity_Blueprint.png',
+  consciousParenting: '/covers/Conscious_Parenting_Mastery.png',
+  certifiedHypnotherapist: '/covers/Mindvalley_Certified_Hypnotherapist.jpg',
+  buildingBrand: '/covers/Building_an_Unstoppable_Brand.jpg',
+  gettingStarted: '/covers/Getting_Started_with_Mindvalley.jpg',
+  lifebook: '/covers/Lifebook.png',
+  artOfManifesting: '/covers/The_Art_of_Manifesting.png',
+  sleepMastery: '/covers/The_Mastery_of_Sleep.jpg',
+  negotiateConfidence: '/covers/Negotiate_with_Confidence_Clarity_in_Every_Conversation.jpg',
+  lifebookMastery: '/covers/Lifebook_Mastery.jpg',
+};
+
+// Meditation & sound cover images (served from public/ directory)
+const meditationCovers = {
+  manifestingHealthWealthLove: '/meditation-covers/Manifesting_Health,_Wealth_&_Love.jpg',
+  releasingAnxiety: '/meditation-covers/Releasing_Anxiety.jpg',
+  sleepInducingBodyScan: '/meditation-covers/Sleep_Inducing_Body_Scan.jpg',
+  sinkBackIntoSleep: '/meditation-covers/Sink_Back_Into_Deeper_Sleep.jpg',
+  thirdEyeChakra: '/meditation-covers/Third_Eye_Chakra_Sounding_Intuition_&_Wisdom.jpg',
+  sixPhaseMeditation: '/meditation-covers/6-Phase_Meditation.jpg',
+  deepRelaxation: '/meditation-covers/Deep_Relaxation.jpg',
+  clarityOfVision: '/meditation-covers/Clarity_of_Vision_The_Path_to_Your_Dreams.jpg',
+  abundanceMeditation: '/meditation-covers/Abundance_Meditation.jpg',
+  profoundSleep: '/meditation-covers/Profound_Sleep.jpg',
+};
+
 // Mock data for Mindvalley app
 
 export const user = {
   name: 'Naresh',
   fullName: 'Naresh Sanchana',
-  email: 'naresh.sanchana@mindvalley.com',
+  email: 'nsanchana@gmail.com',
   avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
   dayStreak: 0,
-  lessonsCompleted: 30,
-  meditatedMinutes: 415, // 6h 55m
+  lessonsCompleted: 15,
+  meditatedMinutes: 27,
 };
 
 export const achievements = [
@@ -38,12 +78,12 @@ export const achievements = [
 ];
 
 export const growthGoals = [
-  { id: '1', title: 'Deeper Connection with Your Partner', color: '#FFE5F0' },
-  { id: '2', title: 'Improving Quality of Life', color: '#E5F3FF' },
-  { id: '3', title: 'Growing Your Income', color: '#FFE5D9' },
-  { id: '4', title: 'Increasing Happiness', color: '#E5F3FF' },
-  { id: '5', title: 'Build a Business', color: '#FFE5D9' },
-  { id: '6', title: 'Better Sleep', color: '#E5FFE5' },
+  { id: '1', title: 'Deeper Connection with Your Partner', color: '#E040FB' },
+  { id: '2', title: 'Getting Fitter', color: '#E040FB' },
+  { id: '3', title: 'Growing Your Finances', color: '#F5A623' },
+  { id: '4', title: 'Better Parenting', color: '#E040FB' },
+  { id: '5', title: 'Improving Overall Health', color: '#00D4AA' },
+  { id: '6', title: 'Better Sleep', color: '#00D4AA' },
 ];
 
 export const eveRecommendations = [
@@ -52,7 +92,7 @@ export const eveRecommendations = [
     type: 'lesson' as const,
     title: 'Rewire Your Belief Systems to Overcome Your Fears',
     author: 'The Science of Personal Branding',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',
+    image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg',
     rating: 4.9,
     duration: '19m',
     reason: 'Boost confidence to launch your business by overcoming limiting beliefs.',
@@ -62,7 +102,7 @@ export const eveRecommendations = [
     type: 'lesson' as const,
     title: 'Discover Your Ideal Client',
     author: 'The Science of Personal Branding',
-    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400',
+    image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg',
     rating: 4.8,
     duration: '22m',
     reason: 'Focus your efforts on those who resonate with your soul-aligned business.',
@@ -72,7 +112,7 @@ export const eveRecommendations = [
     type: 'meditation' as const,
     title: 'Finding Your Life Purpose',
     author: 'Anodea Judith',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400',
+    image: 'https://assets.mindvalley.com/api/v1/assets/169e289b-9dde-4956-993e-b318426ea7fe.jpg',
     rating: 4.7,
     duration: '25m',
     isLocked: true,
@@ -85,7 +125,7 @@ export const freePrograms = [
     id: '1',
     title: 'Getting Started with Mindvalley',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600',
+    image: coverImages.gettingStarted,
     userCount: 92189,
     lessonCount: 10,
   },
@@ -93,7 +133,7 @@ export const freePrograms = [
     id: '2',
     title: 'The 3 Most Important Questions',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600',
+    image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
     userCount: 68340,
     lessonCount: 8,
   },
@@ -104,27 +144,27 @@ export const todayMeditations = [
     id: '1',
     title: 'Infiniprayer',
     author: 'Mahatria',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400',
+    image: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
     rating: 4.6,
     duration: '1m',
     category: 'UNDER 5 MINS',
   },
   {
     id: '2',
-    title: 'Phase 1: Compassion',
+    title: 'Phase 2: Gratitude',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?w=400',
+    image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
     rating: 4.7,
-    duration: '5m',
+    duration: '9m',
     category: 'UNDER 10 MINS',
   },
   {
     id: '3',
-    title: 'Manifesting Abundance',
-    author: 'Regan Hillyer',
-    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400',
+    title: 'Manifesting Health, Wealth & Love',
+    author: 'Sarah Prout',
+    image: meditationCovers.manifestingHealthWealthLove,
     rating: 4.8,
-    duration: '19m',
+    duration: '17m',
     category: 'UNDER 20 MINS',
   },
 ];
@@ -134,7 +174,7 @@ export const popularPrograms = [
     id: '1',
     title: 'The Silva Ultramind System',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600',
+    image: coverImages.silvaUltramind,
     userCount: 361877,
     lessonCount: 29,
   },
@@ -142,7 +182,7 @@ export const popularPrograms = [
     id: '2',
     title: 'Superbrain',
     author: 'Jim Kwik',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600',
+    image: coverImages.superbrain,
     userCount: 2725900,
     lessonCount: 34,
   },
@@ -154,31 +194,31 @@ export const trendingPrograms = [
     rank: 1,
     title: 'The Silva Ultramind System',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=300',
+    image: coverImages.silvaUltramind,
   },
   {
     id: '2',
     rank: 2,
     title: 'Duality',
     author: 'Jeffrey Allen',
-    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=300',
+    image: coverImages.duality,
   },
   {
     id: '3',
     rank: 3,
-    title: 'The Art of Manifesting',
-    author: 'Regan Hillyer',
-    image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=300',
+    title: 'Wildfit',
+    author: 'Eric Edmeades',
+    image: coverImages.wildfit,
   },
 ];
 
 export const categories = [
-  { id: '1', name: 'Mind', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=400', color: '#3B82F6' },
-  { id: '2', name: 'Soul', image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400', color: '#F59E0B' },
-  { id: '3', name: 'Body', image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400', color: '#10B981' },
-  { id: '4', name: 'Entrepreneurship', image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400', color: '#EF4444' },
-  { id: '5', name: 'Career Growth', image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400', color: '#8B5CF6' },
-  { id: '6', name: 'Relationships', image: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=400', color: '#EC4899' },
+  { id: '1', name: 'Mind', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', color: '#3B82F6' },
+  { id: '2', name: 'Soul', image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg', color: '#F59E0B' },
+  { id: '3', name: 'Body', image: 'https://assets.mindvalley.com/api/v1/assets/f043a23b-9e0a-48b4-a9e3-8577db7591d1.jpg', color: '#10B981' },
+  { id: '4', name: 'Entrepreneurship', image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg', color: '#EF4444' },
+  { id: '5', name: 'Career Growth', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', color: '#8B5CF6' },
+  { id: '6', name: 'Relationships', image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg', color: '#EC4899' },
 ];
 
 export const dailyShorts = [
@@ -229,7 +269,7 @@ export const topRatedMeditations = [
     id: '1',
     title: 'Dissolving Memories',
     author: 'Gabriel Loynaz',
-    image: 'https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?w=200',
+    image: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
     rating: 4.9,
     duration: '15m',
     isLocked: true,
@@ -238,7 +278,7 @@ export const topRatedMeditations = [
     id: '2',
     title: 'The Great Vision',
     author: 'Gabriel Loynaz',
-    image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=200',
+    image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
     rating: 4.9,
     duration: '20m',
     isLocked: true,
@@ -247,7 +287,7 @@ export const topRatedMeditations = [
     id: '3',
     title: 'Ocean Healing',
     author: 'Gabriel Loynaz',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=200',
+    image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg',
     rating: 4.9,
     duration: '12m',
     isLocked: true,
@@ -256,7 +296,7 @@ export const topRatedMeditations = [
     id: '4',
     title: 'Third Eye Chakra',
     author: 'Gabriel Loynaz',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=200',
+    image: meditationCovers.thirdEyeChakra,
     rating: 4.9,
     duration: '18m',
     isLocked: true,
@@ -264,16 +304,16 @@ export const topRatedMeditations = [
 ];
 
 export const meditationCategories = [
-  { id: '1', name: 'RELAX', image: 'https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?w=400' },
-  { id: '2', name: 'CLARITY OF VISION', image: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=400' },
-  { id: '3', name: 'ABUNDANCE', image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400' },
-  { id: '4', name: 'SLEEP', image: 'https://images.unsplash.com/photo-1511295742362-92c96b1cf484?w=400' },
+  { id: '1', name: 'RELAX', image: meditationCovers.deepRelaxation },
+  { id: '2', name: 'CLARITY OF VISION', image: meditationCovers.clarityOfVision },
+  { id: '3', name: 'ABUNDANCE', image: meditationCovers.abundanceMeditation },
+  { id: '4', name: 'SLEEP', image: meditationCovers.profoundSleep },
 ];
 
 export const soundCategories = [
-  { id: '1', name: 'ALTERED STATES', image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400' },
-  { id: '2', name: 'NATURE', image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400' },
-  { id: '3', name: 'FOCUS', image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=400' },
+  { id: '1', name: 'ALTERED STATES', image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg' },
+  { id: '2', name: 'NATURE', image: 'https://assets.mindvalley.com/api/v1/assets/3a88f8af-7697-4c23-9ce6-6f89d6fcb718.jpg' },
+  { id: '3', name: 'FOCUS', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg' },
 ];
 
 export const evePrompts = [
@@ -290,40 +330,44 @@ export const continuePrograms = [
     id: '1',
     title: 'Centering Exercise 1',
     programName: 'THE SILVA ULTRAMIND SYSTEM',
+    lessonTitle: 'Centering Exercise 1',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=600',
+    image: coverImages.silvaUltramind,
     duration: '27m',
-    completedLessons: 1,
+    progress: 0.034,
+    lessonsCompleted: 1,
     totalLessons: 29,
   },
   {
     id: '2',
     title: 'Introduction to Manifestation',
-    programName: 'MANIFESTING MASTERY',
-    author: 'Regan Hillyer',
-    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=600',
+    programName: 'DUALITY',
+    lessonTitle: 'Introduction to Manifestation',
+    author: 'Jeffrey Allen',
+    image: coverImages.duality,
     duration: '18m',
-    completedLessons: 0,
-    totalLessons: 52,
+    progress: 0,
+    lessonsCompleted: 0,
+    totalLessons: 30,
   },
 ];
 
 export const premiumPrograms = [
   {
     id: '1',
-    title: 'AI Accelerator',
-    author: 'Vishen, Vykintas Glodenis, Iman Oubou',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600',
-    userCount: 1007,
-    lessonCount: 11,
+    title: 'AI Mastery 2026',
+    author: 'Vishen, Vykintas Glodenis, Domenic Ashburn, I...',
+    image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg',
+    userCount: 8,
+    lessonCount: 0,
   },
   {
     id: '2',
-    title: 'AI Mastery',
-    author: 'Vishen, Vykintas',
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600',
-    userCount: 1765,
-    lessonCount: 5,
+    title: 'Certified Hypnotherapist',
+    author: 'Ajit Nawalkha',
+    image: coverImages.certifiedHypnotherapist,
+    userCount: 2791,
+    lessonCount: 8,
   },
 ];
 
@@ -332,21 +376,21 @@ export const favorites = [
     id: '1',
     title: 'Duality',
     author: 'Jeffrey Allen',
-    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=600',
+    image: coverImages.duality,
     type: 'quest' as const,  // rectangular landscape
   },
   {
     id: '2',
-    title: 'Super Brain',
+    title: 'Superbrain',
     author: 'Jim Kwik',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600',
+    image: coverImages.superbrain,
     type: 'quest' as const,  // rectangular landscape
   },
   {
     id: '3',
-    title: "Yogi's Guide to Joy",
+    title: "A Yogi's Guide to Joy",
     author: 'Sadhguru',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400',
+    image: coverImages.yogiGuide,
     type: 'meditation' as const,  // square
   },
   {
@@ -361,32 +405,33 @@ export const favorites = [
 export const growthGoalsPrograms = [
   {
     id: '1',
-    title: 'Money EQ',
-    author: 'Ken Honda',
-    image: 'https://images.unsplash.com/photo-1579621970795-87facc2f976d?w=600',
-    userCount: 119577,
-    lessonCount: 21,
-    tag: 'Growing Your Income',
+    title: 'The 6 Phase Meditation',
+    author: 'Vishen',
+    image: coverImages.sixPhase,
+    userCount: 135584,
+    lessonCount: 7,
+    tag: 'Forgiveness',
   },
   {
     id: '2',
-    title: 'Be Extraordinary',
-    author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600',
-    userCount: 250000,
+    title: 'Feng Shui for Life',
+    author: 'Marie Diamond',
+    image: coverImages.fengShui,
+    userCount: 115975,
     lessonCount: 30,
-    tag: 'Personal Growth',
+    tag: 'Manifesting',
   },
 ];
 
 export const featuredBanners = [
   {
     id: '1',
-    title: 'Breath Connection',
-    subtitle: 'Tap into limitless energy and clarity with breathwork',
-    label: 'MEDITATION OF THE WEEK',
-    buttonText: 'Meditate now',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800',
+    title: 'Negotiate with Confidence',
+    subtitle: 'Speak with clarity. Set boundaries.\nWin conversations that matter.',
+    label: 'QUEST OF THE WEEK',
+    buttonText: 'Explore the quest',
+    author: 'Kwame Christian',
+    image: coverImages.negotiateConfidence,
   },
   {
     id: '2',
@@ -394,7 +439,8 @@ export const featuredBanners = [
     subtitle: 'Complete 7 days of meditation',
     label: 'CHALLENGE',
     buttonText: 'Join now',
-    image: 'https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?w=800',
+    author: '',
+    image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg',
   },
 ];
 
@@ -403,7 +449,7 @@ export const pickedForYou = [
     id: '1',
     title: 'Getting Started with Mindvalley',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600',
+    image: coverImages.gettingStarted,
     lessonCount: 10,
   },
 ];
@@ -422,7 +468,7 @@ export const meditationsForGoal = {
       id: '1',
       title: 'Releasing Anxiety',
       author: 'Brett Bevell',
-      image: 'https://images.unsplash.com/photo-1528715471579-d1bcf0ba5e83?w=400',
+      image: meditationCovers.releasingAnxiety,
       rating: 4.3,
       duration: '3m',
     },
@@ -430,7 +476,7 @@ export const meditationsForGoal = {
       id: '2',
       title: 'Sleep Inducing Body Scan',
       author: 'House of Wellbeing',
-      image: 'https://images.unsplash.com/photo-1511295742362-92c96b1cf484?w=400',
+      image: meditationCovers.sleepInducingBodyScan,
       rating: 4.7,
       duration: '25m',
     },
@@ -438,7 +484,7 @@ export const meditationsForGoal = {
       id: '3',
       title: 'Sink Back Into Deeper Sleep',
       author: 'House of Wellbeing',
-      image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400',
+      image: meditationCovers.sinkBackIntoSleep,
       rating: 4.6,
       duration: '2m',
     },
@@ -452,21 +498,21 @@ export const soundsForGoal = {
       id: '1',
       title: 'Taurus',
       author: 'Gabriel Loynaz',
-      image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+      image: 'https://assets.mindvalley.com/api/v1/assets/f043a23b-9e0a-48b4-a9e3-8577db7591d1.jpg',
       rating: 4.9,
     },
     {
       id: '2',
       title: 'Aries',
       author: 'Gabriel Loynaz',
-      image: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400',
+      image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg',
       rating: 4.8,
     },
     {
       id: '3',
       title: 'Pisces',
       author: 'Gabriel Loynaz',
-      image: 'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=400',
+      image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
       rating: 4.8,
     },
   ],
@@ -540,7 +586,7 @@ export const questsData: Record<string, Quest> = {
     title: 'The Silva Ultramind System',
     subtitle: 'By José Silva & Vishen',
     author: 'Vishen',
-    image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=800',
+    image: coverImages.silvaUltramind,
     totalLessons: 29,
     completedLessons: 1,
     description: 'Welcome to the second day of your Silva Ultramind journey. Today you will learn to access deeper levels of the mind where you can program yourself for success.',
@@ -556,7 +602,7 @@ export const questsData: Record<string, Quest> = {
             title: 'Welcome to Silva Ultramind',
             author: 'Vishen',
             duration: '15 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: true,
           },
           {
@@ -565,7 +611,7 @@ export const questsData: Record<string, Quest> = {
             title: 'Tap into Alpha with the Centering Exercise',
             author: 'Vishen',
             duration: '27 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
           {
@@ -574,7 +620,7 @@ export const questsData: Record<string, Quest> = {
             title: 'The Power of Dynamic Meditation',
             author: 'Vishen',
             duration: '22 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
           {
@@ -583,7 +629,7 @@ export const questsData: Record<string, Quest> = {
             title: 'Centering Exercise 2',
             author: 'Vishen',
             duration: '25 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
         ],
@@ -599,7 +645,7 @@ export const questsData: Record<string, Quest> = {
             title: 'Understanding Brain Wave States',
             author: 'Vishen',
             duration: '18 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
           {
@@ -608,7 +654,7 @@ export const questsData: Record<string, Quest> = {
             title: 'The Three Scenes Technique',
             author: 'Vishen',
             duration: '24 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
           {
@@ -617,7 +663,7 @@ export const questsData: Record<string, Quest> = {
             title: 'Centering Exercise 3',
             author: 'Vishen',
             duration: '23 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
         ],
@@ -633,7 +679,7 @@ export const questsData: Record<string, Quest> = {
             title: 'The Power of Visualization',
             author: 'Vishen',
             duration: '20 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
           {
@@ -642,7 +688,7 @@ export const questsData: Record<string, Quest> = {
             title: 'Creating Your Mental Screen',
             author: 'Vishen',
             duration: '19 mins',
-            image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+            image: coverImages.silvaUltramind,
             isCompleted: false,
           },
         ],
@@ -653,7 +699,7 @@ export const questsData: Record<string, Quest> = {
     id: 'manifesting-mastery',
     title: 'Manifesting Mastery',
     author: 'Regan Hillyer',
-    image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=800',
+    image: coverImages.manifestingMastery,
     totalLessons: 52,
     completedLessons: 0,
     description: 'Learn the art and science of manifesting your dreams into reality with proven techniques.',
@@ -669,7 +715,7 @@ export const questsData: Record<string, Quest> = {
             title: 'What is Manifestation?',
             author: 'Regan Hillyer',
             duration: '18 mins',
-            image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400',
+            image: coverImages.manifestingMastery,
             isCompleted: false,
           },
           {
@@ -678,7 +724,7 @@ export const questsData: Record<string, Quest> = {
             title: 'The Law of Attraction',
             author: 'Regan Hillyer',
             duration: '22 mins',
-            image: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?w=400',
+            image: coverImages.manifestingMastery,
             isCompleted: false,
           },
         ],
@@ -692,7 +738,7 @@ export const currentLessonMeditation = {
   duration: '20m',
   title: 'The Silva Centering Exercise - Alpha',
   author: 'Vishen',
-  image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+  image: coverImages.silvaUltramind,
 };
 
 export const lessonTasks = [
@@ -700,5 +746,143 @@ export const lessonTasks = [
     id: '1',
     title: 'Practice the Silva Centering Exercise.',
     isCompleted: false,
+  },
+];
+
+// Pathways Collections data
+export interface CollectionProgram {
+  id: string;
+  title: string;
+  author: string;
+  image: string;
+  lessonCount: number;
+  userCount: number;
+  duration: string;
+}
+
+export interface Collection {
+  id: string;
+  name: string;
+  tagline: string;
+  gradientColors: string[];
+  accentColor: string;
+  programCount: number;
+  lessonCount: number;
+  icon: string;
+  programs: CollectionProgram[];
+  pricingSingle: string;
+  pricingCollection: string;
+  pricingAllAccess: string;
+}
+
+export const collections: Collection[] = [
+  {
+    id: 'mindset',
+    name: 'Mindset',
+    tagline: 'Peak Performance & Mental Mastery',
+    gradientColors: ['#2d0b6e', '#4a1d8a', '#6b2fc7'],
+    accentColor: '#9D5CFF',
+    programCount: 7,
+    lessonCount: 210,
+    icon: '🧠',
+    pricingSingle: '$49',
+    pricingCollection: '$149/yr',
+    pricingAllAccess: '$499/yr',
+    programs: [
+      { id: 'silva', title: 'The Silva Ultramind System', author: 'Vishen', image: coverImages.silvaUltramind, lessonCount: 29, userCount: 361877, duration: '29 lessons' },
+      { id: 'superbrain', title: 'Superbrain', author: 'Jim Kwik', image: coverImages.superbrain, lessonCount: 34, userCount: 2725900, duration: '34 lessons' },
+      { id: 'limitless', title: 'Becoming Limitless', author: 'Vishen Lakhiani', image: coverImages.beExtraordinary, lessonCount: 28, userCount: 180000, duration: '28 lessons' },
+      { id: 'extraordinary', title: 'Be Extraordinary', author: 'Vishen', image: coverImages.beExtraordinary, lessonCount: 30, userCount: 250000, duration: '30 lessons' },
+      { id: 'lifebook', title: 'Lifebook Online', author: 'Jon & Missy Butcher', image: coverImages.lifebook, lessonCount: 35, userCount: 145000, duration: '35 lessons' },
+    ],
+  },
+  {
+    id: 'manifesting',
+    name: 'Manifesting',
+    tagline: 'Law of Attraction & Abundance',
+    gradientColors: ['#451a03', '#92400e', '#d97706'],
+    accentColor: '#fbbf24',
+    programCount: 5,
+    lessonCount: 155,
+    icon: '✨',
+    pricingSingle: '$49',
+    pricingCollection: '$129/yr',
+    pricingAllAccess: '$499/yr',
+    programs: [
+      { id: 'manifesting', title: 'The Art of Manifesting', author: 'Regan Hillyer', image: coverImages.artOfManifesting, lessonCount: 52, userCount: 98000, duration: '52 lessons' },
+      { id: 'duality', title: 'Duality', author: 'Jeffrey Allen', image: coverImages.duality, lessonCount: 30, userCount: 220000, duration: '30 lessons' },
+      { id: 'money-eq', title: 'Money EQ', author: 'Ken Honda', image: coverImages.moneyEQ, lessonCount: 21, userCount: 119577, duration: '21 lessons' },
+    ],
+  },
+  {
+    id: 'longevity',
+    name: 'Longevity',
+    tagline: 'Health, Fitness & Longevity Science',
+    gradientColors: ['#0f1a4a', '#1e3a8a', '#2563eb'],
+    accentColor: '#60a5fa',
+    programCount: 5,
+    lessonCount: 130,
+    icon: '💪',
+    pricingSingle: '$49',
+    pricingCollection: '$129/yr',
+    pricingAllAccess: '$499/yr',
+    programs: [
+      { id: 'fitness', title: '10x Fitness', author: 'Lorenzo Delano & Ronan Diego', image: coverImages.tenXFitness, lessonCount: 26, userCount: 175000, duration: '26 lessons' },
+      { id: 'sleep', title: 'Sleep Mastery', author: 'Dr. Michael Breus', image: coverImages.sleepMastery, lessonCount: 22, userCount: 88000, duration: '22 lessons' },
+      { id: 'longevity', title: 'Longevity Blueprint', author: 'Ben Greenfield', image: coverImages.longevityBlueprint, lessonCount: 24, userCount: 62000, duration: '24 lessons' },
+    ],
+  },
+  {
+    id: 'love-family',
+    name: 'Love & Family',
+    tagline: 'Relationships, Parenting & Connection',
+    gradientColors: ['#4a044e', '#86198f', '#c026d3'],
+    accentColor: '#f0abfc',
+    programCount: 6,
+    lessonCount: 180,
+    icon: '❤️',
+    pricingSingle: '$49',
+    pricingCollection: '$139/yr',
+    pricingAllAccess: '$499/yr',
+    programs: [
+      { id: 'parenting', title: 'Conscious Parenting', author: 'Dr. Shefali Tsabary', image: coverImages.consciousParenting, lessonCount: 28, userCount: 95000, duration: '28 lessons' },
+      { id: 'relationship', title: 'The Relationship Expert', author: 'Neelam Verma', image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg', lessonCount: 30, userCount: 72000, duration: '30 lessons' },
+      { id: 'masculine', title: 'Masculine Feminine Connection', author: 'Masculine-Feminine School', image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg', lessonCount: 25, userCount: 58000, duration: '25 lessons' },
+    ],
+  },
+  {
+    id: 'entrepreneur',
+    name: 'Exponential Entrepreneur',
+    tagline: 'Business, Leadership & Performance',
+    gradientColors: ['#0f0f1a', '#1a2540', '#1e3a5f'],
+    accentColor: '#93c5fd',
+    programCount: 6,
+    lessonCount: 165,
+    icon: '🚀',
+    pricingSingle: '$49',
+    pricingCollection: '$149/yr',
+    pricingAllAccess: '$499/yr',
+    programs: [
+      { id: 'brand', title: 'Building an Unstoppable Brand', author: 'Jeffrey Perlman', image: coverImages.buildingBrand, lessonCount: 19, userCount: 23448, duration: '19 lessons' },
+      { id: 'leader', title: 'The Transformational Leader', author: 'Monty Moran', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', lessonCount: 16, userCount: 14452, duration: '16 lessons' },
+      { id: 'ai', title: 'AI Accelerator', author: 'Vishen & Vykintas Glodenis', image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg', lessonCount: 11, userCount: 307006, duration: '11 lessons' },
+    ],
+  },
+  {
+    id: 'speaking',
+    name: 'Speaking & Authorship',
+    tagline: 'Communication, Writing & Influence',
+    gradientColors: ['#052e16', '#14532d', '#166534'],
+    accentColor: '#4ade80',
+    programCount: 4,
+    lessonCount: 110,
+    icon: '🎙️',
+    pricingSingle: '$49',
+    pricingCollection: '$119/yr',
+    pricingAllAccess: '$499/yr',
+    programs: [
+      { id: 'speak', title: 'Speak & Inspire', author: 'Lisa Nichols', image: coverImages.speakInspire, lessonCount: 28, userCount: 67000, duration: '28 lessons' },
+      { id: 'writing', title: 'The Art of Storytelling', author: 'Michael Hauge', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', lessonCount: 20, userCount: 42000, duration: '20 lessons' },
+    ],
   },
 ];

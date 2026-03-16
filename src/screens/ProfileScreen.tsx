@@ -25,9 +25,6 @@ export default function ProfileScreen() {
     navigation.navigate('Settings' as never);
   };
 
-  const meditatedHours = Math.floor(user.meditatedMinutes / 60);
-  const meditatedMins = user.meditatedMinutes % 60;
-
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
@@ -44,20 +41,24 @@ export default function ProfileScreen() {
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* User Profile */}
         <View style={styles.profileSection}>
-          <Image
-            source={{ uri: user.avatar || 'https://via.placeholder.com/120' }}
-            style={styles.avatar}
-          />
-          <View style={styles.userInfo}>
-            <Text style={styles.userName}>{user.fullName}</Text>
-            <Text style={styles.userEmail}>{user.email}</Text>
+          <View style={styles.profileRow}>
+            <View style={styles.avatarContainer}>
+              <Image
+                source={{ uri: user.avatar || 'https://via.placeholder.com/120' }}
+                style={styles.avatar}
+              />
+            </View>
+            <View style={styles.userInfo}>
+              <Text style={styles.userName}>{user.fullName}</Text>
+              <Text style={styles.userEmail}>{user.email}</Text>
+            </View>
           </View>
           <View style={styles.profileActions}>
             <TouchableOpacity style={styles.viewProfileButton}>
               <Text style={styles.viewProfileText}>View Profile</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.editButton}>
-              <Ionicons name="pencil-outline" size={20} color={colors.textPrimary} />
+              <Ionicons name="pencil-outline" size={18} color={colors.textPrimary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -73,8 +74,8 @@ export default function ProfileScreen() {
 
           {/* Day Streak */}
           <View style={styles.streakCard}>
-            <View style={styles.streakIcon}>
-              <Ionicons name="diamond-outline" size={28} color={colors.textMuted} />
+            <View style={styles.streakIconBox}>
+              <Ionicons name="diamond-outline" size={24} color={colors.textMuted} />
             </View>
             <Text style={styles.streakNumber}>{user.dayStreak}</Text>
             <Text style={styles.streakLabel}>DAY STREAK</Text>
@@ -83,13 +84,13 @@ export default function ProfileScreen() {
           {/* Stats Cards */}
           <View style={styles.statsRow}>
             <View style={styles.statCard}>
-              <Ionicons name="play-circle" size={32} color="#007AFF" />
+              <Ionicons name="play-circle-outline" size={30} color="#3B82F6" />
               <Text style={styles.statNumber}>{user.lessonsCompleted}</Text>
               <Text style={styles.statLabel}>LESSONS{'\n'}COMPLETED</Text>
             </View>
             <View style={styles.statCard}>
-              <Ionicons name="time-outline" size={32} color="#34C759" />
-              <Text style={styles.statNumber}>{meditatedHours}h {meditatedMins}m</Text>
+              <Ionicons name="time-outline" size={30} color="#3B82F6" />
+              <Text style={styles.statNumber}>{user.meditatedMinutes}m</Text>
               <Text style={styles.statLabel}>MEDITATED</Text>
             </View>
           </View>
@@ -104,7 +105,7 @@ export default function ProfileScreen() {
             </TouchableOpacity>
           </View>
           <View style={styles.achievementsGrid}>
-            {achievements.map((achievement) => (
+            {achievements.slice(0, 2).map((achievement) => (
               <View key={achievement.id} style={styles.achievementItem}>
                 <View style={styles.achievementBadge}>
                   <Image
@@ -123,22 +124,22 @@ export default function ProfileScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Library</Text>
           <TouchableOpacity style={styles.listItem}>
-            <Ionicons name="book-outline" size={24} color={colors.textPrimary} />
+            <Ionicons name="book-outline" size={22} color={colors.textPrimary} />
             <Text style={styles.listItemText}>Continue programs</Text>
             <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.listItem}>
-            <Ionicons name="bookmark-outline" size={24} color={colors.textPrimary} />
+            <Ionicons name="bookmark-outline" size={22} color={colors.textPrimary} />
             <Text style={styles.listItemText}>Favorites</Text>
             <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.listItem}>
-            <Ionicons name="checkmark-circle-outline" size={24} color={colors.textPrimary} />
+            <Ionicons name="checkmark-circle-outline" size={22} color={colors.textPrimary} />
             <Text style={styles.listItemText}>Completed</Text>
             <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.listItem}>
-            <Ionicons name="download-outline" size={24} color={colors.textPrimary} />
+          <TouchableOpacity style={[styles.listItem, styles.listItemLast]}>
+            <Ionicons name="download-outline" size={22} color={colors.textPrimary} />
             <Text style={styles.listItemText}>Downloads</Text>
             <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
           </TouchableOpacity>
@@ -156,7 +157,7 @@ export default function ProfileScreen() {
             {growthGoals.map((goal) => (
               <View
                 key={goal.id}
-                style={[styles.goalPill, { backgroundColor: goal.color }]}
+                style={[styles.goalPill, { borderColor: goal.color }]}
               >
                 <Text style={styles.goalText}>{goal.title}</Text>
               </View>
@@ -173,7 +174,7 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.background,
   },
   header: {
     flexDirection: 'row',
@@ -200,20 +201,31 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
+  // Profile section - horizontal layout matching screenshot
   profileSection: {
     paddingHorizontal: 16,
-    paddingVertical: 24,
-    alignItems: 'center',
+    paddingTop: 8,
+    paddingBottom: 24,
   },
-  avatar: {
-    width: 120,
-    height: 120,
+  profileRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  avatarContainer: {
+    width: 100,
+    height: 100,
     borderRadius: 16,
+    overflow: 'hidden',
     backgroundColor: colors.backgroundCard,
   },
+  avatar: {
+    width: '100%',
+    height: '100%',
+  },
   userInfo: {
-    alignItems: 'center',
-    marginTop: 16,
+    marginLeft: 20,
+    flex: 1,
   },
   userName: {
     ...typography.h2,
@@ -227,12 +239,11 @@ const styles = StyleSheet.create({
   profileActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 16,
   },
   viewProfileButton: {
     backgroundColor: colors.surface,
     paddingHorizontal: 24,
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderRadius: 24,
     marginRight: 12,
   },
@@ -241,11 +252,14 @@ const styles = StyleSheet.create({
     color: colors.textPrimary,
   },
   editButton: {
-    width: 44,
-    height: 44,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  // Sections
   section: {
     paddingHorizontal: 16,
     marginBottom: 32,
@@ -266,17 +280,19 @@ const styles = StyleSheet.create({
   },
   updateText: {
     ...typography.label,
-    color: colors.primary,
+    color: colors.textSecondary,
   },
+  // Day Streak
   streakCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.surface,
-    padding: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: 12,
-    marginBottom: 16,
+    padding: 20,
+    marginBottom: 12,
   },
-  streakIcon: {
+  streakIconBox: {
     marginRight: 16,
   },
   streakNumber: {
@@ -289,46 +305,51 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     letterSpacing: 1,
   },
+  // Stats
   statsRow: {
     flexDirection: 'row',
     gap: 12,
   },
   statCard: {
     flex: 1,
-    backgroundColor: colors.surface,
-    padding: 20,
+    borderWidth: 1,
+    borderColor: colors.border,
     borderRadius: 12,
+    paddingVertical: 20,
+    paddingHorizontal: 16,
     alignItems: 'center',
   },
   statNumber: {
     ...typography.h2,
     color: colors.textPrimary,
-    marginTop: 12,
-    marginBottom: 8,
+    marginTop: 10,
+    marginBottom: 6,
   },
   statLabel: {
     ...typography.caption,
     color: colors.textMuted,
     textAlign: 'center',
     letterSpacing: 0.5,
+    lineHeight: 16,
   },
+  // Achievements
   achievementsGrid: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
     gap: 16,
   },
   achievementItem: {
-    width: '47%',
+    flex: 1,
     alignItems: 'center',
   },
   achievementBadge: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
+    width: 130,
+    height: 130,
+    borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 3,
-    borderColor: colors.textPrimary,
+    borderColor: colors.gold,
     marginBottom: 12,
+    transform: [{ rotate: '0deg' }],
   },
   achievementImage: {
     width: '100%',
@@ -345,6 +366,7 @@ const styles = StyleSheet.create({
     ...typography.caption,
     color: colors.textMuted,
   },
+  // Library
   listItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -352,12 +374,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: colors.border,
   },
+  listItemLast: {
+    borderBottomWidth: 0,
+  },
   listItemText: {
     ...typography.body,
     color: colors.textPrimary,
     flex: 1,
     marginLeft: 16,
   },
+  // Growth Goals
   goalsContainer: {
     gap: 12,
   },
@@ -365,8 +391,8 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 20,
     borderRadius: 12,
-    borderWidth: 2,
-    borderColor: colors.textPrimary,
+    borderWidth: 1.5,
+    backgroundColor: 'transparent',
   },
   goalText: {
     ...typography.label,
