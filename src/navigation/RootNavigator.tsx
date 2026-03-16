@@ -9,11 +9,15 @@ import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import SearchScreen from '../screens/SearchScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import ProgressScreen from '../screens/ProgressScreen';
+import ProgressScreen from '../screens/ProgressScreen';
 
 export type RootStackParamList = {
   Main: undefined;
   Search: undefined;
   Notifications: undefined;
+  Progress: undefined;
+  Progress: undefined;
   QuestDetail: {
     questId: string;
     questTitle: string;
@@ -84,6 +88,11 @@ export default function RootNavigator() {
         }}
       />
       <Stack.Screen
+        name="Progress"
+        component={ProgressScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
         name="Search"
         component={SearchScreen}
         options={{ animation: 'fade' }}
@@ -91,6 +100,16 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Notifications"
         component={NotificationsScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Progress"
+        component={ProgressScreen}
+        options={{ animation: 'slide_from_right' }}
+      />
+      <Stack.Screen
+        name="Progress"
+        component={ProgressScreen}
         options={{ animation: 'slide_from_right' }}
       />
       <Stack.Screen

@@ -67,7 +67,7 @@ export default function ProfileScreen() {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Progress</Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Progress' as never)}>
               <Text style={styles.seeAllText}>See all</Text>
             </TouchableOpacity>
           </View>

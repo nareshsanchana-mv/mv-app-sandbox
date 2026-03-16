@@ -95,7 +95,7 @@ export default function TodayScreen() {
         </View>
 
         {/* Day Streak */}
-        <TouchableOpacity style={styles.streakCard}>
+        <TouchableOpacity style={styles.streakCard} onPress={() => navigation.navigate('Progress' as never)}>
           <View style={styles.streakIcon}>
             <Ionicons name="flame" size={20} color={colors.textMuted} />
           </View>
