@@ -1,70 +1,68 @@
 import React from 'react';
-import { Text, Image, TouchableOpacity, StyleSheet, View } from 'react-native';
-import { colors } from '../theme/colors';
+import { View, Text, StyleSheet, Image, ImageSourcePropType } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 interface ProgramCardProps {
-  id: string;
   title: string;
   author: string;
-  image: string;
-  type?: string;
-  size?: 'small' | 'medium' | 'large';
-  onPress?: () => void;
-  progress?: number;
-  lessonCount?: number;
-  userCount?: number;
+  coverImage: ImageSourcePropType;
+  enrolledCount: number;
+  lessonCount: number;
 }
 
-export default function ProgramCard({ title, author, image, size = 'medium', onPress, progress }: ProgramCardProps) {
-  const width = size === 'large' ? 260 : size === 'medium' ? 180 : 140;
-  const imageHeight = size === 'large' ? 160 : size === 'medium' ? 140 : 110;
+const ProgramCard: React.FC<ProgramCardProps> = ({ title, author, coverImage, enrolledCount, lessonCount }) => {
+    const imageSource = typeof coverImage === 'string' ? { uri: coverImage } : coverImage;
 
   return (
-    <TouchableOpacity style={[styles.card, { width }]} onPress={onPress} activeOpacity={0.85}>
-      <Image source={{ uri: image }} style={[styles.image, { height: imageHeight }]} />
+    <View style={styles.container}>
+      <Image source={imageSource} style={styles.coverImage} />
       <Text style={styles.title} numberOfLines={2}>{title}</Text>
-      <Text style={styles.author} numberOfLines={1}>{author}</Text>
-      {progress !== undefined && (
-        <View style={styles.progressTrack}>
-          <View style={[styles.progressFill, { width: `${progress * 100}%` }]} />
-        </View>
-      )}
-    </TouchableOpacity>
+      <Text style={styles.author}>{author}</Text>
+      <View style={styles.metaRow}>
+        <Ionicons name="people-outline" size={12} color="#999" />
+        <Text style={styles.metaText}>{enrolledCount.toLocaleString()}</Text>
+        <Text style={styles.metaSeparator}>·</Text>
+        <Text style={styles.metaText}>{lessonCount} lessons</Text>
+      </View>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  card: {
-    marginRight: 14,
+  container: {
+    width: 220,
+    marginRight: 12,
   },
-  image: {
+  coverImage: {
     width: '100%',
-    borderRadius: 14,
-    backgroundColor: colors.backgroundCard,
+    height: 140,
+    borderRadius: 10,
     marginBottom: 10,
   },
   title: {
+    color: '#fff',
     fontSize: 13,
-    fontWeight: '900',
-    color: colors.textPrimary,
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
+    fontWeight: 'bold',
     marginBottom: 4,
   },
   author: {
+    color: '#999',
     fontSize: 12,
-    color: colors.textSecondary,
     marginBottom: 6,
   },
-  progressTrack: {
-    height: 3,
-    backgroundColor: colors.progressTrack,
-    borderRadius: 2,
-    overflow: 'hidden',
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  progressFill: {
-    height: '100%',
-    backgroundColor: colors.magenta,
-    borderRadius: 2,
+  metaText: {
+    color: '#999',
+    fontSize: 11,
+    marginLeft: 4,
+  },
+  metaSeparator: {
+    color: '#999',
+    marginHorizontal: 4,
   },
 });
+
+export default ProgramCard;

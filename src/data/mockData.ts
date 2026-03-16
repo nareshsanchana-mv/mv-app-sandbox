@@ -964,3 +964,78 @@ export const collections: Collection[] = [
     ],
   },
 ];
+
+// ─── Programs Page data (added 16 Mar 2026) ────────────────────────────────
+
+export const hotInMalaysia = [
+  { id: 'hot1', rank: 1, title: 'The 6 Phase Meditation', author: 'Vishen Lakhiani', coverImage: coverImages.sixPhase },
+  { id: 'hot2', rank: 2, title: 'Superbrain', author: 'Jim Kwik', coverImage: coverImages.superbrain },
+  { id: 'hot3', rank: 3, title: 'Duality', author: 'Jeffrey Allen', coverImage: coverImages.duality },
+  { id: 'hot4', rank: 4, title: 'The M Word', author: 'Emily Fletcher', coverImage: 'https://images.unsplash.com/photo-1506126613408-4e0e0f7c50e1?w=300&q=80' },
+  { id: 'hot5', rank: 5, title: 'Be Extraordinary', author: 'Vishen Lakhiani', coverImage: coverImages.beExtraordinary },
+];
+
+export const authorCollections = [
+  { id: 'ac1', name: 'Vishen Lakhiani', avatar: require('../../assets/authors/vishen-lakhiani.jpg') },
+  { id: 'ac2', name: 'Jim Kwik', avatar: require('../../assets/authors/jim-kwik.jpg') },
+  { id: 'ac3', name: 'Emily Fletcher', avatar: require('../../assets/authors/emily-fletcher.jpg') },
+  { id: 'ac4', name: 'Jeffrey Allen', avatar: require('../../assets/authors/jeffrey-allen.jpg') },
+  { id: 'ac5', name: 'Marisa Peer', avatar: require('../../assets/authors/marisa-peer.jpg') },
+  { id: 'ac6', name: 'Marie Diamond', avatar: require('../../assets/authors/marie-diamond.jpg') },
+];
+
+export const programsByCategory: Record<string, Array<{
+  id: string; title: string; author: string;
+  coverImage: string; enrolledCount: number; lessonCount: number;
+}>> = {
+  Mind: [
+    { id: 'mind1', title: 'The Champion Mindset', author: 'Florencia Andres', coverImage: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80', enrolledCount: 12345, lessonCount: 20 },
+    { id: 'mind2', title: 'Be Extraordinary', author: 'Vishen Lakhiani', coverImage: coverImages.beExtraordinary, enrolledCount: 54321, lessonCount: 30 },
+    { id: 'mind3', title: 'Super Productivity', author: 'Vishen Lakhiani', coverImage: coverImages.gettingStarted, enrolledCount: 9800, lessonCount: 21 },
+  ],
+  Body: [
+    { id: 'body1', title: 'Modern Qi Gong', author: 'Lee Holden', coverImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80', enrolledCount: 42104, lessonCount: 30 },
+    { id: 'body2', title: 'Total Transformation Training', author: 'Christine Bullock', coverImage: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80', enrolledCount: 38866, lessonCount: 25 },
+    { id: 'body3', title: '10X Fitness', author: 'Ronan Diego & Lorenzo Delano', coverImage: coverImages.tenXFitness, enrolledCount: 31200, lessonCount: 22 },
+  ],
+  Soul: [
+    { id: 'soul1', title: 'Higher Self Activation', author: 'Ariya Lorenz', coverImage: 'https://images.unsplash.com/photo-1502227845452-984212558db4?w=400&q=80', enrolledCount: 6596, lessonCount: 13 },
+    { id: 'soul2', title: 'Unlimited Abundance', author: 'Christie Marie Sheldon', coverImage: 'https://images.unsplash.com/photo-1475113548554-5a36f1f523d6?w=400&q=80', enrolledCount: 66113, lessonCount: 22 },
+    { id: 'soul3', title: 'Duality', author: 'Jeffrey Allen', coverImage: coverImages.duality, enrolledCount: 48200, lessonCount: 28 },
+  ],
+  Relationships: [
+    { id: 'rel1', title: 'The Energies of Love', author: 'Donna Eden & David Feinstein', coverImage: 'https://images.unsplash.com/photo-1528340994784-a29d5d5a7674?w=400&q=80', enrolledCount: 20002, lessonCount: 30 },
+    { id: 'rel2', title: 'Calling in The One', author: 'Katherine Woodward Thomas', coverImage: 'https://images.unsplash.com/photo-1519781446754-46a29a8d1413?w=400&q=80', enrolledCount: 29160, lessonCount: 12 },
+    { id: 'rel3', title: 'Conscious Parenting Mastery', author: 'Dr. Shefali', coverImage: coverImages.consciousParenting, enrolledCount: 18500, lessonCount: 28 },
+  ],
+  Entrepreneurship: [
+    { id: 'ent1', title: 'Negotiate with Confidence', author: 'Kwame Christian', coverImage: coverImages.negotiateConfidence, enrolledCount: 2370, lessonCount: 14 },
+    { id: 'ent2', title: 'Building an Unstoppable Brand', author: 'Jeffrey Perlman', coverImage: coverImages.buildingBrand, enrolledCount: 23979, lessonCount: 16 },
+    { id: 'ent3', title: 'Money EQ', author: 'Ken Honda', coverImage: coverImages.moneyEQ, enrolledCount: 41200, lessonCount: 18 },
+  ],
+  CareerGrowth: [
+    { id: 'car1', title: 'The Stage Effect', author: 'Eric Edmeades', coverImage: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&q=80', enrolledCount: 15469, lessonCount: 21 },
+    { id: 'car2', title: 'Speak and Inspire', author: 'Lisa Nichols', coverImage: coverImages.speakInspire, enrolledCount: 67000, lessonCount: 28 },
+    { id: 'car3', title: 'Super Reading', author: 'Jim Kwik', coverImage: coverImages.superbrain, enrolledCount: 9400, lessonCount: 20 },
+  ],
+};
+
+export const newReleases = [
+  { id: 'nr1', title: 'Negotiate with Confidence', author: 'Kwame Christian', lessonCount: 14,
+    image: 'https://images.unsplash.com/photo-1556761175-b413da4b248b?w=600&q=80' },
+  { id: 'nr2', title: 'The Maestro to Leadership', author: 'Itay Talgam', lessonCount: 10,
+    image: 'https://images.unsplash.com/photo-1519412666095-9ce4a1d1d8a2?w=600&q=80' },
+  { id: 'nr3', title: 'The Art of Manifesting', author: 'Regan Hillyer', lessonCount: 10,
+    image: require('../../assets/authors/regan-hillyer.jpg') },
+];
+
+export const comingSoon = [
+  {
+    id: 'cs1',
+    title: 'Bold Conversations',
+    author: 'Vernā Myers',
+    lessonCount: 11,
+    description: "You've felt it before: the moment someone says something offensive, the room goes quiet, and nobody does anything. Not because they don't care, but because nobody taught them how. This course changes that.",
+    coverImage: 'https://images.unsplash.com/photo-1522881451255-f59ad836fdfb?w=800&q=80',
+  },
+];
