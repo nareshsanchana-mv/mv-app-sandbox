@@ -10,7 +10,7 @@ interface LiveClassCardProps {
   programName: string;
   programLabel?: string;
   time: string;
-  image: string;
+  image: string | number | object;
   onPress?: () => void;
   onRSVPPress?: () => void;
 }
@@ -28,7 +28,7 @@ export default function LiveClassCard({
   return (
     <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={0.9}>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: image }} style={styles.image} />
+        <Image source={typeof image === 'string' ? { uri: image } : image as any} style={styles.image} />
         <View style={styles.mindvalleyLogo}>
           <Ionicons name="chevron-down" size={12} color="#fff" />
         </View>

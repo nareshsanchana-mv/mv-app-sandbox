@@ -282,6 +282,17 @@ export const categories = [
   { id: '6', name: 'Relationships', image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg', color: '#EC4899' },
 ];
 
+// Real Mindvalley author photos (downloaded from Airtable CSV, 16 Mar 2026)
+const authorPhotos = {
+  neelamVerma: require('../../assets/authors/neelam-verma.jpg'),
+  montyMoran: require('../../assets/authors/monty-moran.jpg'),
+  kristina: require('../../assets/authors/kristina.jpg'),
+  lindaClemons: require('../../assets/authors/linda-clemons.jpg'),
+  jenniferPartridge: require('../../assets/authors/jennifer-partridge.jpg'),
+  paulMcKenna: require('../../assets/authors/paul-mckenna.jpg'),
+  marieDiamond: require('../../assets/authors/marie-diamond.jpg'),
+};
+
 export const dailyShorts = [
   {
     id: '1',
@@ -290,7 +301,7 @@ export const dailyShorts = [
     authorDescription: 'Relationship coach & author',
     // Couple walking together — thematically relevant
     image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100',
+    authorImage: authorPhotos.neelamVerma,
   },
   {
     id: '2',
@@ -299,7 +310,7 @@ export const dailyShorts = [
     authorDescription: 'Former CEO of Chipotle & leadership expert',
     // Confident professional in a leadership setting
     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100',
+    authorImage: authorPhotos.montyMoran,
   },
   {
     id: '3',
@@ -308,7 +319,7 @@ export const dailyShorts = [
     authorDescription: 'Co-founder of Mindvalley & personal growth expert',
     // Person on mountain peak — purpose & meaning
     image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100',
+    authorImage: authorPhotos.kristina,
   },
   {
     id: '4',
@@ -317,7 +328,7 @@ export const dailyShorts = [
     authorDescription: 'World-renowned nonverbal communications expert',
     // Team celebrating / success energy
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=100',
+    authorImage: authorPhotos.lindaClemons,
   },
   {
     id: '5',
@@ -326,7 +337,7 @@ export const dailyShorts = [
     authorDescription: 'Founder of Dream Awake Tapping & tapping expert',
     // Calm meditation / energy healing scene
     image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
+    authorImage: authorPhotos.jenniferPartridge,
   },
 ];
 
@@ -592,8 +603,7 @@ export const liveClasses = [
     programName: 'HYPNOTHERAPIST',
     programLabel: 'Mindvalley certified',
     time: 'Today · 11:00pm - 12:00am',
-    // Abstract mind/brain waves — hypnotherapy theme
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=300',
+    image: authorPhotos.paulMcKenna,
   },
   {
     id: '2',
@@ -602,7 +612,7 @@ export const liveClasses = [
     programName: 'AI ACCELERATOR',
     programLabel: '',
     time: 'Today · 11:00pm - 12:00am',
-    // AI / neural network visual
+    // AI / neural network visual (no real author photo available)
     image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=300',
   },
   {
@@ -612,8 +622,7 @@ export const liveClasses = [
     programName: 'SPIRITUAL MASTERY',
     programLabel: '',
     time: 'Today · 11:00pm - 12:30am',
-    // Mountain sunrise / spiritual light
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300',
+    image: authorPhotos.marieDiamond,
   },
 ];
 

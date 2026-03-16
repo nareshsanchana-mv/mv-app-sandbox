@@ -25,7 +25,7 @@ interface ShortItem {
   author: string;
   authorDescription: string;
   image: string;
-  authorImage: string;
+  authorImage: string | number | object;
 }
 
 interface ShortVideoProps {
@@ -58,7 +58,7 @@ function ShortVideo({ item, isPlaying, onTogglePlay, isMuted, onToggleMute }: Sh
 
       {/* Author info at bottom */}
       <View style={styles.authorContainer}>
-        <Image source={{ uri: item.authorImage }} style={styles.authorImage} />
+        <Image source={typeof item.authorImage === 'string' ? { uri: item.authorImage } : item.authorImage as any} style={styles.authorImage} />
         <View style={styles.authorInfo}>
           <Text style={styles.authorName}>{item.author}</Text>
           <Text style={styles.authorDescription}>{item.authorDescription}</Text>
