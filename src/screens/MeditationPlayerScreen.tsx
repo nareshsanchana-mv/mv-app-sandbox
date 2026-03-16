@@ -130,20 +130,12 @@ export default function MeditationPlayerScreen() {
 
         {/* Bottom Section */}
         <View style={styles.bottomSection}>
-          {/* Ambient Sound */}
+          {/* Ambient Sound info pill */}
           <View style={styles.ambientContainer}>
-            <View style={styles.ambientInfo}>
-              <Image
-                source={{ uri: 'https://images.unsplash.com/photo-1507400492013-162706c8c05e?w=100' }}
-                style={styles.ambientImage}
-              />
-              <View style={styles.ambientText}>
-                <Text style={styles.ambientLabel}>Ambient sound</Text>
-                <Text style={styles.ambientName}>Aurora Borealis</Text>
-              </View>
-            </View>
+            <Ionicons name="lock-closed-outline" size={18} color="rgba(255,255,255,0.6)" />
+            <Text style={styles.ambientLabel}>This meditation has a pre-set ambient sound</Text>
             <TouchableOpacity style={styles.infoButton}>
-              <Ionicons name="information-circle-outline" size={28} color="rgba(255,255,255,0.6)" />
+              <Ionicons name="information-circle-outline" size={22} color="rgba(255,255,255,0.6)" />
             </TouchableOpacity>
           </View>
 
@@ -274,34 +266,18 @@ const styles = StyleSheet.create({
   ambientContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: 'rgba(255,255,255,0.1)',
-    borderRadius: 16,
-    padding: 12,
+    borderRadius: 30,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     marginBottom: 24,
-  },
-  ambientInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  ambientImage: {
-    width: 44,
-    height: 44,
-    borderRadius: 8,
-    marginRight: 12,
-  },
-  ambientText: {
-    justifyContent: 'center',
+    gap: 10,
   },
   ambientLabel: {
+    flex: 1,
     ...typography.caption,
-    color: 'rgba(255,255,255,0.6)',
-    marginBottom: 2,
-  },
-  ambientName: {
-    ...typography.label,
-    color: '#fff',
-    fontWeight: '600',
+    color: 'rgba(255,255,255,0.7)',
+    fontSize: 13,
   },
   infoButton: {
     padding: 4,
