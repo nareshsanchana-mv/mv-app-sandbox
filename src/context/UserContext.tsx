@@ -8,7 +8,7 @@ interface UserContextType {
   setUserTier: (tier: UserTier) => void;
   isSubscriber: boolean;
   userName: string;
-  userAvatar: string;
+  userAvatar: string | number | object;
   dayStreak: number;
 }
 

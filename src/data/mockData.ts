@@ -94,7 +94,7 @@ export const user = {
   name: 'Naresh',
   fullName: 'Naresh Sanchana',
   email: 'nsanchana@gmail.com',
-  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200',
+  avatar: require('../../assets/naresh-avatar.jpeg'),
   dayStreak: 0,
   lessonsCompleted: 15,
   meditatedMinutes: 27,
