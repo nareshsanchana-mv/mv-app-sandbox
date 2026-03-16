@@ -6,8 +6,8 @@ interface ProgramCardProps {
   title: string;
   author: string;
   coverImage: ImageSourcePropType;
-  enrolledCount: number;
-  lessonCount: number;
+  enrolledCount?: number;
+  lessonCount?: number;
 }
 
 const ProgramCard: React.FC<ProgramCardProps> = ({ title, author, coverImage, enrolledCount, lessonCount }) => {
@@ -20,9 +20,9 @@ const ProgramCard: React.FC<ProgramCardProps> = ({ title, author, coverImage, en
       <Text style={styles.author}>{author}</Text>
       <View style={styles.metaRow}>
         <Ionicons name="people-outline" size={12} color="#999" />
-        <Text style={styles.metaText}>{enrolledCount.toLocaleString()}</Text>
-        <Text style={styles.metaSeparator}>·</Text>
-        <Text style={styles.metaText}>{lessonCount} lessons</Text>
+        {enrolledCount != null && <Text style={styles.metaText}>{enrolledCount.toLocaleString()}</Text>}
+        {enrolledCount != null && lessonCount != null && <Text style={styles.metaSeparator}>·</Text>}
+        {lessonCount != null && <Text style={styles.metaText}>{lessonCount} lessons</Text>}
       </View>
     </View>
   );
