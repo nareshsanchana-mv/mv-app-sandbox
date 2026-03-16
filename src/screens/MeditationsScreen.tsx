@@ -9,6 +9,8 @@ import Header from '../components/Header';
 import { colors } from '../theme/colors';
 import MeditationSubTab from './MeditationSubTab';
 import SoundscapeSubTab from './SoundscapeSubTab';
+import SoundHealingSubTab from './SoundHealingSubTab';
+import GenericPracticeSubTab from './GenericPracticeSubTab';
 import {
   todayMeditations,
   meditationPractices,
@@ -23,7 +25,7 @@ import type { RootStackParamList } from '../navigation/RootNavigator';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const TABS = ['All', 'Meditation', 'Soundscape', 'Sound Healing'];
+const TABS = ['All', 'Meditation', 'Soundscape', 'Sound Healing', 'Hypnotherapy', 'Visualization', 'Breathwork'];
 const DURATION_FILTERS = ['UNDER 5 MINS', 'UNDER 10 MINS', 'UNDER 20 MINS'];
 
 const FAVORITES = [
@@ -85,7 +87,53 @@ export default function MeditationsScreen() {
 
       {activeTab === 'Meditation' && <MeditationSubTab />}
       {activeTab === 'Soundscape' && <SoundscapeSubTab />}
-      {activeTab === 'Sound Healing' && <SoundscapeSubTab />}
+      {activeTab === 'Sound Healing' && <SoundHealingSubTab />}
+      {activeTab === 'Hypnotherapy' && (
+        <GenericPracticeSubTab
+          heroImage="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80"
+          heroOverlayColor="rgba(30,15,0,0.45)"
+          title="Hypnotherapy"
+          description="A therapeutic practice that uses guided relaxation and focused attention to achieve a heightened state of awareness."
+          items={[
+            { id: 'hy1', title: 'Becoming Your Best Self', subtitle: 'REMARKABLE TRANSFORMATION', author: 'House of Wellbeing', rating: 4.6, duration: '19m', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80' },
+            { id: 'hy2', title: 'Ease Sadness & Depression Daytime Affirmation', subtitle: 'DAYTIME AFFIRMATION SERIES', author: 'Dr. Steve G. Jones', rating: 4.5, duration: '30m', image: 'https://images.unsplash.com/photo-1499084732479-de2c02d45fcc?w=400&q=80' },
+            { id: 'hy3', title: 'Improve Concentration & Focus', subtitle: '', author: 'Dr. Steve G. Jones', rating: 4.7, duration: '25m', image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=400&q=80' },
+            { id: 'hy4', title: 'Cope With Divorce', subtitle: 'DAYTIME AFFIRMATION SERIES', author: 'Dr. Steve G. Jones', rating: 4.4, duration: '22m', image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80' },
+            { id: 'hy5', title: 'Stop Smoking Now', subtitle: '', author: 'Marisa Peer', rating: 4.8, duration: '35m', image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=400&q=80' },
+            { id: 'hy6', title: 'Deep Sleep Hypnosis', subtitle: '', author: 'Marisa Peer', rating: 4.9, duration: '45m', image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&q=80' },
+          ]}
+        />
+      )}
+      {activeTab === 'Visualization' && (
+        <GenericPracticeSubTab
+          heroImage="https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=800&q=80"
+          heroOverlayColor="rgba(40,0,20,0.35)"
+          title="Visualization"
+          description="A mental exercise where participants are guided to imagine specific outcomes, scenes, or goals."
+          items={[
+            { id: 'vi1', title: 'Vibrant Health and Body Activation: Sculpting Your Ideal Self', subtitle: 'VIBRANT HEALTH AND BODY ACTIVATION', author: 'Regan Hillyer', rating: 4.6, duration: '19m', image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80' },
+            { id: 'vi2', title: 'Infinite Abundance Activation: Entering the Wealth Stream', subtitle: 'INFINITE ABUNDANCE ACTIVATION', author: 'Regan Hillyer', rating: 4.6, duration: '19m', image: 'https://images.unsplash.com/photo-1502481851512-e9e2529bfbf9?w=400&q=80' },
+            { id: 'vi3', title: 'Perfect Day Blueprint: Morning Ritual for Your Ideal Life', subtitle: 'PERFECT DAY BLUEPRINT', author: 'Regan Hillyer', rating: 4.7, duration: '14m', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80' },
+            { id: 'vi4', title: 'Soul Deepening Activation: Expanding Your Spiritual Connection', subtitle: 'SOUL DEEPENING ACTIVATION', author: 'Regan Hillyer', rating: 4.8, duration: '22m', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&q=80' },
+            { id: 'vi5', title: 'Magnetic Confidence: Stepping Into Your Power', subtitle: '', author: 'Regan Hillyer', rating: 4.6, duration: '17m', image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80' },
+          ]}
+        />
+      )}
+      {activeTab === 'Breathwork' && (
+        <GenericPracticeSubTab
+          heroImage="https://images.unsplash.com/photo-1428908728789-d2de25dbd4e2?w=800&q=80"
+          heroOverlayColor="rgba(0,20,40,0.3)"
+          title="Breathwork"
+          description="A practice that uses specific breathing techniques to control breath in ways that influence your physical and emotional state."
+          items={[
+            { id: 'bw1', title: 'Vitality Unleashed: SOMA Breath for Optimal Health', subtitle: 'VITALITY UNLEASHED', author: 'Niraj Naik', rating: 4.8, duration: '42m', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80' },
+            { id: 'bw2', title: 'Journey to Bliss: SOMA Breath for Inner Harmony', subtitle: 'JOURNEY TO BLISS', author: 'Niraj Naik', rating: 4.8, duration: '38m', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80' },
+            { id: 'bw3', title: 'Manifest Your Desires: SOMA Breath for Abundant Living', subtitle: 'MANIFEST YOUR DESIRES', author: 'Niraj Naik', rating: 4.7, duration: '35m', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80' },
+            { id: 'bw4', title: 'Inner Calm: SOMA Breath for Anxiety Release', subtitle: 'INNER CALM', author: 'Niraj Naik', rating: 4.9, duration: '30m', image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&q=80' },
+            { id: 'bw5', title: 'Power & Purpose: SOMA Breath for Deep Focus', subtitle: 'POWER & PURPOSE', author: 'Niraj Naik', rating: 4.7, duration: '28m', image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=400&q=80' },
+          ]}
+        />
+      )}
 
       {activeTab === 'All' && <ScrollView showsVerticalScrollIndicator={false}>
 
