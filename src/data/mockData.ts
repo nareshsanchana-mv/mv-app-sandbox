@@ -67,6 +67,17 @@ const soundCovers: Record<string, string> = {
   'Focus': '/sound-covers/Focus.jpg',
   'Gazm': '/sound-covers/Gazm.jpg',
   'Zen': '/sound-covers/Zen.jpg',
+  // Zodiac series (Gabriel Loynaz)
+  'Taurus': '/sound-covers/Taurus.jpg',
+  'Aries': '/sound-covers/Aries.jpg',
+  'Pisces': '/sound-covers/Pisces.jpg',
+  'Gemini': '/sound-covers/Gemini.jpg',
+  'Cancer': '/sound-covers/Cancer.jpg',
+  'Capricorn': '/sound-covers/Capricorn.jpg',
+  'Scorpius': '/sound-covers/Scorpius.jpg',
+  'Virgo': '/sound-covers/Virgo.jpg',
+  'Libra': '/sound-covers/Libra.jpg',
+  'Sagittarius': '/sound-covers/Sagittarius.jpg',
 };
 
 // Helper to get a sound cover by name (falls back to null)
@@ -277,40 +288,45 @@ export const dailyShorts = [
     title: 'Why Is Dating So Hard?',
     author: 'Neelam Verma',
     authorDescription: 'Relationship coach & author',
-    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100',
+    // Couple walking together — thematically relevant
+    image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=300',
+    authorImage: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100',
   },
   {
     id: '2',
     title: 'The Transformational Leader',
     author: 'Monty Moran',
     authorDescription: 'Former CEO of Chipotle & leadership expert',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
+    // Confident professional in a leadership setting
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300',
+    authorImage: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100',
   },
   {
     id: '3',
     title: 'Why Everything You Do Matters',
     author: 'Kristina Mänd-Lakhiani',
     authorDescription: 'Co-founder of Mindvalley & personal growth expert',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100',
+    // Person on mountain peak — purpose & meaning
+    image: 'https://images.unsplash.com/photo-1499209974431-9dddcece7f88?w=300',
+    authorImage: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100',
   },
   {
     id: '4',
     title: 'The Secret To Leveling Up Your Success',
     author: 'Linda Clemons',
     authorDescription: 'World-renowned nonverbal communications expert',
-    image: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=100',
+    // Team celebrating / success energy
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=300',
+    authorImage: 'https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=100',
   },
   {
     id: '5',
     title: 'What is EFT Tapping?',
     author: 'Jennifer Partridge',
     authorDescription: 'Founder of Dream Awake Tapping & tapping expert',
-    image: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=300',
-    authorImage: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=100',
+    // Calm meditation / energy healing scene
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300',
+    authorImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100',
   },
 ];
 
@@ -548,21 +564,21 @@ export const soundsForGoal = {
       id: '1',
       title: 'Taurus',
       author: 'Gabriel Loynaz',
-      image: 'https://assets.mindvalley.com/api/v1/assets/f043a23b-9e0a-48b4-a9e3-8577db7591d1.jpg',
+      image: soundCovers['Taurus'] ?? '/sound-covers/Taurus.jpg',
       rating: 4.9,
     },
     {
       id: '2',
       title: 'Aries',
       author: 'Gabriel Loynaz',
-      image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg',
+      image: soundCovers['Aries'] ?? '/sound-covers/Aries.jpg',
       rating: 4.8,
     },
     {
       id: '3',
       title: 'Pisces',
       author: 'Gabriel Loynaz',
-      image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
+      image: soundCovers['Pisces'] ?? '/sound-covers/Pisces.jpg',
       rating: 4.8,
     },
   ],
@@ -576,7 +592,8 @@ export const liveClasses = [
     programName: 'HYPNOTHERAPIST',
     programLabel: 'Mindvalley certified',
     time: 'Today · 11:00pm - 12:00am',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300',
+    // Abstract mind/brain waves — hypnotherapy theme
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=300',
   },
   {
     id: '2',
@@ -585,7 +602,8 @@ export const liveClasses = [
     programName: 'AI ACCELERATOR',
     programLabel: '',
     time: 'Today · 11:00pm - 12:00am',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300',
+    // AI / neural network visual
+    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=300',
   },
   {
     id: '3',
@@ -594,7 +612,8 @@ export const liveClasses = [
     programName: 'SPIRITUAL MASTERY',
     programLabel: '',
     time: 'Today · 11:00pm - 12:30am',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300',
+    // Mountain sunrise / spiritual light
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300',
   },
 ];
 
