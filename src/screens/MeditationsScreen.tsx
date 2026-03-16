@@ -7,6 +7,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import { colors } from '../theme/colors';
+import MeditationSubTab from './MeditationSubTab';
+import SoundscapeSubTab from './SoundscapeSubTab';
 import {
   todayMeditations,
   meditationPractices,
@@ -81,7 +83,11 @@ export default function MeditationsScreen() {
         ))}
       </ScrollView>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      {activeTab === 'Meditation' && <MeditationSubTab />}
+      {activeTab === 'Soundscape' && <SoundscapeSubTab />}
+      {activeTab === 'Sound Healing' && <SoundscapeSubTab />}
+
+      {activeTab === 'All' && <ScrollView showsVerticalScrollIndicator={false}>
 
         {/* ── Daily Target ─────────────────────────────────── */}
         <View style={styles.targetCard}>
@@ -302,7 +308,7 @@ export default function MeditationsScreen() {
         </View>
 
         <View style={{ height: 100 }} />
-      </ScrollView>
+      </ScrollView>}
     </SafeAreaView>
   );
 }
