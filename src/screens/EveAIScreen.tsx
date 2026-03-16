@@ -32,98 +32,100 @@ const PAST_CHATS = [
   'Fitness and weight loss',
 ];
 
-interface LessonCard {
+interface ProgramCard {
   title: string;
-  program: string;
-  rating: number;
-  duration: string;
+  author: string;
+  authorAvatar: string;
+  lessonCount: number;
   image: string;
-}
-
-interface ResponsePoint {
-  text: string;
-  card?: LessonCard;
 }
 
 interface EveResponse {
   title: string;
-  intro: string;
-  points: ResponsePoint[];
+  card: ProgramCard;
+  body: string;
+  followUps: string[];
 }
 
 const EVE_RESPONSES: Record<string, EveResponse> = {
   sleep: {
     title: 'Sleep & Stress Relief',
-    intro: 'Knowing that small, consistent efforts can lead to profound shifts in your well-being.',
-    points: [
-      {
-        text: 'Understand why sleep is crucial for your overall health, energy, and emotional balance.',
-        card: { title: 'The Benefits of Sleep', program: 'The Mastery of Sleep', rating: 4.7, duration: '4m', image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&q=80' },
-      },
-      {
-        text: 'Learn a structured evening routine to prepare your mind and body for optimal sleep.',
-        card: { title: 'The Evening Wind-Down Ritual', program: 'The Mastery of Sleep', rating: 4.8, duration: '6m', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80' },
-      },
-      {
-        text: 'Practice this guided meditation to release the tension of the day and drift into restful sleep.',
-        card: { title: 'Sleep Inducing Body Scan', program: 'Mindvalley Meditations', rating: 4.9, duration: '25m', image: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&q=80' },
-      },
+    card: {
+      title: 'Everyday Bliss',
+      author: 'Paul McKenna',
+      authorAvatar: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg',
+      lessonCount: 21,
+      image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&q=80',
+    },
+    body: 'These recommendations are designed to support your journey toward better sleep by addressing both the practical aspects of sleep hygiene and the underlying stress that often impacts rest.',
+    followUps: [
+      'What belief hinders my sleep?',
+      'Quest for better sleep quality',
+      'How can I integrate calm rituals?',
     ],
   },
   fitness: {
     title: 'Fitness & Vitality',
-    intro: 'Building a healthy body is one of the greatest investments you can make in yourself.',
-    points: [
-      {
-        text: 'Start with understanding the science behind effective fat loss and muscle building.',
-        card: { title: 'The Science of Getting Strong', program: '10X Fitness', rating: 4.8, duration: '12m', image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80' },
-      },
-      {
-        text: 'Use this proven 20-minute bodyweight workout that fits any schedule.',
-        card: { title: 'The 20-Minute Power Workout', program: '10X Fitness', rating: 4.7, duration: '20m', image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80' },
-      },
+    card: {
+      title: '10X Fitness',
+      author: 'Ronan Diego & Lorenzo Delano',
+      authorAvatar: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=100&q=80',
+      lessonCount: 22,
+      image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80',
+    },
+    body: 'These recommendations will help you build a lean, strong body with minimal time investment — using science-backed methods that work with your biology, not against it.',
+    followUps: [
+      'How do I start exercising consistently?',
+      'What should I eat to lose weight?',
+      'Best morning fitness routine?',
     ],
   },
   mindset: {
     title: 'Growth Mindset',
-    intro: "Your mindset shapes every outcome in your life — let's build one that serves you.",
-    points: [
-      {
-        text: 'Discover the core beliefs that separate high performers from the rest.',
-        card: { title: 'The Psychology of Peak Performance', program: 'Be Extraordinary', rating: 4.9, duration: '15m', image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&q=80' },
-      },
-      {
-        text: 'Use this powerful reframing technique to turn self-doubt into momentum.',
-        card: { title: 'Rewriting Your Story', program: 'Be Extraordinary', rating: 4.8, duration: '8m', image: 'https://images.unsplash.com/photo-1455849318743-b2233052fcff?w=600&q=80' },
-      },
+    card: {
+      title: 'Be Extraordinary',
+      author: 'Vishen Lakhiani',
+      authorAvatar: require('../../assets/authors/vishen-lakhiani.jpg'),
+      lessonCount: 30,
+      image: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80',
+    },
+    body: 'These lessons will help you rewire the subconscious patterns that hold you back and replace them with beliefs that fuel confidence, resilience, and unstoppable momentum.',
+    followUps: [
+      'How do I overcome self-doubt?',
+      'Techniques to build confidence daily',
+      'What limiting beliefs should I release?',
     ],
   },
   leadership: {
     title: 'Leadership & Teams',
-    intro: 'Great leaders are made, not born — and the skills are learnable at any stage.',
-    points: [
-      {
-        text: 'Understand the five core qualities that inspire loyalty and high performance in teams.',
-        card: { title: 'The Transformational Leader Framework', program: 'The Transformational Leader', rating: 4.7, duration: '18m', image: 'https://images.unsplash.com/photo-1522881451255-f59ad836fdfb?w=600&q=80' },
-      },
-      {
-        text: 'Master the art of giving feedback that motivates rather than deflates.',
-        card: { title: 'Feedback That Fuels Growth', program: 'The Transformational Leader', rating: 4.6, duration: '10m', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80' },
-      },
+    card: {
+      title: 'The Transformational Leader',
+      author: 'Monty Moran',
+      authorAvatar: require('../../assets/authors/monty-moran.jpg'),
+      lessonCount: 16,
+      image: 'https://images.unsplash.com/photo-1522881451255-f59ad836fdfb?w=800&q=80',
+    },
+    body: 'These recommendations will sharpen your ability to inspire trust, communicate vision, and create the conditions where your team does their best work — consistently.',
+    followUps: [
+      'How do I give better feedback?',
+      'Building a high-performance culture',
+      'Dealing with conflict in my team',
     ],
   },
   default: {
     title: 'Eve Recommendations',
-    intro: "Here's what Mindvalley has to help you on this journey.",
-    points: [
-      {
-        text: 'Start your transformation with this foundational lesson on creating lasting change.',
-        card: { title: 'The Anatomy of Transformation', program: 'Be Extraordinary', rating: 4.9, duration: '14m', image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=600&q=80' },
-      },
-      {
-        text: 'Build a daily practice that compounds into extraordinary results over time.',
-        card: { title: 'Designing Your Perfect Day', program: 'Be Extraordinary', rating: 4.8, duration: '9m', image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80' },
-      },
+    card: {
+      title: 'Be Extraordinary',
+      author: 'Vishen Lakhiani',
+      authorAvatar: require('../../assets/authors/vishen-lakhiani.jpg'),
+      lessonCount: 30,
+      image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=800&q=80',
+    },
+    body: "Here's a powerful place to begin your transformation — a program that addresses the root of what drives human potential and helps you design a life that truly excites you.",
+    followUps: [
+      'What program fits my goals best?',
+      'How do I stay motivated long-term?',
+      'Where should I start on Mindvalley?',
     ],
   },
 };
@@ -311,31 +313,43 @@ export default function EveAIScreen() {
                   </View>
                 ) : msg.response ? (
                   <View style={styles.eveBlock}>
-                    {/* Intro */}
-                    <Text style={styles.eveIntro}>{msg.response.intro}</Text>
-                    {/* Points + cards */}
-                    {msg.response.points.map((point, pi) => (
-                      <View key={pi}>
-                        <View style={styles.evePoint}>
-                          <Text style={styles.eveSparkle}>✦</Text>
-                          <Text style={styles.evePointText}>{point.text}</Text>
-                        </View>
-                        {point.card && (
-                          <TouchableOpacity style={styles.lessonCard} activeOpacity={0.85}>
-                            <View style={styles.lessonCardLabel}>
-                              <Ionicons name="play-circle-outline" size={14} color={colors.textMuted} />
-                              <Text style={styles.lessonCardLabelText}> LESSON</Text>
-                            </View>
-                            <Image source={{ uri: point.card.image }} style={styles.lessonCardImage} />
-                            <Text style={styles.lessonCardTitle}>{point.card.title}</Text>
-                            <Text style={styles.lessonCardProgram}>From "{point.card.program}"</Text>
-                            <View style={styles.lessonCardMeta}>
-                              <Ionicons name="star" size={12} color="#F5A623" />
-                              <Text style={styles.lessonCardMetaText}> {point.card.rating} · {point.card.duration}</Text>
-                            </View>
-                          </TouchableOpacity>
-                        )}
+                    {/* Program card */}
+                    <TouchableOpacity style={styles.programCard} activeOpacity={0.85}>
+                      <View style={styles.programCardLabel}>
+                        <Ionicons name="play-circle-outline" size={14} color={colors.textMuted} />
+                        <Text style={styles.programCardLabelText}> PROGRAM</Text>
                       </View>
+                      <Image source={{ uri: msg.response.card.image }} style={styles.programCardImage} />
+                      <View style={styles.programCardBody}>
+                        <Text style={styles.programCardTitle}>{msg.response.card.title}</Text>
+                        <View style={styles.programCardAuthorRow}>
+                          <Image
+                            source={typeof msg.response.card.authorAvatar === 'string'
+                              ? { uri: msg.response.card.authorAvatar }
+                              : msg.response.card.authorAvatar as any}
+                            style={styles.authorAvatar}
+                          />
+                          <Text style={styles.authorName}>{msg.response.card.author}</Text>
+                          <View style={styles.lessonsPill}>
+                            <Text style={styles.lessonsPillText}>{msg.response.card.lessonCount} Lessons</Text>
+                          </View>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+
+                    {/* Body text */}
+                    <Text style={styles.eveBody}>{msg.response.body}</Text>
+
+                    {/* Follow-up prompts */}
+                    <Text style={styles.followUpHeader}>Here's what you can ask next</Text>
+                    {msg.response.followUps.map((q, qi) => (
+                      <TouchableOpacity
+                        key={qi} style={styles.followUpPill}
+                        onPress={() => sendMessage(q)}
+                        activeOpacity={0.75}
+                      >
+                        <Text style={styles.followUpText}>{q}</Text>
+                      </TouchableOpacity>
                     ))}
                   </View>
                 ) : null}
@@ -467,26 +481,37 @@ const styles = StyleSheet.create({
   userText: { fontSize: 15, color: '#fff', lineHeight: 21 },
 
   eveBlock: { marginBottom: 16 },
-  eveIntro: { fontSize: 14, color: colors.textSecondary, lineHeight: 22, marginBottom: 16 },
-  evePoint: { flexDirection: 'row', alignItems: 'flex-start', marginBottom: 12, gap: 10 },
-  eveSparkle: { fontSize: 14, color: '#7C5CFC', marginTop: 2 },
-  evePointText: { flex: 1, fontSize: 15, color: '#fff', fontWeight: '500', lineHeight: 22 },
+  eveBody: { fontSize: 14, color: colors.textSecondary, lineHeight: 22, marginBottom: 20 },
 
-  // Lesson card
-  lessonCard: {
+  // Program card
+  programCard: {
     backgroundColor: colors.backgroundCard, borderRadius: 16,
-    overflow: 'hidden', marginBottom: 20, borderWidth: 1, borderColor: colors.border,
+    overflow: 'hidden', marginBottom: 16, borderWidth: 1, borderColor: colors.border,
   },
-  lessonCardLabel: {
+  programCardLabel: {
     flexDirection: 'row', alignItems: 'center',
     paddingHorizontal: 14, paddingTop: 12, paddingBottom: 8,
   },
-  lessonCardLabelText: { fontSize: 11, fontWeight: '700', color: colors.textMuted, letterSpacing: 1 },
-  lessonCardImage: { width: '100%', height: 180 },
-  lessonCardTitle: { fontSize: 16, fontWeight: '700', color: '#fff', paddingHorizontal: 14, paddingTop: 10, marginBottom: 3 },
-  lessonCardProgram: { fontSize: 13, color: colors.textSecondary, paddingHorizontal: 14, marginBottom: 6 },
-  lessonCardMeta: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingBottom: 14 },
-  lessonCardMetaText: { fontSize: 13, color: colors.textMuted },
+  programCardLabelText: { fontSize: 11, fontWeight: '700', color: colors.textMuted, letterSpacing: 1 },
+  programCardImage: { width: '100%', height: 190 },
+  programCardBody: { padding: 14 },
+  programCardTitle: { fontSize: 18, fontWeight: '700', color: '#fff', marginBottom: 10 },
+  programCardAuthorRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  authorAvatar: { width: 36, height: 36, borderRadius: 18, backgroundColor: colors.backgroundElevated },
+  authorName: { fontSize: 14, color: '#fff', fontWeight: '500' },
+  lessonsPill: {
+    backgroundColor: colors.backgroundElevated, borderRadius: 20,
+    paddingHorizontal: 10, paddingVertical: 4,
+  },
+  lessonsPillText: { fontSize: 12, color: colors.textSecondary, fontWeight: '600' },
+
+  // Follow-up prompts
+  followUpHeader: { fontSize: 15, fontWeight: '700', color: '#fff', marginBottom: 12 },
+  followUpPill: {
+    borderWidth: 1, borderColor: colors.border,
+    borderRadius: 10, paddingHorizontal: 16, paddingVertical: 14, marginBottom: 10,
+  },
+  followUpText: { fontSize: 14, color: '#fff' },
 
   // Input
   inputArea: { paddingHorizontal: 16, paddingBottom: 12, paddingTop: 8 },
