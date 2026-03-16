@@ -24,6 +24,56 @@ const coverImages = {
   lifebookMastery: '/covers/Lifebook_Mastery.jpg',
 };
 
+// Sound cover images (served from public/sound-covers/ directory)
+// 229 sounds from Mindvalley Audiowaves — downloaded from Airtable 16 Mar 2026
+const soundCovers: Record<string, string> = {
+  'Leo': '/sound-covers/Leo.jpg',
+  'Moon Chasm': '/sound-covers/Moon_Chasm.jpg',
+  'Purification Solfeggio 417 Hz': '/sound-covers/Purification_Solfeggio_417_Hz.jpg',
+  'Air - Theta Beats 6Hz': '/sound-covers/Air_-_Theta_Beats_6Hz.jpg',
+  'Earth - Alpha 8Hz (Binaural)': '/sound-covers/Earth_-_Alpha_8Hz_Binaural.jpg',
+  'Embrace - Alpha 8Hz (Binaural)': '/sound-covers/Embrace_-_Alpha_8Hz_Binaural.jpg',
+  'Sleep - Delta 3Hz (Binaural)': '/sound-covers/Sleep_-_Delta_3Hz_Binaural.jpg',
+  'Water - Alpha 8Hz (Binaural)': '/sound-covers/Water_-_Alpha_8Hz_Binaural.jpg',
+  'Alpha Waves 10Hz Relaxation': '/sound-covers/Alpha_Waves_10Hz_Relaxation.jpg',
+  'Crown Chakra - Higher Consciousness & Divine Connection': '/sound-covers/Crown_Chakra_-_Higher_Consciousness__Divine_Connection.jpg',
+  'Delta Waves 1.5Hz Deep Sleep': '/sound-covers/Delta_Waves_1.5Hz_Deep_Sleep.jpg',
+  'Gamma Waves 35Hz Higher Consciousness': '/sound-covers/Gamma_Waves_35Hz_Higher_Consciousness.jpg',
+  'Gray Noise for Tinnitus Relief': '/sound-covers/Gray_Noise_for_Tinnitus_Relief.jpg',
+  'High Beta Waves 24Hz Excitement': '/sound-covers/High_Beta_Waves_24Hz_Excitement.jpg',
+  'Immersive Binaural Soundbath': '/sound-covers/Immersive_Binaural_Soundbath.jpg',
+  'Low Betta Waves 14Hz Focus': '/sound-covers/Low_Betta_Waves_14Hz_Focus.jpg',
+  'Mid Beta Waves 18Hz Alertness': '/sound-covers/Mid_Beta_Waves_18Hz_Alertness.jpg',
+  'Ocean Healing': '/sound-covers/Ocean_Healing.jpg',
+  'Om Chant': '/sound-covers/Om_Chant.jpg',
+  'Sacral Chakra - Sexual & Creative Energy': '/sound-covers/Sacral_Chakra_-_Sexual__Creative_Energy.jpg',
+  'Theta Waves 6Hz Meditation': '/sound-covers/Theta_Waves_6Hz_Meditation.jpg',
+  'Third Eye Chakra - Intuition & Awareness': '/sound-covers/Third_Eye_Chakra_-_Intuition__Awareness.jpg',
+  'Throat Chakra - Communication': '/sound-covers/Throat_Chakra_-_Communication.jpg',
+  'Violet Noise for Tinnitus Relief': '/sound-covers/Violet_Noise_for_Tinnitus_Relief.jpg',
+  'White Noise for Improving Sleep and Reducing Anxiety': '/sound-covers/White_Noise_for_Improving_Sleep_and_Reducing_Anxiety.jpg',
+  'Zen Retreat - THETA 6Hz': '/sound-covers/Zen_Retreat_-_THETA_6Hz.jpg',
+  'Chi-Energy': '/sound-covers/Chi-Energy.jpg',
+  'Heart Chakra - Love & Relationships': '/sound-covers/Heart_Chakra_-_Love__Relationships.jpg',
+  'Root Chakra - Basic Trust': '/sound-covers/Root_Chakra_-_Basic_Trust.jpg',
+  'Productivity': '/sound-covers/Productivity.jpg',
+  'Pure Flow': '/sound-covers/Pure_Flow.jpg',
+  'Sunset Walk': '/sound-covers/Sunset_Walk.jpg',
+  'Infinity': '/sound-covers/Infinity.jpg',
+  'Mycelium': '/sound-covers/Mycelium.jpg',
+  'Earth\'s Breath': '/sound-covers/Earths_Breath.jpg',
+  'Bliss': '/sound-covers/Bliss.jpg',
+  'Dream': '/sound-covers/Dream.jpg',
+  'Focus': '/sound-covers/Focus.jpg',
+  'Gazm': '/sound-covers/Gazm.jpg',
+  'Zen': '/sound-covers/Zen.jpg',
+};
+
+// Helper to get a sound cover by name (falls back to null)
+export function getSoundCover(name: string): string | null {
+  return soundCovers[name] ?? null;
+}
+
 // Meditation & sound cover images (served from public/ directory)
 const meditationCovers = {
   manifestingHealthWealthLove: '/meditation-covers/Manifesting_Health,_Wealth_&_Love.jpg',
@@ -397,7 +447,7 @@ export const favorites = [
     id: '4',
     title: 'Leo',
     author: 'Gabriel Loynaz',
-    image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400',
+    image: soundCovers['Leo'],
     type: 'sound' as const,  // circular
   },
 ];
