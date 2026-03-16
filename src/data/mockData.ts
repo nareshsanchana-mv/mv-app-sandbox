@@ -380,18 +380,7 @@ export const topRatedMeditations = [
   },
 ];
 
-export const meditationCategories = [
-  { id: '1', name: 'RELAX', image: meditationCovers.deepRelaxation },
-  { id: '2', name: 'CLARITY OF VISION', image: meditationCovers.clarityOfVision },
-  { id: '3', name: 'ABUNDANCE', image: meditationCovers.abundanceMeditation },
-  { id: '4', name: 'SLEEP', image: meditationCovers.profoundSleep },
-];
 
-export const soundCategories = [
-  { id: '1', name: 'ALTERED STATES', image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg' },
-  { id: '2', name: 'NATURE', image: 'https://assets.mindvalley.com/api/v1/assets/3a88f8af-7697-4c23-9ce6-6f89d6fcb718.jpg' },
-  { id: '3', name: 'FOCUS', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg' },
-];
 
 export const evePrompts = [
   "I'm feeling stressed, tired, or seeking better sleep.",
