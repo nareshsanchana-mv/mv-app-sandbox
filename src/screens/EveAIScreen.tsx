@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView,
-  KeyboardAvoidingView, Platform, Modal, FlatList, Image,
+  KeyboardAvoidingView, Platform, FlatList, Image,
   Animated, Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -406,38 +406,43 @@ export default function EveAIScreen() {
         </View>
       </KeyboardAvoidingView>
 
-      {/* Chat history modal */}
-      <Modal visible={showHistory} animationType="slide" onRequestClose={() => setShowHistory(false)}>
-        <SafeAreaView style={styles.historyContainer} edges={['top']}>
-          <View style={styles.historyHeader}>
-            <TouchableOpacity onPress={() => setShowHistory(false)} style={styles.headerBtn}>
-              <Ionicons name="chevron-back" size={24} color="#fff" />
-            </TouchableOpacity>
-            <View style={styles.headerRight}>
-              <TouchableOpacity style={styles.headerBtn}>
-                <Ionicons name="create-outline" size={22} color="#fff" />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.headerBtn}>
-                <Ionicons name="ellipsis-horizontal" size={20} color="#fff" />
-              </TouchableOpacity>
-            </View>
+      {/* Chat history panel — inline absolute, stays within app frame */}
+      {showHistory && (
+        <View style={styles.historyOverlay}>
+          <TouchableOpacity style={styles.historyBackdrop} onPress={() => setShowHistory(false)} activeOpacity={1} />
+          <View style={styles.historyPanel}>
+            <SafeAreaView style={styles.historyContainer} edges={['top']}>
+              <View style={styles.historyHeader}>
+                <TouchableOpacity onPress={() => setShowHistory(false)} style={styles.headerBtn}>
+                  <Ionicons name="chevron-back" size={24} color="#fff" />
+                </TouchableOpacity>
+                <View style={styles.headerRight}>
+                  <TouchableOpacity style={styles.headerBtn}>
+                    <Ionicons name="create-outline" size={22} color="#fff" />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.headerBtn}>
+                    <Ionicons name="ellipsis-horizontal" size={20} color="#fff" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <Text style={styles.historySection}>Past</Text>
+              <FlatList
+                data={PAST_CHATS}
+                keyExtractor={(_, i) => i.toString()}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.historyRow}
+                    onPress={() => setShowHistory(false)}
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.historyRowText}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </SafeAreaView>
           </View>
-          <Text style={styles.historySection}>Past</Text>
-          <FlatList
-            data={PAST_CHATS}
-            keyExtractor={(_, i) => i.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={styles.historyRow}
-                onPress={() => setShowHistory(false)}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.historyRowText}>{item}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </SafeAreaView>
-      </Modal>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
@@ -542,6 +547,9 @@ const styles = StyleSheet.create({
   disclaimer: { fontSize: 11, color: colors.textMuted, textAlign: 'center', lineHeight: 16 },
 
   // History modal
+  historyOverlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 100, flexDirection: 'row' },
+  historyBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)' },
+  historyPanel: { width: '80%', backgroundColor: colors.background },
   historyContainer: { flex: 1, backgroundColor: colors.background },
   historyHeader: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',

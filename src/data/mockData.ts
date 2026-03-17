@@ -988,13 +988,13 @@ export const programsByCategory: Record<string, Array<{
     { id: 'body3', title: '10X Fitness', author: 'Ronan Diego & Lorenzo Delano', coverImage: coverImages.tenXFitness, enrolledCount: 31200, lessonCount: 22 },
   ],
   Soul: [
-    { id: 'soul1', title: 'Higher Self Activation', author: 'Ariya Lorenz', coverImage: 'https://images.unsplash.com/photo-1502227845452-984212558db4?w=400&q=80', enrolledCount: 6596, lessonCount: 13 },
+    { id: 'soul1', title: 'Higher Self Activation', author: 'Ariya Lorenz', coverImage: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&q=80', enrolledCount: 6596, lessonCount: 13 },
     { id: 'soul2', title: 'Unlimited Abundance', author: 'Christie Marie Sheldon', coverImage: 'https://images.unsplash.com/photo-1475113548554-5a36f1f523d6?w=400&q=80', enrolledCount: 66113, lessonCount: 22 },
     { id: 'soul3', title: 'Duality', author: 'Jeffrey Allen', coverImage: coverImages.duality, enrolledCount: 48200, lessonCount: 28 },
   ],
   Relationships: [
-    { id: 'rel1', title: 'The Energies of Love', author: 'Donna Eden & David Feinstein', coverImage: 'https://images.unsplash.com/photo-1528340994784-a29d5d5a7674?w=400&q=80', enrolledCount: 20002, lessonCount: 30 },
-    { id: 'rel2', title: 'Calling in The One', author: 'Katherine Woodward Thomas', coverImage: 'https://images.unsplash.com/photo-1519781446754-46a29a8d1413?w=400&q=80', enrolledCount: 29160, lessonCount: 12 },
+    { id: 'rel1', title: 'The Energies of Love', author: 'Donna Eden & David Feinstein', coverImage: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80', enrolledCount: 20002, lessonCount: 30 },
+    { id: 'rel2', title: 'Calling in The One', author: 'Katherine Woodward Thomas', coverImage: 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?w=400&q=80', enrolledCount: 29160, lessonCount: 12 },
     { id: 'rel3', title: 'Conscious Parenting Mastery', author: 'Dr. Shefali', coverImage: coverImages.consciousParenting, enrolledCount: 18500, lessonCount: 28 },
   ],
   Entrepreneurship: [
@@ -1011,9 +1011,9 @@ export const programsByCategory: Record<string, Array<{
 
 export const newReleases = [
   { id: 'nr1', title: 'Negotiate with Confidence', author: 'Kwame Christian', lessonCount: 14,
-    image: 'https://images.unsplash.com/photo-1556761175-b413da4b248b?w=600&q=80' },
+    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80' },
   { id: 'nr2', title: 'The Maestro to Leadership', author: 'Itay Talgam', lessonCount: 10,
-    image: 'https://images.unsplash.com/photo-1519412666095-9ce4a1d1d8a2?w=600&q=80' },
+    image: 'https://images.unsplash.com/photo-1471478331149-c72f17e33c73?w=600&q=80' },
   { id: 'nr3', title: 'The Art of Manifesting', author: 'Regan Hillyer', lessonCount: 10,
     image: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80' },
 ];
