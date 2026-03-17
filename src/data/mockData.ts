@@ -1159,9 +1159,9 @@ export const meditationPractices = [
   { id: 'med',  label: 'Meditation',    icon: 'person-outline',   image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80' },
   { id: 'snd',  label: 'Soundscape',   icon: 'musical-note-outline', image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80' },
   { id: 'heal', label: 'Sound Healing', icon: 'pulse-outline',    image: 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=400&q=80' },
-  { id: 'hyp',  label: 'Hypnotherapy', icon: 'radio-button-on-outline', image: 'https://images.unsplash.com/photo-1510784722466-f2aa240cx26c?w=400&q=80' },
-  { id: 'vis',  label: 'Visualization', icon: 'eye-outline',      image: 'https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=400&q=80' },
-  { id: 'bth',  label: 'Breathwork',   icon: 'cloud-outline',    image: 'https://images.unsplash.com/photo-1506126613408-4e0e0f7c50e1?w=400&q=80' },
+  { id: 'hyp',  label: 'Hypnotherapy', icon: 'radio-button-on-outline', image: 'https://images.unsplash.com/photo-1551739440-5dd934d3a94a?w=400&q=80' },
+  { id: 'vis',  label: 'Visualization', icon: 'eye-outline',      image: 'https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=400&q=80' },
+  { id: 'bth',  label: 'Breathwork',   icon: 'cloud-outline',    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80' },
 ];
 
 export const meditationCategories = [
