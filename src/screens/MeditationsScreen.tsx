@@ -90,7 +90,7 @@ export default function MeditationsScreen() {
       {activeTab === 'Sound Healing' && <SoundHealingSubTab />}
       {activeTab === 'Hypnotherapy' && (
         <GenericPracticeSubTab
-          heroImage="https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&q=80"
+          heroImage="https://images.unsplash.com/photo-1551739440-5dd934d3a94a?w=800&q=80"
           heroOverlayColor="rgba(30,15,0,0.45)"
           title="Hypnotherapy"
           description="A therapeutic practice that uses guided relaxation and focused attention to achieve a heightened state of awareness."
@@ -106,7 +106,7 @@ export default function MeditationsScreen() {
       )}
       {activeTab === 'Visualization' && (
         <GenericPracticeSubTab
-          heroImage="https://images.unsplash.com/photo-1490750967868-88df5691cc96?w=800&q=80"
+          heroImage="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=800&q=80"
           heroOverlayColor="rgba(40,0,20,0.35)"
           title="Visualization"
           description="A mental exercise where participants are guided to imagine specific outcomes, scenes, or goals."
@@ -240,15 +240,19 @@ export default function MeditationsScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Explore by practices</Text>
           <View style={styles.practicesGrid}>
-            {meditationPractices.map(p => (
-              <TouchableOpacity key={p.id} style={styles.practiceTile} activeOpacity={0.85}>
-                <ImageBackground source={{ uri: p.image }} style={styles.practiceBg} imageStyle={styles.practiceBgImg}>
-                  <View style={styles.practiceIconCircle}>
-                    <Ionicons name={p.icon as any} size={18} color="#fff" />
-                  </View>
-                  <Text style={styles.practiceLabel}>{p.label}</Text>
-                </ImageBackground>
-              </TouchableOpacity>
+            {[0, 2, 4].map(rowStart => (
+              <View key={rowStart} style={styles.practicesRow}>
+                {meditationPractices.slice(rowStart, rowStart + 2).map(p => (
+                  <TouchableOpacity key={p.id} style={styles.practiceTile} activeOpacity={0.85}>
+                    <ImageBackground source={{ uri: p.image }} style={styles.practiceBg} imageStyle={styles.practiceBgImg}>
+                      <View style={styles.practiceIconCircle}>
+                        <Ionicons name={p.icon as any} size={18} color="#fff" />
+                      </View>
+                      <Text style={styles.practiceLabel}>{p.label}</Text>
+                    </ImageBackground>
+                  </TouchableOpacity>
+                ))}
+              </View>
             ))}
           </View>
         </View>
@@ -259,7 +263,7 @@ export default function MeditationsScreen() {
             <Text style={styles.sectionTitle}>Meditation categories</Text>
             <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
           </View>
-          <View style={styles.categoryGrid}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryScroll}>
             {meditationCategories.map(cat => (
               <TouchableOpacity key={cat.id} style={styles.categoryCard} activeOpacity={0.85}>
                 <ImageBackground source={{ uri: cat.image }} style={styles.categoryBg} imageStyle={styles.categoryBgImg}>
@@ -267,7 +271,7 @@ export default function MeditationsScreen() {
                 </ImageBackground>
               </TouchableOpacity>
             ))}
-          </View>
+          </ScrollView>
         </View>
 
         {/* ── Sound Categories ────────────────────────────────── */}
@@ -276,7 +280,7 @@ export default function MeditationsScreen() {
             <Text style={styles.sectionTitle}>Sound categories</Text>
             <TouchableOpacity><Text style={styles.seeAll}>See all</Text></TouchableOpacity>
           </View>
-          <View style={styles.categoryGrid}>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.categoryScroll}>
             {soundCategories.map(cat => (
               <TouchableOpacity key={cat.id} style={styles.categoryCard} activeOpacity={0.85}>
                 <ImageBackground source={{ uri: cat.image }} style={styles.categoryBg} imageStyle={styles.categoryBgImg}>
@@ -284,7 +288,7 @@ export default function MeditationsScreen() {
                 </ImageBackground>
               </TouchableOpacity>
             ))}
-          </View>
+          </ScrollView>
         </View>
 
         {/* ── Recently Played ─────────────────────────────────── */}
@@ -431,8 +435,9 @@ const styles = StyleSheet.create({
   medAuthor: { fontSize: 12, color: colors.textSecondary, marginBottom: 4 },
 
   // Practices grid
-  practicesGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 8 },
-  practiceTile: { width: '47%', marginHorizontal: '1.5%', marginBottom: 4 },
+  practicesGrid: { paddingHorizontal: 16, gap: 8 },
+  practicesRow: { flexDirection: 'row', gap: 8, marginBottom: 8 },
+  practiceTile: { flex: 1 },
   practiceBg: { height: 72, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, gap: 10 },
   practiceBgImg: { borderRadius: 12 },
   practiceIconCircle: {
@@ -442,9 +447,9 @@ const styles = StyleSheet.create({
   },
   practiceLabel: { fontSize: 14, fontWeight: '700', color: '#fff' },
 
-  // Category grid (meditation + sound)
-  categoryGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, gap: 8 },
-  categoryCard: { width: '47%', marginHorizontal: '1.5%', aspectRatio: 1.7 },
+  // Category scroll (meditation + sound)
+  categoryScroll: { paddingHorizontal: 16, paddingRight: 16 },
+  categoryCard: { width: 160, height: 94, marginRight: 8 },
   categoryBg: { flex: 1, justifyContent: 'flex-end', padding: 12 },
   categoryBgImg: { borderRadius: 12 },
   categoryLabel: { fontSize: 16, fontWeight: '900', color: '#fff', letterSpacing: 1 },
