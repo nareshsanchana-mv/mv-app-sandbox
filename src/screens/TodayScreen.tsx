@@ -153,6 +153,7 @@ export default function TodayScreen() {
                   <ProgramCard
                     key={program.id}
                     {...program}
+                    coverImage={program.image}
                     type="program"
                     size="large"
                     onPress={() => navigateToQuest(
@@ -439,6 +440,7 @@ export default function TodayScreen() {
                   <ProgramCard
                     key={item.id}
                     {...item}
+                    coverImage={item.image}
                     size="medium"
                   />
                 ))}
@@ -457,6 +459,7 @@ export default function TodayScreen() {
                 <ProgramCard
                   key={program.id}
                   {...program}
+                  coverImage={program.image}
                   type="program"
                   size="large"
                   onPress={() => navigateToQuest(
@@ -521,6 +524,7 @@ export default function TodayScreen() {
                 <ProgramCard
                   key={program.id}
                   {...program}
+                  coverImage={program.image}
                   type="program"
                   size="large"
                   onPress={() => navigateToQuest(
