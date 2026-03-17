@@ -193,7 +193,7 @@ export default function ProgramsScreen() {
                     key={p.id}
                     title={p.title}
                     author={p.author}
-                    image={p.coverImage}
+                    coverImage={p.coverImage}
                     enrolledCount={p.enrolledCount}
                     lessonCount={p.lessonCount}
                   />

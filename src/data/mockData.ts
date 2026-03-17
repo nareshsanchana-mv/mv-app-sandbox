@@ -1015,7 +1015,7 @@ export const newReleases = [
   { id: 'nr2', title: 'The Maestro to Leadership', author: 'Itay Talgam', lessonCount: 10,
     image: 'https://images.unsplash.com/photo-1519412666095-9ce4a1d1d8a2?w=600&q=80' },
   { id: 'nr3', title: 'The Art of Manifesting', author: 'Regan Hillyer', lessonCount: 10,
-    image: require('../../assets/authors/regan-hillyer.jpg') },
+    image: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&q=80' },
 ];
 
 export const comingSoon = [
