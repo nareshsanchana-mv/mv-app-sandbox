@@ -153,7 +153,7 @@ export const eveRecommendations = [
     type: 'lesson' as const,
     title: 'Rewire Your Belief Systems to Overcome Your Fears',
     author: 'The Science of Personal Branding',
-    image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg',
+    image: 'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&q=80',
     rating: 4.9,
     duration: '19m',
     reason: 'Boost confidence to launch your business by overcoming limiting beliefs.',
@@ -163,7 +163,7 @@ export const eveRecommendations = [
     type: 'lesson' as const,
     title: 'Discover Your Ideal Client',
     author: 'The Science of Personal Branding',
-    image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg',
+    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80',
     rating: 4.8,
     duration: '22m',
     reason: 'Focus your efforts on those who resonate with your soul-aligned business.',
@@ -173,7 +173,7 @@ export const eveRecommendations = [
     type: 'meditation' as const,
     title: 'Finding Your Life Purpose',
     author: 'Anodea Judith',
-    image: 'https://assets.mindvalley.com/api/v1/assets/169e289b-9dde-4956-993e-b318426ea7fe.jpg',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&q=80',
     rating: 4.7,
     duration: '25m',
     isLocked: true,
@@ -194,7 +194,7 @@ export const freePrograms = [
     id: '2',
     title: 'The 3 Most Important Questions',
     author: 'Vishen',
-    image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80',
     userCount: 68340,
     lessonCount: 8,
   },
@@ -205,7 +205,7 @@ export const todayMeditations = [
     id: '1',
     title: 'Infiniprayer',
     author: 'Mahatria',
-    image: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
+    image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80',
     rating: 4.6,
     duration: '1m',
     category: 'UNDER 5 MINS',
@@ -214,7 +214,7 @@ export const todayMeditations = [
     id: '2',
     title: 'Phase 2: Gratitude',
     author: 'Vishen',
-    image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80',
     rating: 4.7,
     duration: '9m',
     category: 'UNDER 10 MINS',
@@ -274,12 +274,12 @@ export const trendingPrograms = [
 ];
 
 export const categories = [
-  { id: '1', name: 'Mind', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', color: '#3B82F6' },
-  { id: '2', name: 'Soul', image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg', color: '#F59E0B' },
-  { id: '3', name: 'Body', image: 'https://assets.mindvalley.com/api/v1/assets/f043a23b-9e0a-48b4-a9e3-8577db7591d1.jpg', color: '#10B981' },
-  { id: '4', name: 'Entrepreneurship', image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg', color: '#EF4444' },
-  { id: '5', name: 'Career Growth', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', color: '#8B5CF6' },
-  { id: '6', name: 'Relationships', image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg', color: '#EC4899' },
+  { id: '1', name: 'Mind', image: 'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&q=80', color: '#3B82F6' },
+  { id: '2', name: 'Soul', image: 'https://images.unsplash.com/photo-1495344517868-8ebaf0a2044a?w=400&q=80', color: '#F59E0B' },
+  { id: '3', name: 'Body', image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80', color: '#10B981' },
+  { id: '4', name: 'Entrepreneurship', image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80', color: '#EF4444' },
+  { id: '5', name: 'Career Growth', image: 'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&q=80', color: '#8B5CF6' },
+  { id: '6', name: 'Relationships', image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80', color: '#EC4899' },
 ];
 
 // Real Mindvalley author photos (downloaded from Airtable CSV, 16 Mar 2026)
@@ -346,7 +346,7 @@ export const topRatedMeditations = [
     id: '1',
     title: 'Dissolving Memories',
     author: 'Gabriel Loynaz',
-    image: 'https://assets.mindvalley.com/api/v1/assets/0d29391b-2610-4237-a9cd-8485a58fefb6.jpg',
+    image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=400&q=80',
     rating: 4.9,
     duration: '15m',
     isLocked: true,
@@ -355,7 +355,7 @@ export const topRatedMeditations = [
     id: '2',
     title: 'The Great Vision',
     author: 'Gabriel Loynaz',
-    image: 'https://assets.mindvalley.com/api/v1/assets/ab92e6aa-6f33-4822-a3cc-d7cbdce5b688.png',
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&q=80',
     rating: 4.9,
     duration: '20m',
     isLocked: true,
@@ -364,7 +364,7 @@ export const topRatedMeditations = [
     id: '3',
     title: 'Ocean Healing',
     author: 'Gabriel Loynaz',
-    image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg',
+    image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80',
     rating: 4.9,
     duration: '12m',
     isLocked: true,
@@ -423,7 +423,7 @@ export const premiumPrograms = [
     id: '1',
     title: 'AI Mastery 2026',
     author: 'Vishen, Vykintas Glodenis, Domenic Ashburn, I...',
-    image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg',
+    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80',
     userCount: 8,
     lessonCount: 0,
   },
@@ -506,7 +506,7 @@ export const featuredBanners = [
     label: 'CHALLENGE',
     buttonText: 'Join now',
     author: '',
-    image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg',
+    image: 'https://images.unsplash.com/photo-1495344517868-8ebaf0a2044a?w=400&q=80',
   },
 ];
 
@@ -913,8 +913,8 @@ export const collections: Collection[] = [
     pricingAllAccess: '$499/yr',
     programs: [
       { id: 'parenting', title: 'Conscious Parenting', author: 'Dr. Shefali Tsabary', image: coverImages.consciousParenting, lessonCount: 28, userCount: 95000, duration: '28 lessons' },
-      { id: 'relationship', title: 'The Relationship Expert', author: 'Neelam Verma', image: 'https://assets.mindvalley.com/api/v1/assets/626cb88e-773e-40b5-b860-97711d1ac3ac.jpg', lessonCount: 30, userCount: 72000, duration: '30 lessons' },
-      { id: 'masculine', title: 'Masculine Feminine Connection', author: 'Masculine-Feminine School', image: 'https://assets.mindvalley.com/api/v1/assets/aa4f066e-434f-4fdb-b013-bb15668b543b.jpg', lessonCount: 25, userCount: 58000, duration: '25 lessons' },
+      { id: 'relationship', title: 'The Relationship Expert', author: 'Neelam Verma', image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=400&q=80', lessonCount: 30, userCount: 72000, duration: '30 lessons' },
+      { id: 'masculine', title: 'Masculine Feminine Connection', author: 'Masculine-Feminine School', image: 'https://images.unsplash.com/photo-1495344517868-8ebaf0a2044a?w=400&q=80', lessonCount: 25, userCount: 58000, duration: '25 lessons' },
     ],
   },
   {
@@ -931,8 +931,8 @@ export const collections: Collection[] = [
     pricingAllAccess: '$499/yr',
     programs: [
       { id: 'brand', title: 'Building an Unstoppable Brand', author: 'Jeffrey Perlman', image: coverImages.buildingBrand, lessonCount: 19, userCount: 23448, duration: '19 lessons' },
-      { id: 'leader', title: 'The Transformational Leader', author: 'Monty Moran', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', lessonCount: 16, userCount: 14452, duration: '16 lessons' },
-      { id: 'ai', title: 'AI Accelerator', author: 'Vishen & Vykintas Glodenis', image: 'https://assets.mindvalley.com/api/v1/assets/a6899b95-0f71-4403-9ac7-04edd0cdd722.jpg', lessonCount: 11, userCount: 307006, duration: '11 lessons' },
+      { id: 'leader', title: 'The Transformational Leader', author: 'Monty Moran', image: 'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&q=80', lessonCount: 16, userCount: 14452, duration: '16 lessons' },
+      { id: 'ai', title: 'AI Accelerator', author: 'Vishen & Vykintas Glodenis', image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=400&q=80', lessonCount: 11, userCount: 307006, duration: '11 lessons' },
     ],
   },
   {
@@ -949,7 +949,7 @@ export const collections: Collection[] = [
     pricingAllAccess: '$499/yr',
     programs: [
       { id: 'speak', title: 'Speak & Inspire', author: 'Lisa Nichols', image: coverImages.speakInspire, lessonCount: 28, userCount: 67000, duration: '28 lessons' },
-      { id: 'writing', title: 'The Art of Storytelling', author: 'Michael Hauge', image: 'https://assets.mindvalley.com/api/v1/assets/afd1e11c-cf1d-4c19-a853-abc758da55e9.jpg', lessonCount: 20, userCount: 42000, duration: '20 lessons' },
+      { id: 'writing', title: 'The Art of Storytelling', author: 'Michael Hauge', image: 'https://images.unsplash.com/photo-1509909756405-be0199881695?w=400&q=80', lessonCount: 20, userCount: 42000, duration: '20 lessons' },
     ],
   },
 ];
