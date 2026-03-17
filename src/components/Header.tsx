@@ -10,12 +10,11 @@ export default function Header() {
   const isSubscriber = userTier === 'L3' || userTier === 'L3L4';
   const navigation = useNavigation();
 
-  const cycleTier = () => {
-    const next = { L1: 'L3' as const, L3: 'L3L4' as const, L3L4: 'L1' as const };
-    setUserTier(next[userTier]);
-  };
-
-  const tierLabel = { L1: 'L1 Free User', L3: 'L3 Subscriber', L3L4: 'L3+L4 Subscriber' };
+  const TIERS: Array<{ key: 'L1' | 'L3' | 'L3L4'; label: string }> = [
+    { key: 'L1', label: 'L1' },
+    { key: 'L3', label: 'L3' },
+    { key: 'L3L4', label: 'L3+L4' },
+  ];
 
   return (
     <View style={styles.container}>
@@ -26,20 +25,20 @@ export default function Header() {
         />
       </TouchableOpacity>
 
-      {/* Tier Toggle */}
-      <TouchableOpacity
-        style={[styles.tierToggle, isSubscriber && styles.tierToggleSubscriber]}
-        onPress={cycleTier}
-      >
-        <Text style={[styles.tierText, isSubscriber && styles.tierTextSubscriber]}>
-          {tierLabel[userTier]}
-        </Text>
-        <Ionicons
-          name="swap-horizontal"
-          size={14}
-          color={isSubscriber ? colors.primary : colors.textMuted}
-        />
-      </TouchableOpacity>
+      {/* Tier Selector */}
+      <View style={styles.tierSelector}>
+        {TIERS.map((t) => (
+          <TouchableOpacity
+            key={t.key}
+            style={[styles.tierBtn, userTier === t.key && styles.tierBtnActive]}
+            onPress={() => setUserTier(t.key)}
+          >
+            <Text style={[styles.tierBtnText, userTier === t.key && styles.tierBtnTextActive]}>
+              {t.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
 
       <View style={styles.actions}>
         <TouchableOpacity style={styles.iconBtn} onPress={() => navigation.navigate('Search' as never)}>
@@ -74,24 +73,28 @@ const styles = StyleSheet.create({
   iconBtn: {
     marginLeft: 16,
   },
-  tierToggle: {
+  tierSelector: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.backgroundCard,
+    borderRadius: 20,
+    padding: 3,
+    gap: 2,
+  },
+  tierBtn: {
     paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingVertical: 5,
     borderRadius: 16,
-    gap: 6,
   },
-  tierToggleSubscriber: {
-    backgroundColor: 'rgba(124, 58, 237, 0.15)',
+  tierBtnActive: {
+    backgroundColor: colors.primary,
   },
-  tierText: {
+  tierBtnText: {
     fontSize: 11,
     fontWeight: '600',
     color: colors.textMuted,
   },
-  tierTextSubscriber: {
-    color: colors.primary,
+  tierBtnTextActive: {
+    color: '#fff',
   },
 });
